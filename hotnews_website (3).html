@@ -1,0 +1,1510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HOT NEWS — Breaking News Every Minute</title>
+<meta name="description" content="Hot News Kenya - Breaking news every minute.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:#0a0a0a;color:#fff;font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;font-size:16px;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:#000;}::-webkit-scrollbar-thumb{background:#e8192c;}
+a{text-decoration:none;color:inherit;}
+.page{display:none;}.page.active{display:block;}
+
+/* ══ TICKER ══ */
+.ticker{background:#e8192c;height:38px;display:flex;align-items:stretch;overflow:hidden;}
+.ticker-label{background:#fff;color:#e8192c;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:3px;padding:0 20px;display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.blink{width:7px;height:7px;background:#e8192c;border-radius:50%;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.ticker-scroll{overflow:hidden;flex:1;display:flex;align-items:center;}
+.ticker-move{display:flex;white-space:nowrap;animation:slide 38s linear infinite;}
+.ticker-move span{color:#fff;font-size:13px;font-weight:700;padding:0 30px;}
+.ticker-move span::after{content:'◆';margin-left:30px;opacity:0.45;}
+@keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══ HEADER ══ */
+header{background:#000;border-bottom:1px solid #1f1f1f;position:sticky;top:0;z-index:9999;}
+.hdr{max-width:1300px;margin:0 auto;padding:0 30px;height:66px;display:flex;align-items:center;gap:30px;}
+.logo{flex-shrink:0;cursor:pointer;}
+.logo-name{font-family:'Bebas Neue',sans-serif;font-size:40px;letter-spacing:5px;color:#fff;line-height:1;}
+.logo-name em{color:#e8192c;font-style:normal;}
+.logo-tag{font-size:8px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#aaa;}
+.hdivider{width:1px;height:34px;background:#1f1f1f;flex-shrink:0;}
+nav{display:flex;gap:2px;flex:1;}
+nav a{color:#bbb;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;border-radius:3px;transition:all 0.15s;cursor:pointer;}
+nav a:hover{color:#fff;background:#1a1a1a;}
+nav a.active{color:#e8192c;}
+.search{margin-left:auto;display:flex;border:1px solid #1f1f1f;border-radius:3px;overflow:hidden;}
+.search input{background:#0a0a0a;border:none;color:#fff;font-family:'Inter',sans-serif;font-size:12px;padding:8px 14px;outline:none;width:180px;}
+.search input::placeholder{color:#333;}
+.search button{background:#e8192c;border:none;color:#fff;padding:8px 14px;font-size:13px;cursor:pointer;}
+.admin-btn{background:#111;border:1px solid #222;color:#666;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:7px 14px;border-radius:3px;cursor:pointer;transition:all 0.15s;white-space:nowrap;}
+.admin-btn:hover{color:#fff;border-color:#444;}
+
+/* ══ WRAP ══ */
+.wrap{max-width:1300px;margin:0 auto;padding:0 30px;}
+
+/* ══ TOPBAR ══ */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0 14px;border-bottom:1px solid #1f1f1f;margin-bottom:20px;}
+.topbar-date{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#ccc;}
+.live-tag{display:flex;align-items:center;gap:8px;background:rgba(232,25,44,0.1);border:1px solid rgba(232,25,44,0.3);padding:5px 14px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#e8192c;}
+.live-dot{width:6px;height:6px;background:#e8192c;border-radius:50%;animation:blink 1s infinite;}
+
+/* ══ HERO ══ */
+.hero-grid{display:grid;grid-template-columns:1fr 360px;grid-template-rows:1fr 1fr;height:500px;gap:3px;margin-bottom:10px;border-radius:4px;overflow:hidden;background:#111;}
+.hero-main{grid-row:1/3;position:relative;overflow:hidden;background:#111;}
+.hero-main img{width:100%;height:100%;object-fit:cover;opacity:0.6;transition:opacity 0.4s,transform 0.5s;}
+.hero-main:hover img{opacity:0.75;transform:scale(1.04);}
+.hero-main-shade{position:absolute;inset:0;background:linear-gradient(to top,#000 0%,rgba(0,0,0,0.6) 45%,transparent 100%);}
+.hero-main-body{position:absolute;bottom:0;left:0;right:0;padding:28px;}
+.badge{display:inline-block;background:#e8192c;color:#fff;font-size:9px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;padding:4px 12px;margin-bottom:12px;}
+.hero-main-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;line-height:1.18;color:#fff;margin-bottom:10px;text-shadow:0 2px 20px rgba(0,0,0,0.9);cursor:pointer;}
+.hero-main-title:hover{color:#e8192c;}
+.hero-main-sum{font-size:13px;font-weight:500;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.hero-main-meta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.src-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:2px;}
+.time-txt{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);}
+.hero-btns{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.btn-read-full{display:inline-flex;align-items:center;gap:8px;background:#fff;color:#000;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:9px 18px;border:none;cursor:pointer;border-radius:3px;}
+.btn-read-full:hover{background:#f0f0f0;}
+.poster-btn-hero{display:inline-flex;align-items:center;gap:8px;background:#e8192c;color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:9px 16px;border:none;cursor:pointer;border-radius:3px;}
+.poster-btn-hero:hover{background:#c0111f;}
+.hero-side{background:#080808;border-left:2px solid #1a1a1a;padding:18px;display:flex;gap:14px;cursor:pointer;transition:background 0.2s;align-items:flex-start;overflow:hidden;}
+.hero-side:hover{background:#0f0f0f;}
+.hero-side:first-of-type{border-bottom:2px solid #1a1a1a;}
+.side-thumb{width:95px;height:68px;object-fit:cover;flex-shrink:0;filter:brightness(0.8);border-radius:2px;}
+.side-src{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#e8192c;margin-bottom:4px;}
+.side-rule{width:22px;height:2px;background:#e8192c;margin:4px 0 6px;}
+.side-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;line-height:1.3;color:#fff;}
+.side-time{font-size:11px;font-weight:600;color:#aaa;margin-top:5px;}
+
+/* ══ BODY GRID ══ */
+.body-grid{display:grid;grid-template-columns:1fr 300px;gap:40px;padding-bottom:60px;}
+.sec{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid #1f1f1f;}
+.sec-bar{width:3px;height:20px;background:#e8192c;border-radius:1px;flex-shrink:0;}
+.sec-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;}
+.sec-rule{flex:1;height:1px;background:#2a2a2a;}
+
+/* ══ CARDS ══ */
+.card-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:10px;}
+.card{background:#080808;border:1px solid #1a1a1a;border-radius:3px;overflow:hidden;cursor:pointer;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;}
+.card:hover{border-color:#e8192c;transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.7);}
+.card-img{aspect-ratio:16/9;overflow:hidden;background:#111;position:relative;}
+.card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8);transition:transform 0.35s;}
+.card:hover .card-img img{transform:scale(1.06);}
+.card-src-tag{position:absolute;top:8px;left:8px;background:rgba(0,0,0,0.85);border:1px solid #1f1f1f;color:#aaa;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:2px;}
+.card-custom-badge{position:absolute;top:8px;right:8px;background:#e8192c;color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:2px;}
+.card-body{padding:14px;}
+.card-cat{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#e8192c;margin-bottom:7px;}
+.card-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:800;line-height:1.35;color:#fff;margin-bottom:9px;}
+.card-sum{font-size:13px;font-weight:500;color:#ccc;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px;}
+.card-foot{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid #111;}
+.card-time{font-size:11px;font-weight:600;color:#aaa;}
+.card-read{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#e8192c;}
+
+/* ══ LIST ══ */
+.alist{display:flex;flex-direction:column;}
+.aitem{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid #111;cursor:pointer;}
+.aitem:last-child{border-bottom:none;}
+.aitem:hover{opacity:0.8;}
+.aitem-thumb{aspect-ratio:4/3;overflow:hidden;border-radius:3px;background:#111;}
+.aitem-thumb img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8);}
+.aitem-src{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#e8192c;margin-bottom:4px;}
+.aitem-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:800;line-height:1.35;color:#fff;margin-bottom:6px;}
+.aitem-sum{font-size:13px;font-weight:500;color:#ccc;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px;}
+.aitem-time{font-size:11px;font-weight:600;color:#aaa;}
+
+/* ══ SIDEBAR ══ */
+.widget{margin-bottom:32px;}
+.trend-item{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #111;cursor:pointer;}
+.trend-item:last-child{border-bottom:none;}
+.trend-item:hover{opacity:0.75;}
+.trend-num{font-family:'Bebas Neue',sans-serif;font-size:38px;line-height:1;color:#1a1a1a;min-width:36px;transition:color 0.2s;}
+.trend-item:hover .trend-num{color:#e8192c;}
+.trend-title{font-family:'Playfair Display',serif;font-size:13px;font-weight:800;line-height:1.35;color:#fff;margin-bottom:4px;}
+.trend-meta{font-size:11px;font-weight:600;color:#aaa;}
+.chips{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{background:#111;border:1px solid #2a2a2a;color:#bbb;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:100px;cursor:pointer;transition:all 0.15s;}
+.chip:hover{border-color:#e8192c;color:#fff;background:rgba(232,25,44,0.1);}
+.soc-btn{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:3px;font-size:13px;font-weight:700;margin-bottom:8px;transition:opacity 0.2s,transform 0.15s;}
+.soc-btn:hover{opacity:0.85;transform:translateX(3px);}
+.soc-fb{background:#1877f2;color:#fff;}
+.soc-tw{background:#111;color:#fff;border:1px solid #222;}
+.update-box{background:#0a0a0a;border:1px solid #1a1a1a;border-left:3px solid #e8192c;padding:12px 14px;display:flex;align-items:center;gap:10px;}
+.update-box-text{font-size:12px;font-weight:600;color:#bbb;line-height:1.5;}
+.update-box-text strong{color:#fff;display:block;margin-bottom:2px;}
+.ad-slot{background:#080808;border:1px dashed #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#222;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;gap:5px;position:relative;}
+.ad-slot::before{content:'ADVERTISEMENT';position:absolute;top:7px;left:50%;transform:translateX(-50%);font-size:8px;letter-spacing:3px;color:#1a1a1a;white-space:nowrap;}
+.ad-rectangle{width:100%;height:250px;margin:0 0 24px;}
+.ad-banner{width:100%;height:60px;margin:16px 0;}
+
+/* ══ ARTICLE PAGE ══ */
+.article-page{max-width:1300px;margin:0 auto;padding:30px 30px 60px;}
+.article-back{display:inline-flex;align-items:center;gap:8px;color:#666;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;margin-bottom:28px;transition:color 0.15s;border:none;background:none;}
+.article-back:hover{color:#fff;}
+.article-layout{display:grid;grid-template-columns:1fr 300px;gap:48px;}
+.article-category{font-size:10px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#e8192c;margin-bottom:14px;}
+.article-headline{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;line-height:1.15;color:#fff;margin-bottom:18px;}
+.article-meta-bar{display:flex;align-items:center;gap:16px;padding:14px 0;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;margin-bottom:24px;flex-wrap:wrap;}
+.article-byline{font-size:12px;font-weight:700;color:#fff;}
+.article-byline span{color:#e8192c;}
+.article-date{font-size:12px;font-weight:600;color:#bbb;}
+.article-source-tag{background:#111;border:1px solid #2a2a2a;color:#bbb;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 10px;border-radius:2px;}
+.article-hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;margin-bottom:28px;filter:brightness(0.85);}
+.article-hero-img-placeholder{width:100%;aspect-ratio:16/9;background:#080808;border:1px solid #1a1a1a;border-radius:4px;margin-bottom:28px;display:flex;align-items:center;justify-content:center;color:#222;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.ai-loading{background:#080808;border:1px solid #1a1a1a;border-radius:4px;padding:48px;text-align:center;margin-bottom:28px;}
+.ai-spinner{width:48px;height:48px;border:3px solid #1a1a1a;border-top-color:#e8192c;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto 18px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ai-loading-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;margin-bottom:8px;}
+.ai-loading-sub{font-size:12px;font-weight:600;color:#444;letter-spacing:1px;}
+.ai-steps{display:flex;flex-direction:column;gap:8px;margin-top:20px;text-align:left;max-width:300px;margin-left:auto;margin-right:auto;}
+.ai-step{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;color:#333;}
+.ai-step.done{color:#4ade80;}
+.ai-step.active{color:#fff;}
+.ai-step-icon{font-size:14px;width:20px;text-align:center;}
+.article-body{font-size:18px;font-weight:400;color:#f0f0f0;line-height:1.9;margin-bottom:32px;}
+.article-body p{margin-bottom:22px;}
+.article-body p:first-child{font-size:20px;font-weight:500;color:#fff;line-height:1.75;}
+.article-body p:first-child::first-letter{font-family:'Playfair Display',serif;font-size:64px;font-weight:900;color:#e8192c;float:left;line-height:0.8;margin:8px 14px 0 0;}
+.article-body h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:800;color:#fff;margin:28px 0 14px;}
+.article-attribution{background:#111;border:1px solid #2a2a2a;border-left:3px solid #555;padding:14px 18px;border-radius:0 4px 4px 0;margin-bottom:28px;font-size:14px;font-weight:600;color:#bbb;font-style:italic;}
+.article-attribution strong{color:#fff;}
+.article-share{display:flex;align-items:center;gap:10px;padding:20px 0;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a;margin-bottom:32px;flex-wrap:wrap;}
+.share-label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#444;margin-right:4px;}
+.share-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:3px;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.15s;}
+.share-fb{background:#1877f2;color:#fff;}
+.share-x{background:#000;color:#fff;border:1px solid #222;}
+.share-poster{background:#e8192c;color:#fff;}
+.related-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:8px;}
+
+/* ══════════════════════════════════════════
+   ADMIN PANEL
+══════════════════════════════════════════ */
+/* Login */
+.admin-login{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#000;padding:20px;}
+.login-box{background:#080808;border:1px solid #1f1f1f;border-radius:6px;padding:48px;width:100%;max-width:400px;text-align:center;}
+.login-logo{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:5px;color:#fff;margin-bottom:4px;}
+.login-logo em{color:#e8192c;font-style:normal;}
+.login-sub{font-size:10px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:#333;margin-bottom:32px;}
+.login-title{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#555;margin-bottom:20px;}
+.login-input{width:100%;background:#0a0a0a;border:1px solid #1f1f1f;color:#fff;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;padding:14px 16px;border-radius:3px;outline:none;margin-bottom:12px;display:block;}
+.login-input:focus{border-color:#e8192c;}
+.login-btn{width:100%;background:#e8192c;color:#fff;border:none;font-size:13px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:14px;border-radius:3px;cursor:pointer;transition:background 0.15s;}
+.login-btn:hover{background:#c0111f;}
+.login-error{color:#e8192c;font-size:12px;font-weight:600;margin-top:10px;display:none;}
+
+/* Admin shell */
+.admin-shell{display:none;min-height:100vh;background:#000;}
+.admin-shell.show{display:flex;}
+.admin-sidebar{width:240px;background:#080808;border-right:1px solid #1a1a1a;flex-shrink:0;display:flex;flex-direction:column;}
+.admin-brand{padding:20px 20px 16px;border-bottom:1px solid #1a1a1a;}
+.admin-brand-name{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;}
+.admin-brand-name em{color:#e8192c;font-style:normal;}
+.admin-brand-tag{font-size:8px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#aaa;margin-top:2px;}
+.admin-nav{flex:1;padding:16px 0;}
+.admin-nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;transition:all 0.15s;font-size:13px;font-weight:600;color:#bbb;border-left:3px solid transparent;}
+.admin-nav-item:hover{color:#fff;background:#0f0f0f;}
+.admin-nav-item.active{color:#fff;background:#0f0f0f;border-left-color:#e8192c;}
+.admin-nav-icon{font-size:16px;width:20px;text-align:center;}
+.admin-logout{padding:16px 20px;border-top:1px solid #1a1a1a;}
+.admin-logout-btn{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;color:#bbb;cursor:pointer;transition:color 0.15s;}
+.admin-logout-btn:hover{color:#e8192c;}
+
+/* Admin main */
+.admin-main{flex:1;overflow-y:auto;padding:32px;}
+.admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
+.admin-page-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:3px;color:#fff;}
+.admin-panel{display:none;}.admin-panel.active{display:block;}
+
+/* Stats row */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:#080808;border:1px solid #1a1a1a;border-radius:4px;padding:20px;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:40px;color:#fff;line-height:1;}
+.stat-num em{color:#e8192c;font-style:normal;}
+.stat-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-top:4px;}
+
+/* Article table */
+.art-table{width:100%;border-collapse:collapse;}
+.art-table th{text-align:left;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#444;padding:10px 14px;border-bottom:1px solid #1a1a1a;}
+.art-table td{padding:14px;border-bottom:1px solid #0f0f0f;vertical-align:top;}
+.art-table tr:hover td{background:#080808;}
+.art-thumb{width:60px;height:44px;object-fit:cover;border-radius:2px;filter:brightness(0.7);}
+.art-thumb-placeholder{width:60px;height:44px;background:#111;border-radius:2px;display:flex;align-items:center;justify-content:center;color:#222;font-size:10px;font-weight:700;}
+.art-title-cell{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:4px;}
+.art-src-cell{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8192c;}
+.art-date-cell{font-size:11px;font-weight:600;color:#444;white-space:nowrap;}
+.status-badge{display:inline-block;font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;border-radius:100px;}
+.status-published{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);color:#4ade80;}
+.status-draft{background:rgba(251,191,36,0.1);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;}
+.status-scheduled{background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);color:#818cf8;}
+.status-rss{background:rgba(148,163,184,0.1);border:1px solid rgba(148,163,184,0.2);color:#94a3b8;}
+.art-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.act-btn{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:2px;cursor:pointer;border:none;transition:all 0.15s;white-space:nowrap;}
+.act-edit{background:#111;color:#ccc;border:1px solid #222;}
+.act-edit:hover{color:#fff;border-color:#444;}
+.act-publish{background:rgba(74,222,128,0.1);color:#4ade80;border:1px solid rgba(74,222,128,0.3);}
+.act-publish:hover{background:#4ade80;color:#000;}
+.act-unpublish{background:rgba(251,191,36,0.1);color:#fbbf24;border:1px solid rgba(251,191,36,0.3);}
+.act-unpublish:hover{background:#fbbf24;color:#000;}
+.act-delete{background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.3);}
+.act-delete:hover{background:#ef4444;color:#fff;}
+.act-poster{background:rgba(232,25,44,0.1);color:#e8192c;border:1px solid rgba(232,25,44,0.3);}
+.act-poster:hover{background:#e8192c;color:#fff;}
+
+/* Article Editor */
+.editor-wrap{background:#080808;border:1px solid #1a1a1a;border-radius:4px;padding:28px;}
+.editor-field{margin-bottom:20px;}
+.editor-label{font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:8px;display:block;}
+.editor-input{width:100%;background:#0a0a0a;border:1px solid #1a1a1a;color:#fff;font-family:'Inter',sans-serif;font-size:14px;font-weight:500;padding:12px 16px;border-radius:3px;outline:none;transition:border-color 0.15s;}
+.editor-input:focus{border-color:#e8192c;}
+.editor-textarea{width:100%;background:#0a0a0a;border:1px solid #1a1a1a;color:#d4d4d4;font-family:'Inter',sans-serif;font-size:15px;line-height:1.8;padding:16px;border-radius:3px;outline:none;resize:vertical;min-height:300px;transition:border-color 0.15s;}
+.editor-textarea:focus{border-color:#e8192c;}
+.editor-select{width:100%;background:#0a0a0a;border:1px solid #1a1a1a;color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:12px 16px;border-radius:3px;outline:none;cursor:pointer;}
+.editor-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.editor-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.editor-actions{display:flex;gap:10px;flex-wrap:wrap;padding-top:20px;border-top:1px solid #1a1a1a;margin-top:8px;}
+.ea-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:3px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.15s;}
+.ea-publish{background:#4ade80;color:#000;}
+.ea-publish:hover{background:#22c55e;}
+.ea-draft{background:#111;color:#ccc;border:1px solid #222;}
+.ea-draft:hover{color:#fff;border-color:#444;}
+.ea-schedule{background:#818cf8;color:#fff;}
+.ea-schedule:hover{background:#6366f1;}
+.ea-ai{background:#e8192c;color:#fff;}
+.ea-ai:hover{background:#c0111f;}
+.ea-cancel{background:transparent;color:#555;border:1px solid #1a1a1a;}
+.ea-cancel:hover{color:#fff;}
+
+/* Schedule picker */
+.schedule-row{display:none;background:#0a0a0a;border:1px solid #1a1a1a;border-radius:3px;padding:16px;margin-bottom:16px;}
+.schedule-row.show{display:block;}
+
+/* Import from RSS */
+.rss-import-card{background:#080808;border:1px solid #1a1a1a;border-radius:4px;padding:20px;display:flex;gap:14px;align-items:flex-start;margin-bottom:12px;cursor:pointer;transition:border-color 0.15s;}
+.rss-import-card:hover{border-color:#333;}
+.rss-import-card.selected{border-color:#e8192c;background:#0f0808;}
+.rss-import-thumb{width:80px;height:56px;object-fit:cover;border-radius:2px;flex-shrink:0;filter:brightness(0.7);}
+.rss-import-src{font-size:9px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#e8192c;margin-bottom:4px;}
+.rss-import-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:4px;}
+.rss-import-sum{font-size:12px;font-weight:500;color:#bbb;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.rss-import-actions{display:flex;gap:8px;margin-top:10px;}
+.sel-indicator{width:20px;height:20px;border:2px solid #1a1a1a;border-radius:50%;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all 0.15s;}
+.rss-import-card.selected .sel-indicator{background:#e8192c;border-color:#e8192c;}
+.sel-check{color:#fff;font-size:10px;display:none;}
+.rss-import-card.selected .sel-check{display:block;}
+
+/* Scheduler calendar view */
+.sched-list{display:flex;flex-direction:column;gap:10px;}
+.sched-item{background:#080808;border:1px solid #1a1a1a;border-radius:4px;padding:16px;display:flex;align-items:center;gap:16px;}
+.sched-time{background:#e8192c;color:#fff;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;padding:8px 14px;border-radius:3px;white-space:nowrap;min-width:100px;text-align:center;}
+.sched-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:#fff;flex:1;}
+.sched-src{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#e8192c;margin-top:3px;}
+.sched-del{background:none;border:none;color:#444;font-size:18px;cursor:pointer;transition:color 0.15s;}
+.sched-del:hover{color:#ef4444;}
+
+/* ══ LOADING ══ */
+.load-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:400px;gap:16px;}
+.spinner{width:40px;height:40px;border:3px solid #1a1a1a;border-top-color:#e8192c;border-radius:50%;animation:spin 0.7s linear infinite;}
+.load-txt{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#333;}
+
+/* ══ POSTER MODAL ══ */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:#0a0a0a;border:1px solid #222;border-radius:6px;width:100%;max-width:680px;overflow:hidden;transform:scale(0.93);transition:transform 0.3s;}
+.modal-overlay.open .modal-box{transform:scale(1);}
+.modal-topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid #1a1a1a;background:#080808;}
+.modal-topbar-title{font-size:11px;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:#555;}
+.modal-close{background:none;border:none;color:#555;font-size:22px;cursor:pointer;padding:0 4px;}
+.modal-close:hover{color:#fff;}
+#posterCanvas{width:100%;aspect-ratio:1200/630;position:relative;overflow:hidden;}
+.poster-bg{position:absolute;inset:0;background:#000;}
+.poster-bg img{width:100%;height:100%;object-fit:cover;opacity:0.2;filter:blur(3px);}
+.poster-red-top{position:absolute;top:0;left:0;right:0;height:10px;background:#e8192c;}
+.poster-breaking-bar{position:absolute;bottom:0;left:0;right:0;background:#e8192c;padding:0 36px;height:68px;display:flex;align-items:center;gap:18px;}
+.poster-breaking-label{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;color:#fff;white-space:nowrap;border-right:2px solid rgba(255,255,255,0.3);padding-right:18px;}
+.poster-breaking-source{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.75);}
+.poster-logo{position:absolute;top:24px;left:36px;font-family:'Bebas Neue',sans-serif;font-size:34px;letter-spacing:5px;color:#fff;line-height:1;}
+.poster-logo em{color:#e8192c;font-style:normal;}
+.poster-logo-tag{font-size:8px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:2px;}
+.poster-date-el{position:absolute;top:30px;right:36px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.poster-headline{position:absolute;top:50%;left:36px;right:36px;transform:translateY(-55%);}
+.poster-headline h2{font-family:'Playfair Display',serif;font-size:clamp(20px,3.2vw,36px);font-weight:900;line-height:1.2;color:#fff;text-shadow:0 3px 30px rgba(0,0,0,0.8);margin-bottom:12px;}
+.poster-headline-rule{width:56px;height:4px;background:#e8192c;border-radius:2px;}
+.modal-actions{display:flex;gap:10px;padding:14px 20px;border-top:1px solid #1a1a1a;background:#080808;flex-wrap:wrap;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:3px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.15s;}
+.btn-dl{background:#e8192c;color:#fff;}.btn-dl:hover{background:#c0111f;}
+.btn-fb2{background:#1877f2;color:#fff;}
+.btn-x2{background:#000;color:#fff;border:1px solid #333;}
+
+/* ══ FOOTER ══ */
+footer{background:#050505;border-top:1px solid #1a1a1a;}
+.footer-bottom{max-width:1300px;margin:0 auto;padding:16px 30px;display:flex;justify-content:space-between;align-items:center;}
+.footer-copy{font-size:11px;font-weight:600;color:#aaa;}
+.footer-legal{display:flex;gap:20px;}
+.footer-legal a{font-size:11px;font-weight:600;color:#aaa;cursor:pointer;}
+.footer-legal a:hover{color:#e8192c;}
+
+/* ══ FADE ══ */
+.fade-up{opacity:0;transform:translateY(14px);animation:fadeup 0.4s ease forwards;}
+@keyframes fadeup{to{opacity:1;transform:translateY(0)}}
+@keyframes posterPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,25,44,0.4);}50%{box-shadow:0 0 0 8px rgba(232,25,44,0);}}
+
+/* Toast notification */
+.toast{position:fixed;bottom:28px;right:28px;background:#080808;border:1px solid #222;border-left:3px solid #4ade80;border-radius:4px;padding:14px 20px;font-size:13px;font-weight:700;color:#fff;z-index:999999;transform:translateY(80px);opacity:0;transition:all 0.3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.error{border-left-color:#e8192c;}
+
+@media(max-width:1060px){
+  .hero-grid{grid-template-columns:1fr;height:auto;}
+  .hero-main{min-height:320px;}
+  .body-grid{grid-template-columns:1fr;}
+  .card-grid{grid-template-columns:1fr 1fr;}
+  .article-layout{grid-template-columns:1fr;}
+  .related-grid{grid-template-columns:1fr 1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .editor-row{grid-template-columns:1fr;}
+  .editor-row-3{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:640px){
+  nav{display:none;}
+  .hdr{padding:0 16px;}
+  .wrap{padding:0 16px;}
+  .card-grid{grid-template-columns:1fr;}
+  .hero-main-title{font-size:22px;}
+  .article-headline{font-size:28px;}
+  .admin-sidebar{display:none;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- TICKER -->
+<div class="ticker" id="mainTicker" style="display:none;">
+  <div class="ticker-label"><div class="blink"></div> BREAKING</div>
+  <div class="ticker-scroll">
+    <div class="ticker-move" id="tickerMove">
+      <span>Loading Kenya's latest headlines...</span>
+      <span>Loading Kenya's latest headlines...</span>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="mainHeader" style="display:none;">
+  <div class="hdr">
+    <div class="logo" onclick="showHome()">
+      <div class="logo-name"><em>HOT</em> NEWS</div>
+      <div class="logo-tag">Breaking News Every Minute</div>
+    </div>
+    <div class="hdivider"></div>
+    <nav>
+      <a class="active" onclick="filterCat(event,'')">Home</a>
+      <a onclick="filterCat(event,'kenya')">Kenya</a>
+      <a onclick="filterCat(event,'politics')">Politics</a>
+      <a onclick="filterCat(event,'business')">Business</a>
+      <a onclick="filterCat(event,'africa')">Africa</a>
+      <a onclick="filterCat(event,'world')">World</a>
+      <a onclick="filterCat(event,'sports')">Sports</a>
+    </nav>
+    <div class="search">
+      <input type="text" id="sInput" placeholder="Search news..." onkeyup="if(event.key==='Enter')doSearch()">
+      <button onclick="doSearch()">🔍</button>
+    </div>
+    <button class="admin-btn" onclick="goAdmin()">⚙️ Admin</button>
+  </div>
+</header>
+
+<!-- ════════ HOME PAGE ════════ -->
+<div id="homePage" class="page">
+  <div class="wrap">
+    <div class="topbar">
+      <span class="topbar-date" id="dateEl">—</span>
+      <div class="live-tag"><div class="live-dot"></div> Live Updates</div>
+    </div>
+    <div id="heroGrid">
+      <div class="load-state"><div class="spinner"></div><div class="load-txt">Fetching Latest News</div></div>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="body-grid">
+      <main>
+        <div class="sec"><div class="sec-bar"></div><div class="sec-name">Latest News</div><div class="sec-rule"></div></div>
+        <div id="cardGrid" class="card-grid"></div>
+        <div class="sec" style="margin-top:10px;"><div class="sec-bar"></div><div class="sec-name">More Stories</div><div class="sec-rule"></div></div>
+        <div id="aList" class="alist"></div>
+      </main>
+      <aside>
+        <div class="widget">
+          <div class="ad-slot ad-rectangle"><span style="font-size:20px">📢</span><span>300×250 Ad</span></div>
+        </div>
+        <div class="widget">
+          <div class="sec"><div class="sec-bar"></div><div class="sec-name" style="font-size:18px">Trending</div><div class="sec-rule"></div></div>
+          <div id="trendList"><div class="load-state" style="min-height:130px"><div class="spinner"></div></div></div>
+        </div>
+        <div class="widget">
+          <div class="sec"><div class="sec-bar"></div><div class="sec-name" style="font-size:18px">Sources</div><div class="sec-rule"></div></div>
+          <div class="chips">
+            <span class="chip" onclick="srcF('Daily Nation')">Daily Nation</span>
+            <span class="chip" onclick="srcF('Standard')">The Standard</span>
+            <span class="chip" onclick="srcF('Tuko')">Tuko Kenya</span>
+            <span class="chip" onclick="srcF('BBC')">BBC Africa</span>
+            <span class="chip" onclick="srcF('Reuters')">Reuters</span>
+            <span class="chip" onclick="srcF('Al Jazeera')">Al Jazeera</span>
+            <span class="chip" onclick="srcF('East African')">East African</span>
+          </div>
+        </div>
+        <div class="widget">
+          <div class="sec"><div class="sec-bar"></div><div class="sec-name" style="font-size:18px">Follow Us</div><div class="sec-rule"></div></div>
+          <a href="#" class="soc-btn soc-fb">📘 Follow on Facebook</a>
+          <a href="#" class="soc-btn soc-tw">𝕏 Follow on Twitter / X</a>
+        </div>
+        <div class="widget">
+          <div class="update-box"><span style="font-size:18px">🔄</span>
+            <div class="update-box-text"><strong id="lastUpd">—</strong>Auto-refreshes every 5 min</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ ARTICLE PAGE ════════ -->
+<div id="articlePage" class="page">
+  <div class="article-page">
+    <button class="article-back" onclick="showHome()">← Back to Home</button>
+    <div class="article-layout">
+      <main>
+        <div class="article-category" id="artCategory">KENYA · NEWS</div>
+        <h1 class="article-headline" id="artHeadline">Loading...</h1>
+        <div class="article-meta-bar">
+          <span class="article-byline">By <span>Hot News Kenya</span> Editorial Team</span>
+          <span class="article-date" id="artDate">—</span>
+          <span class="article-source-tag" id="artSourceTag">—</span>
+        </div>
+        <div id="artImgWrap"></div>
+        <div id="aiLoading" class="ai-loading">
+          <div class="ai-spinner"></div>
+          <div class="ai-loading-title">Loading Article</div>
+          <div class="ai-loading-sub">Hot News Kenya</div>
+          <div class="ai-steps">
+            <div class="ai-step active" id="step1"><span class="ai-step-icon">📡</span> Loading story...</div>
+            <div class="ai-step" id="step2"><span class="ai-step-icon">📝</span> Preparing content...</div>
+            <div class="ai-step" id="step3"><span class="ai-step-icon">✅</span> Ready to read...</div>
+          </div>
+        </div>
+        <div id="artBody" class="article-body" style="display:none;"></div>
+        <div id="artAttribution" class="article-attribution" style="display:none;"></div>
+        <div class="article-share">
+          <span class="share-label">Share:</span>
+          <button class="share-btn share-fb" onclick="shareFB()">📘 Facebook</button>
+          <button class="share-btn share-x" onclick="shareX()">𝕏 Twitter/X</button>
+          <button class="share-btn share-poster" id="artPosterBtn" style="animation:posterPulse 2s ease-in-out 3;">🗞 Create Poster</button>
+          <button class="share-btn" style="background:#111;color:#bbb;border:1px solid #222;" onclick="copyLink()">🔗 Copy Link</button>
+        </div>
+        <div class="sec"><div class="sec-bar"></div><div class="sec-name">Related Stories</div><div class="sec-rule"></div></div>
+        <div id="relatedGrid" class="related-grid"></div>
+      </main>
+      <aside>
+        <div class="widget">
+          <div class="ad-slot ad-rectangle"><span style="font-size:20px">📢</span><span>300×250 Ad</span></div>
+        </div>
+        <div class="widget">
+          <div class="sec"><div class="sec-bar"></div><div class="sec-name" style="font-size:18px">Trending</div><div class="sec-rule"></div></div>
+          <div id="trendList2"></div>
+        </div>
+        <div class="widget">
+          <a href="#" class="soc-btn soc-fb">📘 Follow on Facebook</a>
+          <a href="#" class="soc-btn soc-tw">𝕏 Follow on Twitter / X</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ ADMIN LOGIN ════════ -->
+<div id="adminLogin" class="page">
+  <div class="admin-login">
+    <div class="login-box">
+      <div class="login-logo"><em>HOT</em> NEWS</div>
+      <div class="login-sub">Admin Panel</div>
+      <div class="login-title">Sign In to Continue</div>
+      <input class="login-input" type="text" id="loginUser" placeholder="Username" onkeyup="if(event.key==='Enter')doLogin()">
+      <input class="login-input" type="password" id="loginPass" placeholder="Password" onkeyup="if(event.key==='Enter')doLogin()">
+      <button class="login-btn" onclick="doLogin()">Sign In →</button>
+      <div class="login-error" id="loginErr">Incorrect username or password</div>
+      <div style="margin-top:20px;font-size:11px;color:#222;font-weight:600;">Default: admin / hotnews2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ ADMIN PANEL ════════ -->
+<div id="adminPanel" class="page">
+  <div class="admin-shell show">
+
+    <!-- Sidebar -->
+    <div class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="admin-brand-name"><em>HOT</em> NEWS</div>
+        <div class="admin-brand-tag">Admin Dashboard</div>
+      </div>
+      <div class="admin-nav">
+        <div class="admin-nav-item active" onclick="switchPanel('dashboard',this)"><span class="admin-nav-icon">📊</span> Dashboard</div>
+        <div class="admin-nav-item" onclick="switchPanel('newArticle',this)"><span class="admin-nav-icon">✏️</span> Write Article</div>
+        <div class="admin-nav-item" onclick="switchPanel('importRSS',this)"><span class="admin-nav-icon">📡</span> Import from RSS</div>
+        <div class="admin-nav-item" onclick="switchPanel('allArticles',this)"><span class="admin-nav-icon">📰</span> All Articles</div>
+        <div class="admin-nav-item" onclick="switchPanel('scheduler',this)"><span class="admin-nav-icon">📅</span> Scheduler</div>
+      </div>
+      <div class="admin-logout">
+        <div class="admin-logout-btn" onclick="doLogout()"><span>🚪</span> Log Out</div>
+      </div>
+    </div>
+
+    <!-- Main area -->
+    <div class="admin-main">
+
+      <!-- ── DASHBOARD ── -->
+      <div id="panel-dashboard" class="admin-panel active">
+        <div class="admin-topbar">
+          <div class="admin-page-title">Dashboard</div>
+          <button class="ea-btn ea-ai" onclick="switchPanel('importRSS',document.querySelector('.admin-nav-item:nth-child(3)'))">📡 Import & Publish Stories</button>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-num" id="statPublished"><em>0</em></div><div class="stat-label">Published</div></div>
+          <div class="stat-card"><div class="stat-num" id="statDrafts"><em>0</em></div><div class="stat-label">Drafts</div></div>
+          <div class="stat-card"><div class="stat-num" id="statScheduled"><em>0</em></div><div class="stat-label">Scheduled</div></div>
+          <div class="stat-card"><div class="stat-num" id="statRSS"><em>0</em></div><div class="stat-label">RSS Stories</div></div>
+        </div>
+        <div class="sec"><div class="sec-bar"></div><div class="sec-name" style="font-size:18px">Recent Articles</div><div class="sec-rule"></div></div>
+        <table class="art-table" id="dashRecentTable">
+          <thead><tr><th>Image</th><th>Title</th><th>Source</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="dashRecentBody"></tbody>
+        </table>
+      </div>
+
+      <!-- ── WRITE ARTICLE ── -->
+      <div id="panel-newArticle" class="admin-panel">
+        <div class="admin-topbar">
+          <div class="admin-page-title" id="editorTitle">Write New Article</div>
+        </div>
+        <div class="editor-wrap">
+          <input type="hidden" id="editId" value="">
+          <div class="editor-row">
+            <div class="editor-field">
+              <label class="editor-label">Headline *</label>
+              <input class="editor-input" id="eTitle" type="text" placeholder="Enter bold, attention-grabbing headline...">
+            </div>
+            <div class="editor-field">
+              <label class="editor-label">Category</label>
+              <select class="editor-select editor-input" id="eCat">
+                <option value="Kenya">Kenya</option>
+                <option value="Politics">Politics</option>
+                <option value="Business">Business</option>
+                <option value="Africa">Africa</option>
+                <option value="World">World</option>
+                <option value="Sports">Sports</option>
+                <option value="Technology">Technology</option>
+                <option value="Health">Health</option>
+              </select>
+            </div>
+          </div>
+          <div class="editor-row">
+            <div class="editor-field">
+              <label class="editor-label">Image URL (optional)</label>
+              <input class="editor-input" id="eImg" type="text" placeholder="https://example.com/image.jpg" oninput="previewEditorImg(this.value)">
+              <div style="margin-top:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                <label style="display:inline-flex;align-items:center;gap:7px;background:#111;border:1px solid #2a2a2a;color:#bbb;font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;border-radius:3px;cursor:pointer;">
+                  📁 Upload Photo
+                  <input type="file" id="eImgUpload" accept="image/*" style="display:none;" onchange="handleImgUpload(this)">
+                </label>
+                <button type="button" class="act-btn act-edit" onclick="autoFetchImage()" style="padding:8px 14px;">🔍 Auto-Find Photo</button>
+                <span id="imgPreviewWrap" style="display:none;">
+                  <img id="imgPreview" style="height:48px;width:80px;object-fit:cover;border-radius:3px;border:1px solid #2a2a2a;" src="" alt="preview">
+                </span>
+              </div>
+            </div>
+            <div class="editor-field">
+              <label class="editor-label">Source Attribution</label>
+              <input class="editor-input" id="eSrc" type="text" placeholder="e.g. Daily Nation, Reuters...">
+            </div>
+          </div>
+          <div class="editor-field">
+            <label class="editor-label">Summary (shown on homepage cards)</label>
+            <input class="editor-input" id="eSum" type="text" placeholder="One sentence summary of the story...">
+          </div>
+          <div class="editor-field">
+            <label class="editor-label">Full Article Body *</label>
+            <textarea class="editor-textarea" id="eBody" placeholder="Write or paste your full article here...&#10;&#10;Each paragraph on a new line.&#10;&#10;Write in bold, dramatic breaking-news style.&#10;400-600 words recommended."></textarea>
+          </div>
+          <div class="schedule-row" id="scheduleRow">
+            <label class="editor-label">📅 Schedule Publish Date & Time</label>
+            <input class="editor-input" id="eSchedule" type="datetime-local">
+          </div>
+          <div class="editor-actions">
+            <button class="ea-btn ea-publish" onclick="saveArticle('published')">✅ Publish Now</button>
+            <button class="ea-btn ea-draft" onclick="saveArticle('draft')">💾 Save as Draft</button>
+            <button class="ea-btn ea-schedule" onclick="toggleSchedule()">📅 Schedule</button>
+            <button class="ea-btn ea-cancel" onclick="switchPanel('allArticles',document.querySelector('.admin-nav-item:nth-child(4)'))">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── IMPORT FROM RSS ── -->
+      <div id="panel-importRSS" class="admin-panel">
+        <div class="admin-topbar">
+          <div class="admin-page-title">Import from RSS</div>
+          <div style="display:flex;gap:10px;">
+            <button class="ea-btn ea-draft" onclick="loadRSSImport()">🔄 Refresh Feed</button>
+            <button class="ea-btn ea-publish" id="importSelBtn" onclick="importSelected()" style="display:none;">✅ Import Selected</button>
+          </div>
+        </div>
+        <p style="font-size:13px;font-weight:500;color:#bbb;margin-bottom:20px;line-height:1.6;">Select stories from the latest RSS feed. Click <strong style="color:#fff">Import Selected</strong> to bring them into your article editor where you can edit and publish them.</p>
+        <div id="rssImportList">
+          <div class="load-state" style="min-height:200px;"><div class="spinner"></div><div class="load-txt">Loading RSS Feeds</div></div>
+        </div>
+      </div>
+
+      <!-- ── ALL ARTICLES ── -->
+      <div id="panel-allArticles" class="admin-panel">
+        <div class="admin-topbar">
+          <div class="admin-page-title">All Articles</div>
+          <button class="ea-btn ea-publish" onclick="switchPanel('newArticle',document.querySelector('.admin-nav-item:nth-child(2)'));newArticle()">✏️ Write New Article</button>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+          <button class="act-btn act-edit" onclick="filterArticles('all')" id="fAll" style="padding:8px 16px;">All</button>
+          <button class="act-btn act-publish" onclick="filterArticles('published')" id="fPub">Published</button>
+          <button class="act-btn act-unpublish" onclick="filterArticles('draft')" id="fDraft">Drafts</button>
+          <button class="act-btn" style="background:rgba(99,102,241,0.1);color:#818cf8;border:1px solid rgba(99,102,241,0.3);" onclick="filterArticles('scheduled')">Scheduled</button>
+        </div>
+        <table class="art-table" id="allArticlesTable">
+          <thead><tr><th>Image</th><th>Title</th><th>Source</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody id="allArticlesBody"></tbody>
+        </table>
+      </div>
+
+      <!-- ── SCHEDULER ── -->
+      <div id="panel-scheduler" class="admin-panel">
+        <div class="admin-topbar">
+          <div class="admin-page-title">Scheduler</div>
+        </div>
+        <p style="font-size:13px;font-weight:500;color:#bbb;margin-bottom:24px;">Articles scheduled to publish automatically.</p>
+        <div id="schedList" class="sched-list"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="mainFooter" style="display:none;">
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 Hot News Kenya. All rights reserved. Nairobi, Kenya.</div>
+    <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a onclick="goAdmin()">Admin</a></div>
+  </div>
+</footer>
+
+<!-- POSTER MODAL -->
+<div class="modal-overlay" id="posterModal" onclick="if(event.target===this)closePoster()">
+  <div class="modal-box">
+    <div class="modal-topbar">
+      <span class="modal-topbar-title">🗞 Breaking News Poster</span>
+      <button class="modal-close" onclick="closePoster()">✕</button>
+    </div>
+    <div id="posterCanvas">
+      <div class="poster-bg"><img id="posterBgImg" src="" alt=""></div>
+      <div class="poster-red-top"></div>
+      <div class="poster-logo"><em>HOT</em> NEWS<div class="poster-logo-tag">hotnewskenya.com</div></div>
+      <div class="poster-date-el" id="posterDateEl">—</div>
+      <div class="poster-headline"><h2 id="posterTitle">Headline</h2><div class="poster-headline-rule"></div></div>
+      <div class="poster-breaking-bar">
+        <div class="poster-breaking-label">BREAKING NEWS</div>
+        <div class="poster-breaking-source" id="posterSrc">Hot News Kenya</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-dl" onclick="downloadPoster()">⬇ Download</button>
+      <button class="btn btn-fb2" onclick="shareFBposter()">📘 Facebook</button>
+      <button class="btn btn-x2" onclick="shareXposter()">𝕏 Twitter/X</button>
+    </div>
+    <div style="padding:10px 20px 14px;background:#080808;border-top:1px solid #111;">
+      <p style="font-size:11px;color:#2a2a2a;font-weight:600;">💡 Download first, then upload when posting to Facebook/X for maximum impact.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  STORAGE — articles saved in localStorage
+// ══════════════════════════════════════════
+function getArticles(){ try{return JSON.parse(localStorage.getItem('hn_articles')||'[]');}catch{return[];} }
+function saveArticles(a){ localStorage.setItem('hn_articles',JSON.stringify(a)); }
+function genId(){ return 'a_'+Date.now()+'_'+Math.random().toString(36).slice(2,7); }
+
+// Admin credentials (change these!)
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "hotnews2026";
+
+// ══ RSS FEEDS ══
+const FEEDS=[
+  {n:"Daily Nation",u:"https://api.allorigins.win/get?url="+encodeURIComponent("https://nation.africa/kenya/rss.xml")},
+  {n:"Tuko Kenya",u:"https://api.allorigins.win/get?url="+encodeURIComponent("https://www.tuko.co.ke/rss")},
+  {n:"BBC Africa",u:"https://api.allorigins.win/get?url="+encodeURIComponent("http://feeds.bbci.co.uk/news/world/africa/rss.xml")},
+  {n:"Reuters Africa",u:"https://api.allorigins.win/get?url="+encodeURIComponent("https://feeds.reuters.com/reuters/AfricaNews")},
+  {n:"Al Jazeera",u:"https://api.allorigins.win/get?url="+encodeURIComponent("https://www.aljazeera.com/xml/rss/all.xml")},
+  {n:"The East African",u:"https://api.allorigins.win/get?url="+encodeURIComponent("https://www.theeastafrican.co.ke/tea/rss")},
+];
+const KW=["kenya","nairobi","mombasa","kisumu","ruto","raila","east africa","safaricom","kenyan","kenyatta","jubilee","odm"];
+const GLOB=["BBC","Reuters","Al Jazeera"];
+let all=[], curArt=null, selectedRSS=[];
+let isAdmin = !!sessionStorage.getItem('hn_admin');
+
+// ══ INIT ══
+document.getElementById('dateEl').textContent = new Date().toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+function init(){
+  if(isAdmin){ goAdmin(); return; }
+  showMain();
+  showHome();
+  loadFeed();
+}
+
+function showMain(){
+  document.getElementById('mainTicker').style.display='flex';
+  document.getElementById('mainHeader').style.display='block';
+  document.getElementById('mainFooter').style.display='block';
+}
+
+// ══ PARSE RSS ══
+function parse(xml,src){
+  const doc=new DOMParser().parseFromString(xml,"text/xml");
+  return[...doc.querySelectorAll("item")].slice(0,15).map(it=>{
+    const title=it.querySelector("title")?.textContent?.trim()||"";
+    const link=it.querySelector("link")?.textContent?.trim()||"";
+    const desc=it.querySelector("description")?.textContent?.trim()||"";
+    const pub=it.querySelector("pubDate")?.textContent?.trim()||"";
+    let img=it.querySelector("content")?.getAttribute("url")||it.querySelector("thumbnail")?.getAttribute("url")||it.querySelector("enclosure")?.getAttribute("url")||null;
+    if(!img&&desc){const m=desc.match(/<img[^>]+src=["']([^"']+)["']/i);if(m)img=m[1];}
+    const clean=desc.replace(/<[^>]+>/g,"").replace(/&[a-z#0-9]+;/gi," ").trim();
+    const sum=clean.length>200?clean.slice(0,197)+"...":clean;
+    if(GLOB.some(g=>src.includes(g))){const t=(title+" "+sum).toLowerCase();if(!KW.some(k=>t.includes(k)))return null;}
+    if(!title||!link)return null;
+    return{id:genId(),title,link,sum,body:'',img,src,date:new Date(pub),status:'rss',custom:false};
+  }).filter(Boolean);
+}
+
+async function fetchAll(){
+  const res=await Promise.allSettled(FEEDS.map(async f=>{const r=await fetch(f.u);const d=await r.json();return parse(d.contents,f.n);}));
+  let arts=[];res.forEach(r=>{if(r.status==="fulfilled")arts=arts.concat(r.value);});
+  arts.sort((a,b)=>b.date-a.date);
+  const seen=new Set();
+  return arts.filter(a=>{const k=a.title.toLowerCase().slice(0,45);if(seen.has(k))return false;seen.add(k);return true;});
+}
+
+async function loadFeed(){
+  try{
+    all=await fetchAll();
+    // Merge with custom published articles (custom articles take priority at top)
+    const custom = getArticles().filter(a=>a.status==='published'||isScheduledNow(a));
+    const merged = [...custom, ...all];
+    renderAll(merged);
+    checkScheduled();
+  }catch(e){
+    document.getElementById("heroGrid").innerHTML=`<div class="load-state"><div class="load-txt">Connection error. Please refresh.</div></div>`;
+  }
+}
+
+function isScheduledNow(a){
+  if(a.status!=='scheduled'||!a.scheduledAt) return false;
+  return new Date(a.scheduledAt) <= new Date();
+}
+
+function checkScheduled(){
+  const arts = getArticles();
+  let changed = false;
+  arts.forEach(a=>{if(isScheduledNow(a)){a.status='published';changed=true;}});
+  if(changed) saveArticles(arts);
+}
+
+// ══ HELPERS ══
+function ago(d){
+  if(!d||isNaN(new Date(d)))return"Recently";
+  const m=Math.floor((Date.now()-new Date(d))/60000);
+  if(m<1)return"Just now";if(m<60)return m+"m ago";
+  const h=Math.floor(m/60);if(h<24)return h+"h ago";
+  return Math.floor(h/24)+"d ago";
+}
+// ══════════════════════════════════════════
+//  IMAGE SYSTEM
+//  1. RSS image (if available)
+//  2. Pexels real photos (free API key from pexels.com/api)
+//  3. Pollinations AI generated image (100% free, no key needed)
+//  4. Branded HOT NEWS canvas fallback
+// ══════════════════════════════════════════
+
+// Get a FREE Pexels key at https://www.pexels.com/api/ (takes 1 min)
+const PEXELS_KEY = "YOUR_PEXELS_API_KEY_HERE";
+
+const imgCache = {};
+
+async function getArticleImage(article) {
+  const cacheKey = (article.id || article.title || '').slice(0,50);
+  if (imgCache[cacheKey]) return imgCache[cacheKey];
+
+  // 1. RSS image already attached
+  if (article.img && article.img.startsWith('http')) {
+    imgCache[cacheKey] = article.img;
+    return article.img;
+  }
+
+  // 2. Pexels real photo
+  const kw = extractKeywords(article.title);
+  if (PEXELS_KEY !== "YOUR_PEXELS_API_KEY_HERE") {
+    try {
+      const r = await fetch(
+        `https://api.pexels.com/v1/search?query=${encodeURIComponent(kw)}&per_page=1&orientation=landscape`,
+        { headers: { Authorization: PEXELS_KEY } }
+      );
+      const d = await r.json();
+      if (d.photos && d.photos.length) {
+        imgCache[cacheKey] = d.photos[0].src.large;
+        return imgCache[cacheKey];
+      }
+    } catch(e) {}
+  }
+
+  // 3. Pollinations AI — free, no key, generates image from headline
+  try {
+    const prompt = `Breaking news Kenya photo: ${kw}, photojournalism style, dramatic, high quality`;
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?width=800&height=450&nologo=true&seed=${Math.abs(hashStr(article.title||''))}`;
+    imgCache[cacheKey] = url;
+    return url;
+  } catch(e) {}
+
+  // 4. Branded canvas fallback
+  return generateBrandedFallback(article.title||'Hot News Kenya', article.src||'');
+}
+
+function extractKeywords(title) {
+  if (!title) return 'kenya news';
+  const stop = new Set(['the','a','an','is','are','was','were','has','have','had','will','to','of','in','on','at','for','with','by','from','and','or','but','not','this','that','it','its','as','be','been','do','does','did','he','she','they','we','you','i','his','her','their','our']);
+  const words = title.toLowerCase().replace(/[^a-z0-9 ]/g,'').split(' ').filter(w => w.length > 2 && !stop.has(w));
+  const priority = words.filter(w => ['kenya','nairobi','ruto','raila','police','court','parliament','hospital','school','government','election','protest','economy','flood','fire','accident'].includes(w));
+  return [...priority, ...words.filter(w=>!priority.includes(w))].slice(0,3).join(' ') || 'kenya news';
+}
+
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) { h = (Math.imul(31, h) + s.charCodeAt(i)) | 0; }
+  return Math.abs(h);
+}
+
+function generateBrandedFallback(title, src) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 800; canvas.height = 450;
+  const ctx = canvas.getContext('2d');
+  const grad = ctx.createLinearGradient(0,0,800,450);
+  grad.addColorStop(0,'#0a0a0a'); grad.addColorStop(1,'#1a0505');
+  ctx.fillStyle = grad; ctx.fillRect(0,0,800,450);
+  ctx.fillStyle = '#e8192c'; ctx.fillRect(0,0,800,8);
+  ctx.fillStyle = '#e8192c'; ctx.fillRect(0,372,800,78);
+  ctx.fillStyle = '#ffffff'; ctx.font = 'bold 54px serif'; ctx.fillText('HOT', 40, 82);
+  ctx.fillStyle = '#e8192c'; ctx.fillText(' NEWS', 126, 82);
+  ctx.fillStyle = '#777'; ctx.font = '13px sans-serif'; ctx.fillText('BREAKING NEWS EVERY MINUTE · HOTNEWSKENYA.COM', 40, 106);
+  ctx.fillStyle = '#ffffff'; ctx.font = 'bold 26px serif';
+  const words = (title||'').split(' ');
+  let line = '', y = 190, lines2 = [];
+  ctx.font = 'bold 26px serif';
+  for (const w of words) {
+    const test = line + w + ' ';
+    if (ctx.measureText(test).width > 720 && line) { lines2.push(line.trim()); line = w + ' '; }
+    else line = test;
+  }
+  lines2.push(line.trim());
+  lines2.slice(0,4).forEach((l,i) => { ctx.fillStyle='#fff'; ctx.fillText(l, 40, y + i*44); });
+  ctx.fillStyle='#fff'; ctx.font='bold 22px sans-serif'; ctx.fillText('BREAKING NEWS', 40, 420);
+  ctx.fillStyle='rgba(255,255,255,0.75)'; ctx.font='14px sans-serif';
+  ctx.fillText((src||'Hot News Kenya')+' · hotnewskenya.com', 260, 420);
+  return canvas.toDataURL('image/jpeg', 0.9);
+}
+
+// Legacy sync placeholder for admin thumbnails
+function ph(s){ return ''; }
+function esc(a){return JSON.stringify(a).replace(/"/g,"&quot;").replace(/'/g,"&#39;");}
+function showToast(msg,err=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(err?' error':'');
+  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ══ RENDER HOME ══
+async function renderAll(arts){
+  renderTrend(arts);renderTicker(arts);
+  await Promise.all([renderHero(arts), renderCards(arts.slice(1)), renderList(arts.slice(1))]);
+  document.getElementById("lastUpd").textContent="Updated: "+new Date().toLocaleTimeString("en-KE",{hour:"2-digit",minute:"2-digit"});
+}
+
+async function renderHero(arts){
+  if(!arts.length){document.getElementById("heroGrid").innerHTML=`<div class="load-state"><div class="load-txt">No articles yet. Add some in Admin panel.</div></div>`;return;}
+  const a=arts[0],s1=arts[1]||a,s2=arts[2]||a;
+  // Fetch images in parallel
+  const [img0,img1,img2] = await Promise.all([getArticleImage(a),getArticleImage(s1),getArticleImage(s2)]);
+  // Store back so article page reuses them
+  a.img=img0; s1.img=img1; s2.img=img2;
+  document.getElementById("heroGrid").innerHTML=`
+  <div class="hero-grid fade-up">
+    <div class="hero-main">
+      <img src="${img0}" onerror="this.src=''" alt="">
+      <div class="hero-main-shade"></div>
+      <div class="hero-main-body">
+        <div class="badge">${a.custom?'✍️ Hot News Exclusive':'🔴 Top Story'}</div>
+        <h1 class="hero-main-title" onclick="openArticle(${esc(a)})">${a.title}</h1>
+        ${a.sum?`<p class="hero-main-sum">${a.sum}</p>`:''}
+        <div class="hero-main-meta"><span class="src-pill">${a.src||'Hot News Kenya'}</span><span class="time-txt">🕐 ${ago(a.date)}</span></div>
+        <div class="hero-btns">
+          <button class="btn-read-full" onclick="openArticle(${esc(a)})">📖 Read Full Story</button>
+          <button class="poster-btn-hero" onclick="openPoster(${esc(a)})">🗞 Create Poster</button>
+        </div>
+      </div>
+    </div>
+    <div class="hero-side" onclick="openArticle(${esc(s1)})">
+      <img src="${img1}" class="side-thumb" onerror="this.style.display='none'" alt="">
+      <div><div class="side-src">${s1.src||'Hot News'}</div><div class="side-rule"></div>
+      <div class="side-title">${s1.title}</div><div class="side-time">🕐 ${ago(s1.date)}</div></div>
+    </div>
+    <div class="hero-side" onclick="openArticle(${esc(s2)})">
+      <img src="${img2}" class="side-thumb" onerror="this.style.display='none'" alt="">
+      <div><div class="side-src">${s2.src||'Hot News'}</div><div class="side-rule"></div>
+      <div class="side-title">${s2.title}</div><div class="side-time">🕐 ${ago(s2.date)}</div></div>
+    </div>
+  </div>`;
+}
+
+async function renderCards(arts){
+  const slice = arts.slice(0,6);
+  const imgs = await Promise.all(slice.map(a=>getArticleImage(a)));
+  slice.forEach((a,i)=>{ a.img=imgs[i]; });
+  document.getElementById("cardGrid").innerHTML=slice.map((a,i)=>`
+  <div class="card fade-up" style="animation-delay:${i*0.07}s" onclick="openArticle(${esc(a)})">
+    <div class="card-img">
+      <img src="${imgs[i]}" onerror="this.style.display='none'" alt="">
+      <div class="card-src-tag">${a.src||'Hot News'}</div>
+      ${a.custom?'<div class="card-custom-badge">Exclusive</div>':''}
+    </div>
+    <div class="card-body">
+      <div class="card-cat">${a.category||'Kenya'} · News</div>
+      <div class="card-title">${a.title}</div>
+      ${a.sum?`<div class="card-sum">${a.sum}</div>`:''}
+      <div class="card-foot"><span class="card-time">🕐 ${ago(a.date)}</span><span class="card-read">Read Story →</span></div>
+    </div>
+  </div>`).join('');
+}
+
+async function renderList(arts){
+  const slice = arts.slice(6,20);
+  const imgs = await Promise.all(slice.map(a=>getArticleImage(a)));
+  slice.forEach((a,i)=>{ a.img=imgs[i]; });
+  document.getElementById("aList").innerHTML=slice.map((a,i)=>`
+  <div class="aitem fade-up" style="animation-delay:${i*0.04}s" onclick="openArticle(${esc(a)})">
+    <div class="aitem-thumb"><img src="${imgs[i]}" onerror="this.style.display='none'" alt=""></div>
+    <div>
+      <div class="aitem-src">${a.src||'Hot News Kenya'}</div>
+      <div class="aitem-title">${a.title}</div>
+      ${a.sum?`<div class="aitem-sum">${a.sum}</div>`:''}
+      <div class="aitem-time">🕐 ${ago(a.date)}</div>
+    </div>
+  </div>`).join('');
+}
+
+function renderTrend(arts){
+  document.getElementById("trendList").innerHTML=arts.slice(0,5).map((a,i)=>`
+  <div class="trend-item" onclick="openArticle(${esc(a)})">
+    <div class="trend-num">0${i+1}</div>
+    <div><div class="trend-title">${a.title}</div><div class="trend-meta">${a.src||'Hot News'} · ${ago(a.date)}</div></div>
+  </div>`).join('');
+}
+
+function renderTicker(arts){
+  const h=arts.slice(0,12).map(a=>`<span>${a.title}</span>`).join('');
+  document.getElementById("tickerMove").innerHTML=h+h;
+}
+
+// ══ OPEN ARTICLE ══
+async function openArticle(article){
+  curArt = typeof article === 'string' ? JSON.parse(article) : article;
+  showMain();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('articlePage').classList.add('active');
+  window.scrollTo(0,0);
+
+  document.getElementById('artHeadline').textContent = curArt.title;
+  document.getElementById('artDate').textContent = curArt.date ? new Date(curArt.date).toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'}) : 'Today';
+  document.getElementById('artSourceTag').textContent = curArt.src ? 'Via '+curArt.src : 'Hot News Kenya';
+  document.getElementById('artCategory').textContent = (curArt.category||'KENYA') + ' · NEWS';
+  document.getElementById('artPosterBtn').onclick = () => openPoster(curArt);
+
+  const imgWrap=document.getElementById('artImgWrap');
+  imgWrap.innerHTML = `<div class="article-hero-img-placeholder" id="imgLoadingPH" style="font-size:12px;color:#555;">Loading image...</div>`;
+  getArticleImage(curArt).then(imgUrl => {
+    curArt.img = imgUrl;
+    if(imgUrl) imgWrap.innerHTML = `<img src="${imgUrl}" class="article-hero-img" onerror="this.parentElement.innerHTML='<div class=article-hero-img-placeholder>HOT NEWS KENYA</div>'" alt="">`;
+    else imgWrap.innerHTML = '<div class="article-hero-img-placeholder">HOT NEWS KENYA</div>';
+    // Pre-fill poster so it is ready the moment user clicks Create Poster
+    document.getElementById("posterBgImg").src = imgUrl||"";
+    showAutoPoster({...curArt, img:imgUrl});
+  });
+
+  document.getElementById('aiLoading').style.display='block';
+  document.getElementById('artBody').style.display='none';
+  document.getElementById('artAttribution').style.display='none';
+
+  const s1=document.getElementById('step1'),s2=document.getElementById('step2'),s3=document.getElementById('step3');
+  s1.className='ai-step active';s2.className='ai-step';s3.className='ai-step';
+
+  await new Promise(r=>setTimeout(r,500));
+  s1.className='ai-step done';s1.querySelector('.ai-step-icon').textContent='✅';
+  s2.className='ai-step active';
+  await new Promise(r=>setTimeout(r,400));
+  s2.className='ai-step done';s2.querySelector('.ai-step-icon').textContent='✅';
+  s3.className='ai-step active';
+  await new Promise(r=>setTimeout(r,300));
+  s3.className='ai-step done';s3.querySelector('.ai-step-icon').textContent='✅';
+  await new Promise(r=>setTimeout(r,200));
+
+  document.getElementById('aiLoading').style.display='none';
+  const bodyEl=document.getElementById('artBody');
+
+  if(curArt.body && curArt.body.trim()){
+    // Custom written article — show as-is
+    bodyEl.innerHTML = curArt.body.split('\n\n').filter(p=>p.trim()).map(p=>`<p>${p.trim()}</p>`).join('');
+  } else {
+    // RSS article — show summary with note
+    bodyEl.innerHTML = `<p>${curArt.sum||'No content available.'}</p><p style="color:#555;font-size:14px;background:#080808;border:1px solid #1a1a1a;padding:16px;border-radius:3px;margin-top:20px;">📋 <strong style="color:#888;">Admin note:</strong> This story was imported from RSS. Go to <strong style="color:#e8192c;">Admin → Import from RSS</strong>, select this story, and click <strong style="color:#fff;">Edit & Publish</strong> to add the full article body.</p>`;
+  }
+  bodyEl.style.display='block';
+
+  if(curArt.src && !curArt.custom){
+    const attrEl=document.getElementById('artAttribution');
+    attrEl.innerHTML=`<strong>Source Attribution:</strong> As reported by ${curArt.src}. Hot News Kenya has independently presented this story for our readers.`;
+    attrEl.style.display='block';
+  }
+
+  // Related
+  const custom=getArticles().filter(a=>a.status==='published');
+  const combined=[...custom,...all].filter(a=>a.id!==curArt.id&&a.title!==curArt.title).slice(0,3);
+  document.getElementById('relatedGrid').innerHTML=combined.map(a=>`
+  <div class="card" onclick="openArticle(${esc(a)})">
+    <div class="card-img"><img src="${a.img||ph(a.src)}" onerror="this.src='${ph(a.src||'')}'" alt=""><div class="card-src-tag">${a.src||'Hot News'}</div></div>
+    <div class="card-body"><div class="card-cat">${a.category||'Kenya'} · News</div><div class="card-title">${a.title}</div>
+    <div class="card-foot"><span class="card-time">🕐 ${ago(a.date)}</span><span class="card-read">Read →</span></div></div>
+  </div>`).join('');
+
+  document.getElementById('trendList2').innerHTML=all.slice(0,5).map((a,i)=>`
+  <div class="trend-item" onclick="openArticle(${esc(a)})">
+    <div class="trend-num">0${i+1}</div>
+    <div><div class="trend-title">${a.title}</div><div class="trend-meta">${a.src||'Hot News'} · ${ago(a.date)}</div></div>
+  </div>`).join('');
+}
+
+function showHome(){
+  showMain();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('homePage').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function filterCat(e,kw){
+  if(e)e.preventDefault();
+  document.querySelectorAll("nav a").forEach(a=>a.classList.remove("active"));
+  if(e)e.target.classList.add("active");
+  showHome();
+  const custom=getArticles().filter(a=>a.status==='published');
+  const combined=[...custom,...all];
+  const f=kw?combined.filter(a=>(a.title+" "+a.sum+" "+a.src+" "+(a.category||'')).toLowerCase().includes(kw)):combined;
+  renderAll(f.length?f:combined);
+}
+function srcF(s){
+  const custom=getArticles().filter(a=>a.status==='published');
+  const combined=[...custom,...all];
+  const f=combined.filter(a=>(a.src||'').toLowerCase().includes(s.toLowerCase()));
+  showHome();renderAll(f.length?f:combined);
+}
+function doSearch(){
+  const q=document.getElementById("sInput").value.toLowerCase().trim();
+  const custom=getArticles().filter(a=>a.status==='published');
+  const combined=[...custom,...all];
+  if(!q){showHome();renderAll(combined);return;}
+  const f=combined.filter(a=>(a.title+" "+a.sum+" "+a.src).toLowerCase().includes(q));
+  showHome();renderAll(f.length?f:combined);
+}
+
+// ══ ADMIN LOGIN ══
+function goAdmin(){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('mainTicker').style.display='none';
+  document.getElementById('mainHeader').style.display='none';
+  document.getElementById('mainFooter').style.display='none';
+  if(isAdmin){
+    document.getElementById('adminPanel').classList.add('active');
+    refreshAdminData();
+  } else {
+    document.getElementById('adminLogin').classList.add('active');
+  }
+}
+
+function doLogin(){
+  const u=document.getElementById('loginUser').value.trim();
+  const p=document.getElementById('loginPass').value.trim();
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    isAdmin=true;
+    sessionStorage.setItem('hn_admin','1');
+    document.getElementById('adminLogin').classList.remove('active');
+    document.getElementById('adminPanel').classList.add('active');
+    refreshAdminData();
+    loadRSSImport();
+  } else {
+    document.getElementById('loginErr').style.display='block';
+    setTimeout(()=>document.getElementById('loginErr').style.display='none',3000);
+  }
+}
+
+function doLogout(){
+  isAdmin=false;
+  sessionStorage.removeItem('hn_admin');
+  showMain();
+  showHome();
+}
+
+// ══ ADMIN PANELS ══
+function switchPanel(name, el){
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(i=>i.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+  refreshAdminData();
+  if(name==='importRSS') loadRSSImport();
+  if(name==='scheduler') renderScheduler();
+}
+
+function refreshAdminData(){
+  const arts=getArticles();
+  const pub=arts.filter(a=>a.status==='published').length;
+  const dra=arts.filter(a=>a.status==='draft').length;
+  const sch=arts.filter(a=>a.status==='scheduled').length;
+  const rssCount=all.length;
+  document.getElementById('statPublished').innerHTML=`<em>${pub}</em>`;
+  document.getElementById('statDrafts').innerHTML=`<em>${dra}</em>`;
+  document.getElementById('statScheduled').innerHTML=`<em>${sch}</em>`;
+  document.getElementById('statRSS').innerHTML=`<em>${rssCount}</em>`;
+  renderArticleTable('dashRecentBody', arts.slice(0,10));
+  renderArticleTable('allArticlesBody', arts);
+}
+
+function renderArticleTable(tbodyId, arts){
+  const tbody=document.getElementById(tbodyId);
+  if(!arts.length){tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;color:#333;padding:32px;font-size:13px;font-weight:600;">No articles yet. Write your first one!</td></tr>`;return;}
+  tbody.innerHTML=arts.map(a=>`
+  <tr>
+    <td>${a.img?`<img src="${a.img}" class="art-thumb" onerror="this.style.display='none'">`:`<div class="art-thumb-placeholder">IMG</div>`}</td>
+    <td><div class="art-title-cell">${a.title}</div><div class="art-src-cell">${a.src||'Hot News Kenya'}</div></td>
+    <td><div class="art-src-cell">${a.src||'—'}</div></td>
+    <td><span class="status-badge status-${a.status}">${a.status}</span></td>
+    <td class="art-date-cell">${a.date?new Date(a.date).toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}):'—'}</td>
+    <td>
+      <div class="art-actions">
+        <button class="act-btn act-edit" onclick="editArticle('${a.id}')">✏️ Edit</button>
+        ${a.status!=='published'?`<button class="act-btn act-publish" onclick="publishArticle('${a.id}')">✅ Publish</button>`:`<button class="act-btn act-unpublish" onclick="unpublishArticle('${a.id}')">⏸ Unpublish</button>`}
+        <button class="act-btn act-poster" onclick="openPosterById('${a.id}')">🗞 Poster</button>
+        <button class="act-btn act-delete" onclick="deleteArticle('${a.id}')">🗑 Delete</button>
+      </div>
+    </td>
+  </tr>`).join('');
+}
+
+// ══ ARTICLE CRUD ══
+function newArticle(){
+  document.getElementById('editId').value='';
+  document.getElementById('editorTitle').textContent='Write New Article';
+  document.getElementById('eTitle').value='';
+  document.getElementById('eCat').value='Kenya';
+  document.getElementById('eImg').value='';
+  document.getElementById('eSrc').value='';
+  document.getElementById('eSum').value='';
+  document.getElementById('eBody').value='';
+  document.getElementById('eSchedule').value='';
+  document.getElementById('scheduleRow').classList.remove('show');
+}
+
+function editArticle(id){
+  const arts=getArticles();
+  const a=arts.find(x=>x.id===id);
+  if(!a)return;
+  document.getElementById('editId').value=a.id;
+  document.getElementById('editorTitle').textContent='Edit Article';
+  document.getElementById('eTitle').value=a.title||'';
+  document.getElementById('eCat').value=a.category||'Kenya';
+  document.getElementById('eImg').value=a.img||'';
+  document.getElementById('eSrc').value=a.src||'';
+  document.getElementById('eSum').value=a.sum||'';
+  document.getElementById('eBody').value=a.body||'';
+  if(a.scheduledAt) document.getElementById('eSchedule').value=a.scheduledAt.slice(0,16);
+  switchPanel('newArticle', document.querySelector('.admin-nav-item:nth-child(2)'));
+}
+
+function saveArticle(status){
+  const title=document.getElementById('eTitle').value.trim();
+  const body=document.getElementById('eBody').value.trim();
+  if(!title){showToast('Please enter a headline!',true);return;}
+  if(!body&&status==='published'){showToast('Please write the article body!',true);return;}
+
+  const schedVal=document.getElementById('eSchedule').value;
+  if(status==='scheduled'&&!schedVal){showToast('Please set a schedule date/time!',true);return;}
+
+  const arts=getArticles();
+  const editId=document.getElementById('editId').value;
+  const existing=editId?arts.find(a=>a.id===editId):null;
+
+  const article={
+    id: existing?existing.id:genId(),
+    title,
+    body,
+    sum: document.getElementById('eSum').value.trim()||body.slice(0,150)+'...',
+    category: document.getElementById('eCat').value,
+    img: document.getElementById('eImg').value.trim()||'',
+    src: document.getElementById('eSrc').value.trim()||'',
+    status: schedVal&&status==='scheduled'?'scheduled':status,
+    scheduledAt: schedVal||null,
+    date: existing?existing.date:new Date().toISOString(),
+    custom: true,
+  };
+
+  if(existing){
+    const idx=arts.findIndex(a=>a.id===existing.id);
+    arts[idx]=article;
+  } else {
+    arts.unshift(article);
+  }
+  saveArticles(arts);
+  refreshAdminData();
+  showToast(status==='published'?'✅ Article published!':status==='draft'?'💾 Saved as draft!':'📅 Scheduled!');
+  switchPanel('allArticles', document.querySelector('.admin-nav-item:nth-child(4)'));
+}
+
+function toggleSchedule(){
+  const row=document.getElementById('scheduleRow');
+  row.classList.toggle('show');
+  if(row.classList.contains('show')) saveArticle('scheduled');
+}
+
+function publishArticle(id){
+  const arts=getArticles();
+  const a=arts.find(x=>x.id===id);
+  if(a){a.status='published';saveArticles(arts);refreshAdminData();showToast('✅ Published!');}
+}
+
+function unpublishArticle(id){
+  const arts=getArticles();
+  const a=arts.find(x=>x.id===id);
+  if(a){a.status='draft';saveArticles(arts);refreshAdminData();showToast('⏸ Moved to drafts');}
+}
+
+function deleteArticle(id){
+  if(!confirm('Delete this article? This cannot be undone.'))return;
+  const arts=getArticles().filter(a=>a.id!==id);
+  saveArticles(arts);refreshAdminData();showToast('🗑 Deleted');
+}
+
+function filterArticles(status){
+  const arts=getArticles();
+  const filtered=status==='all'?arts:arts.filter(a=>a.status===status);
+  renderArticleTable('allArticlesBody',filtered);
+}
+
+// ══ IMPORT FROM RSS ══
+async function loadRSSImport(){
+  document.getElementById('rssImportList').innerHTML=`<div class="load-state" style="min-height:200px;"><div class="spinner"></div><div class="load-txt">Loading RSS Feeds</div></div>`;
+  selectedRSS=[];
+  document.getElementById('importSelBtn').style.display='none';
+  try{
+    if(!all.length) all=await fetchAll();
+    renderRSSImport(all);
+  }catch(e){
+    document.getElementById('rssImportList').innerHTML=`<div class="load-state" style="min-height:200px;"><div class="load-txt">Failed to load feeds. Check connection.</div></div>`;
+  }
+}
+
+function renderRSSImport(arts){
+  document.getElementById('rssImportList').innerHTML=arts.slice(0,30).map((a,i)=>`
+  <div class="rss-import-card" id="rss_${i}" onclick="toggleRSSSelect(${i},${esc(a)})">
+    <div class="sel-indicator"><span class="sel-check">✓</span></div>
+    ${a.img?`<img src="${a.img}" class="rss-import-thumb" onerror="this.style.display='none'">`:''}
+    <div style="flex:1;">
+      <div class="rss-import-src">${a.src}</div>
+      <div class="rss-import-title">${a.title}</div>
+      <div class="rss-import-sum">${a.sum||''}</div>
+      <div class="rss-import-actions">
+        <button class="act-btn act-edit" onclick="event.stopPropagation();editFromRSS(${esc(a)})">✏️ Edit & Publish</button>
+        <button class="act-btn act-publish" onclick="event.stopPropagation();quickPublish(${esc(a)})">⚡ Quick Publish</button>
+      </div>
+    </div>
+  </div>`).join('');
+}
+
+function toggleRSSSelect(i, article){
+  const card=document.getElementById('rss_'+i);
+  if(!card) return;
+  card.classList.toggle('selected');
+  const idx=selectedRSS.findIndex(a=>a.title===article.title);
+  if(idx>=0) selectedRSS.splice(idx,1);
+  else selectedRSS.push(article);
+  document.getElementById('importSelBtn').style.display=selectedRSS.length?'inline-flex':'none';
+  document.getElementById('importSelBtn').textContent=`✅ Import ${selectedRSS.length} Selected`;
+}
+
+function editFromRSS(article){
+  document.getElementById('editId').value='';
+  document.getElementById('editorTitle').textContent='Edit & Publish: '+article.title.slice(0,40)+'...';
+  document.getElementById('eTitle').value=article.title||'';
+  document.getElementById('eCat').value='Kenya';
+  document.getElementById('eImg').value=article.img||'';
+  document.getElementById('eSrc').value=article.src||'';
+  document.getElementById('eSum').value=article.sum||'';
+  document.getElementById('eBody').value=article.sum||'';
+  document.getElementById('eSchedule').value='';
+  document.getElementById('scheduleRow').classList.remove('show');
+  switchPanel('newArticle', document.querySelector('.admin-nav-item:nth-child(2)'));
+  showToast('📝 Story loaded — write the full article body then publish!');
+}
+
+function quickPublish(article){
+  if(!confirm('Publish "'+article.title.slice(0,60)+'..." immediately?\n\nNote: This publishes the RSS summary. Edit it first for a full article.'))return;
+  const arts=getArticles();
+  const a={...article,id:genId(),status:'published',custom:false,date:article.date||new Date().toISOString()};
+  arts.unshift(a);
+  saveArticles(arts);
+  refreshAdminData();
+  showToast('✅ Published! Go to your site to see it.');
+}
+
+function importSelected(){
+  if(!selectedRSS.length)return;
+  selectedRSS.forEach(article=>{
+    const arts=getArticles();
+    if(!arts.find(a=>a.title===article.title)){
+      arts.unshift({...article,id:genId(),status:'draft',custom:false});
+      saveArticles(arts);
+    }
+  });
+  showToast(`💾 ${selectedRSS.length} stories saved as drafts. Edit them in All Articles.`);
+  selectedRSS=[];
+  document.getElementById('importSelBtn').style.display='none';
+  switchPanel('allArticles', document.querySelector('.admin-nav-item:nth-child(4)'));
+}
+
+// ══ SCHEDULER ══
+function renderScheduler(){
+  const arts=getArticles().filter(a=>a.status==='scheduled');
+  const list=document.getElementById('schedList');
+  if(!arts.length){list.innerHTML=`<div style="text-align:center;color:#333;padding:40px;font-size:13px;font-weight:600;">No scheduled articles. Write an article and click 📅 Schedule.</div>`;return;}
+  list.innerHTML=arts.map(a=>`
+  <div class="sched-item">
+    <div class="sched-time">${a.scheduledAt?new Date(a.scheduledAt).toLocaleDateString('en-KE',{day:'numeric',month:'short'})+' '+new Date(a.scheduledAt).toLocaleTimeString('en-KE',{hour:'2-digit',minute:'2-digit'}):'TBD'}</div>
+    <div>
+      <div class="sched-title">${a.title}</div>
+      <div class="sched-src">${a.src||'Hot News Kenya'}</div>
+    </div>
+    <button class="act-btn act-publish" onclick="publishArticle('${a.id}');renderScheduler();">Publish Now</button>
+    <button class="sched-del" onclick="deleteArticle('${a.id}');renderScheduler();">✕</button>
+  </div>`).join('');
+}
+
+// ══ POSTER ══
+function openPosterById(id){
+  const arts=getArticles();
+  const a=arts.find(x=>x.id===id)||all.find(x=>x.id===id);
+  if(a) openPoster(a);
+}
+function openPoster(a){
+  curArt=typeof a==='string'?JSON.parse(a):a;
+  document.getElementById("posterTitle").textContent=curArt.title;
+  document.getElementById("posterSrc").textContent=(curArt.src||'Hot News Kenya')+" · hotnewskenya.com";
+  document.getElementById("posterDateEl").textContent=new Date().toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}).toUpperCase();
+  document.getElementById("posterBgImg").src=curArt.img||"";
+  document.getElementById("posterModal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function closePoster(){document.getElementById("posterModal").classList.remove("open");document.body.style.overflow="";}
+function downloadPoster(){html2canvas(document.getElementById("posterCanvas"),{scale:2,useCORS:true,backgroundColor:"#000"}).then(c=>{const l=document.createElement("a");l.download="hotnews-"+Date.now()+".png";l.href=c.toDataURL("image/png");l.click();});}
+function shareFBposter(){if(!curArt)return;window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(curArt.link||window.location.href),"_blank","width=600,height=500");}
+function shareXposter(){if(!curArt)return;window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent("🔴 BREAKING: "+curArt.title+" — Hot News Kenya"),"_blank","width=600,height=400");}
+function shareFB(){if(!curArt)return;window.open("https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(window.location.href),"_blank","width=600,height=500");}
+function shareX(){if(!curArt)return;window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent("🔴 "+curArt.title+" — Hot News Kenya"),"_blank","width=600,height=400");}
+function copyLink(){const url=window.location.href;navigator.clipboard?navigator.clipboard.writeText(url).then(()=>showToast('🔗 Link copied!')):showToast('Copy from your browser address bar');}
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closePoster();});
+
+// Check scheduled every minute
+setInterval(()=>{checkScheduled();},60000);
+setInterval(loadFeed, 5*60*1000);
+
+// ══ ADMIN PHOTO UPLOAD ══
+function handleImgUpload(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const dataUrl = e.target.result;
+    document.getElementById('eImg').value = dataUrl;
+    previewEditorImg(dataUrl);
+    showToast('📷 Photo uploaded!');
+  };
+  reader.readAsDataURL(file);
+}
+
+function previewEditorImg(url) {
+  const wrap = document.getElementById('imgPreviewWrap');
+  const img = document.getElementById('imgPreview');
+  if (url && url.length > 4) {
+    img.src = url;
+    wrap.style.display = 'inline-flex';
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+async function autoFetchImage() {
+  const title = document.getElementById('eTitle').value.trim();
+  if (!title) { showToast('Enter a headline first!', true); return; }
+  showToast('🔍 Searching for photo...');
+  const fakeArt = { id: 'edit_'+Date.now(), title, img: null, src: '' };
+  // temporarily clear cache so it re-fetches
+  delete imgCache[fakeArt.id];
+  const url = await getArticleImage(fakeArt);
+  if (url) {
+    document.getElementById('eImg').value = url;
+    previewEditorImg(url);
+    showToast('✅ Photo found and attached!');
+  } else {
+    showToast('No photo found. Try a different headline.', true);
+  }
+}
+
+// Auto-generate poster when article page opens
+function showAutoPoster(article) {
+  // Pre-fill poster silently so it is ready when user clicks
+  document.getElementById("posterTitle").textContent = article.title || '';
+  document.getElementById("posterSrc").textContent = (article.src||'Hot News Kenya') + ' · hotnewskenya.com';
+  document.getElementById("posterDateEl").textContent = new Date().toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}).toUpperCase();
+  if (article.img) document.getElementById("posterBgImg").src = article.img;
+}
+
+init();
+</script>
+</body>
+</html>
