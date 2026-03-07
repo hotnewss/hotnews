@@ -196,6 +196,107 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
 
 @media(max-width:1024px){.hero-grid{grid-template-columns:1fr;}.hero-main{min-height:320px;}.page-body{grid-template-columns:1fr;}.article-grid{grid-template-columns:1fr 1fr;}.footer-top{grid-template-columns:1fr 1fr;}.share-buttons{grid-template-columns:1fr 1fr;}}
 @media(max-width:680px){.header-inner{padding:0 14px;gap:10px;}nav{display:none;}.hero-section,.page-body{padding-left:14px;padding-right:14px;}.article-grid{grid-template-columns:1fr;}.hero-main-title{font-size:22px;}.footer-top{grid-template-columns:1fr;padding:28px 14px;}.footer-bottom{flex-direction:column;gap:8px;text-align:center;padding:14px;}.share-buttons{grid-template-columns:1fr;}}
+
+/* ── ADMIN STYLES ── */
+.admin-login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:2000;align-items:center;justify-content:center;}
+.admin-login-overlay.open{display:flex;}
+.admin-login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:12px;padding:40px;width:360px;max-width:90vw;}
+.admin-login-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--white);margin-bottom:4px;}
+.admin-login-logo em{color:var(--accent);font-style:normal;}
+.admin-login-sub{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:28px;}
+.admin-login-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:6px;display:block;}
+.admin-login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 14px;border-radius:6px;outline:none;margin-bottom:14px;}
+.admin-login-input:focus{border-color:var(--accent);}
+.admin-login-btn{width:100%;background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:12px;border-radius:6px;cursor:pointer;margin-top:4px;}
+.admin-login-btn:hover{background:#c0111f;}
+.admin-login-error{color:#ff6b6b;font-size:12px;margin-top:10px;display:none;}
+.admin-login-cancel{text-align:center;margin-top:14px;font-size:12px;color:var(--text3);cursor:pointer;}
+.admin-login-cancel:hover{color:var(--text);}
+
+.admin-panel{display:none;position:fixed;inset:0;background:var(--bg);z-index:1800;overflow-y:auto;}
+.admin-panel.open{display:block;}
+.admin-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;height:60px;gap:20px;position:sticky;top:0;z-index:10;}
+.admin-header-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--white);}
+.admin-header-logo em{color:var(--accent);font-style:normal;}
+.admin-header-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+.admin-header-actions{margin-left:auto;display:flex;gap:10px;}
+.admin-close-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;}
+.admin-close-btn:hover{border-color:var(--accent);color:var(--accent);}
+.admin-logout-btn{background:rgba(232,25,44,0.1);border:1px solid rgba(232,25,44,0.3);color:var(--accent);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;}
+
+.admin-tabs{display:flex;gap:2px;padding:0 32px;background:var(--surface);border-bottom:1px solid var(--border);}
+.admin-tab-btn{background:none;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:14px 20px;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;}
+.admin-tab-btn:hover{color:var(--white);}
+.admin-tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+.admin-content{max-width:1100px;margin:0 auto;padding:32px;}
+.admin-tab-pane{display:none;}
+.admin-tab-pane.active{display:block;}
+
+.admin-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--accent);line-height:1;}
+.stat-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:6px;}
+.admin-section-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--white);margin-bottom:16px;}
+.admin-bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px;}
+.bar-row{display:flex;align-items:center;gap:14px;}
+.bar-label{font-size:12px;font-weight:600;color:var(--text2);width:110px;flex-shrink:0;}
+.bar-track{flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;background:var(--accent);border-radius:4px;transition:width 0.6s ease;}
+.bar-count{font-size:12px;font-weight:700;color:var(--text3);width:30px;text-align:right;}
+.admin-viewed-list{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.admin-viewed-item{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border);}
+.admin-viewed-item:last-child{border-bottom:none;}
+.admin-viewed-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--border);min-width:28px;line-height:1;margin-top:2px;}
+.admin-viewed-title{font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);margin-bottom:4px;}
+.admin-viewed-meta{font-size:11px;color:var(--text3);}
+
+.admin-articles-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.admin-search-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 14px;border-radius:6px;outline:none;}
+.admin-search-input:focus{border-color:var(--accent);}
+.admin-add-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:10px 20px;border-radius:6px;cursor:pointer;white-space:nowrap;}
+.admin-add-btn:hover{background:#c0111f;}
+
+.admin-art-row{display:flex;align-items:center;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;}
+.admin-art-thumb{width:80px;height:54px;object-fit:cover;border-radius:5px;flex-shrink:0;background:var(--surface2);}
+.admin-art-info{flex:1;min-width:0;}
+.admin-art-title{font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;}
+.admin-art-meta{font-size:11px;color:var(--text3);}
+.admin-cat-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-right:6px;}
+.admin-art-actions{display:flex;gap:8px;flex-shrink:0;}
+.admin-btn-edit{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:600;padding:6px 12px;border-radius:5px;cursor:pointer;}
+.admin-btn-edit:hover{border-color:var(--accent);color:var(--accent);}
+.admin-btn-del{background:rgba(232,25,44,0.08);border:1px solid rgba(232,25,44,0.25);color:var(--accent);font-size:11px;font-weight:600;padding:6px 12px;border-radius:5px;cursor:pointer;}
+.admin-btn-del:hover{background:var(--accent);color:#fff;}
+
+.admin-edit-form{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:24px;margin-bottom:24px;display:none;}
+.admin-edit-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--white);margin-bottom:20px;}
+.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.admin-form-group{display:flex;flex-direction:column;gap:5px;}
+.admin-form-group.full{grid-column:1/-1;}
+.admin-form-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
+.admin-form-input,.admin-form-select,.admin-form-textarea{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border-radius:6px;outline:none;width:100%;}
+.admin-form-input:focus,.admin-form-select:focus,.admin-form-textarea:focus{border-color:var(--accent);}
+.admin-form-select{cursor:pointer;}
+.admin-form-textarea{resize:vertical;min-height:90px;}
+.admin-form-textarea.tall{min-height:160px;}
+.admin-form-actions{display:flex;gap:10px;margin-top:6px;}
+.admin-save-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:10px 24px;border-radius:6px;cursor:pointer;}
+.admin-save-btn:hover{background:#c0111f;}
+.admin-cancel-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:10px 18px;border-radius:6px;cursor:pointer;}
+.admin-cancel-btn:hover{border-color:var(--border);color:var(--text);}
+
+.admin-toast{position:fixed;bottom:28px;right:28px;background:var(--surface);border:1px solid var(--accent);color:var(--text);font-size:13px;font-weight:600;padding:12px 22px;border-radius:8px;z-index:3000;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;}
+.admin-toast.show{opacity:1;transform:translateY(0);}
+
+@media(max-width:700px){
+  .admin-stats-grid{grid-template-columns:1fr 1fr;}
+  .admin-form-grid{grid-template-columns:1fr;}
+  .admin-art-row{flex-wrap:wrap;}
+  .admin-content{padding:16px;}
+  .admin-tabs{padding:0 16px;overflow-x:auto;}
+}
+
 </style>
 </head>
 <body>
@@ -1045,6 +1146,372 @@ function handleSearch(e){ if(e.key==="Enter") doSearch(); }
 
 // Boot
 renderAll(ARTICLES);
+
+// ============================================================
+// ADMIN PANEL — Press Ctrl+Shift+A or type "hustle254admin"
+// Login: admin / hustle254
+// ============================================================
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "hustle254";
+let adminLoggedIn = false;
+let adminKeyBuffer = "";
+let editingId = null;
+let pageViews = parseInt(localStorage.getItem("h254_pv")||"0") + 1;
+let sessionStart = Date.now();
+localStorage.setItem("h254_pv", pageViews);
+
+// Track visits per article
+function trackArticleView(id){
+  const key = "h254_av_"+id;
+  const v = parseInt(localStorage.getItem(key)||"0")+1;
+  localStorage.setItem(key, v);
+}
+
+// Keyboard shortcut listener
+document.addEventListener("keydown", function(e){
+  if(e.ctrlKey && e.shiftKey && e.key==="A"){ e.preventDefault(); openAdminLogin(); return; }
+  adminKeyBuffer += e.key;
+  if(adminKeyBuffer.length > 14) adminKeyBuffer = adminKeyBuffer.slice(-14);
+  if(adminKeyBuffer.includes("hustle254admin")){ adminKeyBuffer=""; openAdminLogin(); }
+});
+
+function openAdminLogin(){
+  if(adminLoggedIn){ showAdminPanel(); return; }
+  document.getElementById("adminLoginOverlay").classList.add("open");
+  document.getElementById("adminLoginUser").focus();
+}
+
+function adminLogin(){
+  const u = document.getElementById("adminLoginUser").value;
+  const p = document.getElementById("adminLoginPass").value;
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    adminLoggedIn = true;
+    document.getElementById("adminLoginOverlay").classList.remove("open");
+    document.getElementById("adminLoginUser").value="";
+    document.getElementById("adminLoginPass").value="";
+    showAdminPanel();
+  } else {
+    document.getElementById("adminLoginError").style.display="block";
+    setTimeout(()=>document.getElementById("adminLoginError").style.display="none",2500);
+  }
+}
+
+function adminLoginKey(e){ if(e.key==="Enter") adminLogin(); }
+
+function closeAdminLogin(){
+  document.getElementById("adminLoginOverlay").classList.remove("open");
+}
+
+// ── ADMIN PANEL ──────────────────────────────────────────────
+function showAdminPanel(){
+  renderAdminStats();
+  renderAdminArticleList();
+  document.getElementById("adminPanel").classList.add("open");
+  showAdminTab("stats");
+}
+
+function closeAdminPanel(){
+  document.getElementById("adminPanel").classList.remove("open");
+  editingId = null;
+}
+
+function adminLogout(){
+  adminLoggedIn = false;
+  closeAdminPanel();
+}
+
+function showAdminTab(tab){
+  document.querySelectorAll(".admin-tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".admin-tab-pane").forEach(p=>p.classList.remove("active"));
+  document.getElementById("adminTab-"+tab).classList.add("active");
+  document.getElementById("adminPane-"+tab).classList.add("active");
+  document.querySelector(`[onclick="showAdminTab('${tab}')"]`).classList.add("active");
+}
+
+// ── STATS ────────────────────────────────────────────────────
+function renderAdminStats(){
+  const cats = {};
+  ARTICLES.forEach(a=>{ cats[a.category]=(cats[a.category]||0)+1; });
+  const topCats = Object.entries(cats).sort((a,b)=>b[1]-a[1]);
+
+  // Top viewed articles
+  const viewed = ARTICLES.map(a=>({
+    ...a, views: parseInt(localStorage.getItem("h254_av_"+a.id)||"0")
+  })).sort((a,b)=>b.views-a.views).slice(0,10);
+
+  document.getElementById("adminPane-stats").innerHTML = `
+  <div class="admin-stats-grid">
+    <div class="stat-card">
+      <div class="stat-num">${pageViews.toLocaleString()}</div>
+      <div class="stat-label">Total Page Views</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">${ARTICLES.length}</div>
+      <div class="stat-label">Total Articles</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">${[...new Set(ARTICLES.map(a=>a.category))].length}</div>
+      <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">${Math.round((Date.now()-sessionStart)/1000)}s</div>
+      <div class="stat-label">Session Duration</div>
+    </div>
+  </div>
+
+  <div class="admin-section-title">📊 Articles by Category</div>
+  <div class="admin-bar-chart">
+    ${topCats.map(([cat,count])=>`
+    <div class="bar-row">
+      <div class="bar-label">${cat}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/ARTICLES.length*100)}%"></div></div>
+      <div class="bar-count">${count}</div>
+    </div>`).join("")}
+  </div>
+
+  <div class="admin-section-title" style="margin-top:28px;">🔥 Most Viewed Articles</div>
+  <div class="admin-viewed-list">
+    ${viewed.map((a,i)=>`
+    <div class="admin-viewed-item">
+      <span class="admin-viewed-num">${i+1}</span>
+      <div>
+        <div class="admin-viewed-title">${a.title}</div>
+        <div class="admin-viewed-meta">${a.category} · ${a.views} views</div>
+      </div>
+    </div>`).join("")}
+  </div>`;
+}
+
+// ── ARTICLE MANAGER ──────────────────────────────────────────
+function renderAdminArticleList(filter=""){
+  const list = filter
+    ? ARTICLES.filter(a=>(a.title+" "+a.category).toLowerCase().includes(filter.toLowerCase()))
+    : ARTICLES;
+
+  document.getElementById("adminArticleList").innerHTML = list.map(a=>`
+  <div class="admin-art-row" id="arow-${a.id}">
+    <img src="${a.img}" onerror="this.src='${imgFallback(a.category)}'" class="admin-art-thumb">
+    <div class="admin-art-info">
+      <div class="admin-art-title">${a.title}</div>
+      <div class="admin-art-meta"><span class="admin-cat-badge">${a.category}</span> ${a.region} · ${a.date}</div>
+    </div>
+    <div class="admin-art-actions">
+      <button class="admin-btn-edit" onclick="adminEditArticle(${a.id})">✏️ Edit</button>
+      <button class="admin-btn-del" onclick="adminDeleteArticle(${a.id})">🗑️ Delete</button>
+    </div>
+  </div>`).join("");
+}
+
+function adminSearchArticles(e){
+  renderAdminArticleList(e.target.value);
+}
+
+function adminEditArticle(id){
+  editingId = id;
+  const a = ARTICLES.find(x=>x.id===id);
+  document.getElementById("editId").value = a.id;
+  document.getElementById("editTitle").value = a.title;
+  document.getElementById("editCategory").value = a.category;
+  document.getElementById("editRegion").value = a.region;
+  document.getElementById("editDate").value = a.date;
+  document.getElementById("editImg").value = a.img;
+  document.getElementById("editSummary").value = a.summary;
+  document.getElementById("editBody").value = a.body;
+  document.getElementById("editTeaser").value = a.teaser;
+  document.getElementById("adminEditForm").style.display="block";
+  document.getElementById("adminEditForm").scrollIntoView({behavior:"smooth"});
+}
+
+function adminSaveArticle(){
+  const id = parseInt(document.getElementById("editId").value);
+  const idx = ARTICLES.findIndex(x=>x.id===id);
+  if(idx===-1) return;
+  ARTICLES[idx] = {
+    id,
+    title:    document.getElementById("editTitle").value.trim(),
+    category: document.getElementById("editCategory").value,
+    region:   document.getElementById("editRegion").value.trim(),
+    date:     document.getElementById("editDate").value.trim(),
+    img:      document.getElementById("editImg").value.trim(),
+    summary:  document.getElementById("editSummary").value.trim(),
+    body:     document.getElementById("editBody").value.trim(),
+    teaser:   document.getElementById("editTeaser").value.trim()
+  };
+  currentArticles = [...ARTICLES];
+  renderAll(currentArticles);
+  renderAdminArticleList();
+  cancelEdit();
+  showAdminToast("✅ Article updated!");
+}
+
+function cancelEdit(){
+  document.getElementById("adminEditForm").style.display="none";
+  editingId = null;
+}
+
+function adminDeleteArticle(id){
+  if(!confirm("Delete this article? This cannot be undone.")) return;
+  const idx = ARTICLES.findIndex(x=>x.id===id);
+  if(idx!==-1){ ARTICLES.splice(idx,1); }
+  currentArticles = currentArticles.filter(a=>a.id!==id);
+  renderAll(currentArticles);
+  renderAdminArticleList();
+  showAdminToast("🗑️ Article deleted.");
+}
+
+function adminAddNew(){
+  editingId = null;
+  const newId = Math.max(...ARTICLES.map(a=>a.id))+1;
+  document.getElementById("editId").value = newId;
+  document.getElementById("editTitle").value = "";
+  document.getElementById("editCategory").value = "Kenya";
+  document.getElementById("editRegion").value = "Kenya";
+  document.getElementById("editDate").value = new Date().toISOString().split("T")[0];
+  document.getElementById("editImg").value = "";
+  document.getElementById("editSummary").value = "";
+  document.getElementById("editBody").value = "";
+  document.getElementById("editTeaser").value = "";
+  document.getElementById("adminEditForm").style.display="block";
+  document.getElementById("adminEditForm").scrollIntoView({behavior:"smooth"});
+}
+
+function adminSaveNew(){
+  const newId = parseInt(document.getElementById("editId").value);
+  const newArt = {
+    id: newId,
+    title:    document.getElementById("editTitle").value.trim(),
+    category: document.getElementById("editCategory").value,
+    region:   document.getElementById("editRegion").value.trim(),
+    date:     document.getElementById("editDate").value.trim(),
+    img:      document.getElementById("editImg").value.trim(),
+    summary:  document.getElementById("editSummary").value.trim(),
+    body:     document.getElementById("editBody").value.trim(),
+    teaser:   document.getElementById("editTeaser").value.trim()
+  };
+  if(!newArt.title){ alert("Title is required."); return; }
+  ARTICLES.unshift(newArt);
+  currentArticles = [...ARTICLES];
+  renderAll(currentArticles);
+  renderAdminArticleList();
+  cancelEdit();
+  showAdminToast("✅ New article published!");
+}
+
+function showAdminToast(msg){
+  const t = document.getElementById("adminToast");
+  t.textContent = msg;
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),3000);
+}
+
+// Track article views
+const origOpen = openArticle;
+window.openArticle = function(id){
+  trackArticleView(id);
+  origOpen(id);
+};
+
 </script>
+
+<!-- ADMIN LOGIN OVERLAY -->
+<div class="admin-login-overlay" id="adminLoginOverlay" onclick="if(event.target===this)closeAdminLogin()">
+  <div class="admin-login-box">
+    <div class="admin-login-logo"><em>HUSTLE</em> 254</div>
+    <div class="admin-login-sub">Admin Access</div>
+    <label class="admin-login-label">Username</label>
+    <input class="admin-login-input" id="adminLoginUser" type="text" placeholder="admin" onkeyup="adminLoginKey(event)" autocomplete="off">
+    <label class="admin-login-label">Password</label>
+    <input class="admin-login-input" id="adminLoginPass" type="password" placeholder="••••••••" onkeyup="adminLoginKey(event)">
+    <button class="admin-login-btn" onclick="adminLogin()">🔐 Login to Admin</button>
+    <div class="admin-login-error" id="adminLoginError">❌ Wrong username or password</div>
+    <div class="admin-login-cancel" onclick="closeAdminLogin()">Cancel</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <div class="admin-header-logo"><em>HUSTLE</em> 254</div>
+    <div class="admin-header-badge">ADMIN</div>
+    <div class="admin-header-actions">
+      <button class="admin-close-btn" onclick="closeAdminPanel()">← Back to Site</button>
+      <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
+    </div>
+  </div>
+  <div class="admin-tabs">
+    <button class="admin-tab-btn active" onclick="showAdminTab('stats')">📊 Analytics</button>
+    <button class="admin-tab-btn" onclick="showAdminTab('articles')">📝 Articles</button>
+  </div>
+  <div class="admin-content">
+
+    <!-- STATS TAB -->
+    <div class="admin-tab-pane active" id="adminPane-stats" data-tab="stats">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- ARTICLES TAB -->
+    <div class="admin-tab-pane" id="adminPane-articles" data-tab="articles">
+      <div class="admin-articles-toolbar">
+        <input class="admin-search-input" placeholder="🔍 Search articles by title or category..." oninput="adminSearchArticles(event)">
+        <button class="admin-add-btn" onclick="adminAddNew()">＋ New Article</button>
+      </div>
+
+      <!-- EDIT / ADD FORM -->
+      <div class="admin-edit-form" id="adminEditForm">
+        <div class="admin-edit-title" id="editFormTitle">✏️ Edit Article</div>
+        <input type="hidden" id="editId">
+        <div class="admin-form-grid">
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Title *</label>
+            <input class="admin-form-input" id="editTitle" placeholder="Article headline...">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Category</label>
+            <select class="admin-form-select" id="editCategory">
+              <option>Kenya</option><option>World</option><option>Politics</option>
+              <option>Business</option><option>Technology</option><option>Sports</option>
+              <option>Health</option><option>Entertainment</option>
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Region</label>
+            <input class="admin-form-input" id="editRegion" placeholder="e.g. Kenya, USA, Africa...">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Date</label>
+            <input class="admin-form-input" id="editDate" type="date">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Image URL</label>
+            <input class="admin-form-input" id="editImg" placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Summary (1-2 sentences)</label>
+            <textarea class="admin-form-textarea" id="editSummary" placeholder="Short summary shown on cards..."></textarea>
+          </div>
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Full Article Body</label>
+            <textarea class="admin-form-textarea tall" id="editBody" placeholder="Full article text... Use blank lines to separate paragraphs."></textarea>
+          </div>
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Social Share Teaser (with emoji for engagement)</label>
+            <textarea class="admin-form-textarea" id="editTeaser" placeholder="🔥 Attention-grabbing teaser for Facebook/WhatsApp/Twitter..."></textarea>
+          </div>
+        </div>
+        <div class="admin-form-actions">
+          <button class="admin-save-btn" id="adminSaveBtn" onclick="adminSaveArticle()">💾 Save Changes</button>
+          <button class="admin-cancel-btn" onclick="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+
+      <div id="adminArticleList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="admin-toast" id="adminToast"></div>
+
 </body>
 </html>
