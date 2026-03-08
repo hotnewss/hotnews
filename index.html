@@ -500,16 +500,11 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
 
       <!-- Poster Generator -->
       <div class="ai-image-section" id="aiImageSection">
-        <div class="ai-image-title">🎨 <span>Poster</span> Generator</div>
-        <div class="ai-img-loading" id="aiImgLoading">
-          <div class="ai-img-spinner"></div>
-          <div class="ai-img-text">Generating poster...</div>
-        </div>
-        <canvas id="posterCanvas" style="display:none;width:100%;border-radius:8px;"></canvas>
-        <img id="aiGeneratedImg" class="ai-generated-img" src="" alt="" style="display:none;" onload="aiImgLoaded()" onerror="aiImgError()">
-        <div id="aiDownloadBar" style="display:none;margin-top:10px;gap:8px;flex-wrap:wrap;">
-          <button class="ai-dl-btn" onclick="downloadPoster()">⬇️ Download Poster</button>
-          <button class="ai-dl-btn ai-dl-btn2" onclick="regeneratePoster()">🔄 New Image</button>
+        <div class="ai-image-title">&#127912; <span>Article</span> Poster</div>
+        <canvas id="posterCanvas" style="width:100%;border-radius:8px;display:block;"></canvas>
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="ai-dl-btn" onclick="downloadPoster()">&#11015;&#65039; Download Poster</button>
+          <button class="ai-dl-btn ai-dl-btn2" onclick="redrawPoster()">&#127912; Redraw</button>
         </div>
       </div>
 
@@ -1004,15 +999,10 @@ function imgFallback(cat){
 }
 
 // AI Image generation using Pollinations (free, no API key needed)
-function getAiImageUrl(title){
-  const prompt = encodeURIComponent(`Breaking news headline poster: "${title}" — dramatic photojournalism style, dark moody lighting, high contrast, professional news photography`);
-  return `https://image.pollinations.ai/prompt/${prompt}?width=800&height=450&nologo=true&seed=${Math.floor(Math.random()*9999)}`;
-}
+// poster uses canvas only
 
 
-function aiImgError(){
-  document.getElementById("aiImageSection").style.display="none";
-}
+
 
 // Open article modal
 function openArticle(id){
@@ -1028,18 +1018,9 @@ function openArticle(id){
   document.getElementById("modalSummary").textContent = a.summary;
   document.getElementById("modalBody").textContent = a.body;
 
-  // Show poster section — draw text-only poster immediately
+  // Draw poster instantly
   document.getElementById("aiImageSection").style.display="block";
-  document.getElementById("posterCanvas").style.display="none";
-  document.getElementById("aiGeneratedImg").style.display="none";
-  document.getElementById("aiDownloadBar").style.display="none";
-  document.getElementById("aiImgLoading").style.display="flex";
-  // Draw text-only poster right away (no wait)
-  setTimeout(()=>{ drawPoster(null); },50);
-  // Also load AI background image — if it loads, redraw with it
-  const aiImg = document.getElementById("aiGeneratedImg");
-  aiImg.src="";
-  setTimeout(()=>{ aiImg.src = getAiImageUrl(a.title); },100);
+  drawPoster();
 
   // Teaser text
   document.getElementById("shareTeaserText").textContent = a.teaser + `\n\n📍 Read the full story: ${SITE_URL}`;
@@ -1238,131 +1219,101 @@ function doSearch(){
 }
 function handleSearch(e){ if(e.key==="Enter") doSearch(); }
 
-function downloadPoster(){
-  const canvas = document.getElementById("posterCanvas");
-  if(canvas.style.display==="none"){
-    // fallback: download AI image
-    const img = document.getElementById("aiGeneratedImg");
-    if(!img.src) return;
-    const a = document.createElement("a");
-    a.href = img.src; a.target="_blank";
-    a.download = (activeArticle?activeArticle.title.replace(/[^a-z0-9]/gi,"_").substring(0,40):"poster")+".jpg";
-    a.click(); return;
-  }
-  const a = document.createElement("a");
-  a.download = (activeArticle?activeArticle.title.replace(/[^a-z0-9]/gi,"_").substring(0,40):"hustle254_poster")+".png";
-  a.href = canvas.toDataURL("image/png");
-  a.click();
-}
-
-function drawPoster(bgImg){
-  const art = activeArticle;
+function drawPoster(){
+  var art = activeArticle;
   if(!art) return;
-  const canvas = document.getElementById("posterCanvas");
-  const W=800, H=450;
+  var canvas = document.getElementById("posterCanvas");
+  var W=800, H=450;
   canvas.width=W; canvas.height=H;
-  const ctx = canvas.getContext("2d");
+  var ctx = canvas.getContext("2d");
 
-  // Background
-  if(bgImg){
-    try{
-      ctx.drawImage(bgImg,0,0,W,H);
-    }catch(e){
-      ctx.fillStyle="#0d0d0f"; ctx.fillRect(0,0,W,H);
-    }
-  } else {
-    ctx.fillStyle="#0d0d0f"; ctx.fillRect(0,0,W,H);
-  }
+  var bgColors={
+    Kenya:["#0a1628","#1a0a08"],
+    World:["#0a1220","#0a2010"],
+    Politics:["#150a20","#200a15"],
+    Business:["#0a1a10","#102010"],
+    Technology:["#080a20","#0a1025"],
+    Sports:["#1a0808","#200a0a"],
+    Health:["#081a10","#0a200a"],
+    Entertainment:["#1a100a","#201508"]
+  };
+  var cols = bgColors[art.category]||["#0d0d0f","#1a1a22"];
+  var bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,cols[0]); bg.addColorStop(1,cols[1]);
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
-  // Dark gradient overlay (bottom half)
-  const grad = ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0,"rgba(0,0,0,0.25)");
-  grad.addColorStop(0.45,"rgba(0,0,0,0.55)");
-  grad.addColorStop(1,"rgba(0,0,0,0.92)");
-  ctx.fillStyle=grad; ctx.fillRect(0,0,W,H);
+  // Subtle grid texture
+  ctx.strokeStyle="rgba(255,255,255,0.04)"; ctx.lineWidth=1;
+  for(var x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(var y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
 
-  // Red top bar
-  ctx.fillStyle="#e8192c"; ctx.fillRect(0,0,W,6);
+  // Big faded category word
+  ctx.save(); ctx.globalAlpha=0.06; ctx.fillStyle="#fff";
+  ctx.font="bold 120px Arial,sans-serif"; ctx.textAlign="center";
+  ctx.fillText((art.category||"NEWS").toUpperCase(),W/2,H/2+40); ctx.restore();
+
+  // Left edge accent
+  ctx.fillStyle="#e8192c"; ctx.fillRect(0,0,6,H);
+  // Top bar
+  ctx.fillStyle="#e8192c"; ctx.fillRect(0,0,W,5);
 
   // BREAKING NEWS badge
-  ctx.fillStyle="#e8192c";
-  ctx.fillRect(32,22,160,34);
-  ctx.fillStyle="#fff";
-  ctx.font="bold 15px 'Arial Black',Arial,sans-serif";
-  ctx.letterSpacing="3px";
-  ctx.fillText("🔴 BREAKING NEWS",40,44);
+  ctx.fillStyle="#e8192c"; ctx.fillRect(28,18,195,36);
+  ctx.fillStyle="#fff"; ctx.font="bold 14px Arial,sans-serif"; ctx.textAlign="left";
+  ctx.fillText("● BREAKING NEWS",40,41);
 
-  // HUSTLE 254 watermark top right
-  ctx.fillStyle="rgba(255,255,255,0.55)";
-  ctx.font="bold 13px Arial,sans-serif";
-  ctx.textAlign="right";
-  ctx.fillText("HUSTLE254.COM",W-24,44);
-  ctx.textAlign="left";
+  // Date
+  var d="";
+  try{ d=new Date(art.date).toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"});}catch(e){}
+  ctx.fillStyle="rgba(255,255,255,0.5)"; ctx.font="12px Arial,sans-serif";
+  ctx.textAlign="right"; ctx.fillText(d,W-24,41);
 
-  // Category badge
-  const cat = (art.category||"NEWS").toUpperCase();
-  ctx.fillStyle="rgba(232,25,44,0.85)";
-  const catW = ctx.measureText(cat).width + 24;
-  ctx.fillRect(32, H-130, catW, 26);
-  ctx.fillStyle="#fff";
-  ctx.font="bold 12px Arial,sans-serif";
-  ctx.fillText(cat, 44, H-112);
+  // HUSTLE 254 branding
+  ctx.fillStyle="rgba(232,25,44,0.9)"; ctx.font="bold 16px Arial,sans-serif";
+  ctx.textAlign="right"; ctx.fillText("HUSTLE 254",W-24,H-22);
+  ctx.fillStyle="rgba(255,255,255,0.4)"; ctx.font="10px Arial,sans-serif";
+  ctx.fillText("hustle254.com",W-24,H-8);
 
-  // Title — word wrap
-  const title = art.title.toUpperCase();
-  ctx.fillStyle="#ffffff";
-  ctx.shadowColor="rgba(0,0,0,0.9)";
-  ctx.shadowBlur=8;
-  const fontSize = title.length > 60 ? 22 : title.length > 40 ? 26 : 30;
-  ctx.font = `bold ${fontSize}px 'Arial Black',Arial,sans-serif`;
-  const words = title.split(" ");
-  const maxW = W - 64;
-  let lines=[], line="";
-  words.forEach(w=>{
-    const test = line ? line+" "+w : w;
-    if(ctx.measureText(test).width > maxW){ lines.push(line); line=w; }
-    else line=test;
+  // Category pill
+  ctx.textAlign="left"; ctx.font="bold 11px Arial,sans-serif";
+  var cat=(art.category||"NEWS").toUpperCase();
+  var cpw=ctx.measureText(cat).width+20;
+  ctx.fillStyle="rgba(232,25,44,0.85)"; ctx.fillRect(28,H-68,cpw,22);
+  ctx.fillStyle="#fff"; ctx.fillText(cat,38,H-52);
+
+  // Headline
+  var title=art.title;
+  ctx.textAlign="left"; ctx.shadowColor="rgba(0,0,0,0.9)"; ctx.shadowBlur=8;
+  var fs=title.length>80?18:title.length>55?22:title.length>35?26:30;
+  ctx.font="bold "+fs+"px Arial,sans-serif"; ctx.fillStyle="#fff";
+  var words=title.split(" "); var maxW=W-80; var lines=[],cur="";
+  words.forEach(function(w){
+    var t=cur?cur+" "+w:w;
+    if(ctx.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;
   });
-  if(line) lines.push(line);
-  lines = lines.slice(0,3);
-  const lineH = fontSize+8;
-  let y = H - 80 - (lines.length-1)*lineH;
-  lines.forEach(l=>{ ctx.fillText(l,32,y); y+=lineH; });
+  if(cur)lines.push(cur); lines=lines.slice(0,3);
+  var lh=fs+10; var ty=H-110-(lines.length-1)*lh;
+  lines.forEach(function(l){ctx.fillText(l,32,ty);ty+=lh;});
   ctx.shadowBlur=0;
 
-  // Teaser/hook line
-  const teaser = art.teaser ? art.teaser.replace(/[🔴🚨💥🌍🏆🔥👇⬇️]/gu,"").trim().substring(0,80) : "";
+  // Teaser
+  var teaser=(art.teaser||"").replace(/[^\x00-\x7F]/g,"").trim().substring(0,90);
   if(teaser){
-    ctx.fillStyle="rgba(255,220,60,0.95)";
-    ctx.font="13px Arial,sans-serif";
-    ctx.fillText(teaser, 32, H-24);
+    ctx.fillStyle="rgba(255,220,60,1)"; ctx.font="bold 13px Arial,sans-serif";
+    ctx.fillText(teaser,32,H-22);
   }
 
   // Bottom bar
-  ctx.fillStyle="rgba(232,25,44,0.9)"; ctx.fillRect(0,H-6,W,6);
-
-  // Show canvas, hide spinner
-  canvas.style.display="block";
-  document.getElementById("aiImgLoading").style.display="none";
-  document.getElementById("aiDownloadBar").style.display="flex";
+  ctx.fillStyle="#e8192c"; ctx.fillRect(0,H-4,W,4);
 }
 
-function aiImgLoaded(){
-  // Draw poster with loaded image as background
-  const img = document.getElementById("aiGeneratedImg");
-  drawPoster(img);
-}
+function redrawPoster(){ if(activeArticle) drawPoster(); }
 
-function regeneratePoster(){
-  if(!activeArticle) return;
-  document.getElementById("posterCanvas").style.display="none";
-  document.getElementById("aiGeneratedImg").style.display="none";
-  document.getElementById("aiDownloadBar").style.display="none";
-  document.getElementById("aiImgLoading").style.display="flex";
-  // try AI image first, fall back to text-only poster
-  const img = document.getElementById("aiGeneratedImg");
-  img.src="";
-  setTimeout(()=>{ img.src = getAiImageUrl(activeArticle.title)+"&t="+Date.now(); },100);
+function downloadPoster(){
+  var canvas=document.getElementById("posterCanvas");
+  var a=document.createElement("a");
+  var name=(activeArticle?activeArticle.title.replace(/[^a-z0-9]/gi,"_").substring(0,50):"hustle254_poster")+".png";
+  a.download=name; a.href=canvas.toDataURL("image/png"); a.click();
 }
 
 // Boot
