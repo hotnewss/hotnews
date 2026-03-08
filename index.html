@@ -1281,26 +1281,70 @@ function drawPoster(){
   ctx.fillStyle="rgba(232,25,44,0.85)"; ctx.fillRect(28,H-68,cpw,22);
   ctx.fillStyle="#fff"; ctx.fillText(cat,38,H-52);
 
-  // Headline
-  var title=art.title;
-  ctx.textAlign="left"; ctx.shadowColor="rgba(0,0,0,0.9)"; ctx.shadowBlur=8;
-  var fs=title.length>80?36:title.length>55?44:title.length>35?52:58;
-  ctx.font='900 '+fs+"px 'Arial Black','Impact',Arial,sans-serif"; ctx.fillStyle="#fff";
-  var words=title.split(" "); var maxW=W-64; var lines=[],cur="";
-  words.forEach(function(w){
-    var t=cur?cur+" "+w:w;
-    if(ctx.measureText(t).width>maxW){lines.push(cur);cur=w;}else cur=t;
-  });
-  if(cur)lines.push(cur); lines=lines.slice(0,3);
-  var lh=fs+16; var ty=H-118-(lines.length-1)*lh;
-  lines.forEach(function(l){ctx.fillText(l,32,ty);ty+=lh;});
-  ctx.shadowBlur=0;
+  // ── SMART LAYOUT: calculate zones ──
+  // Bottom zone reserved: 30px teaser + 10px gap + 30px cat pill + 10px gap = 80px from bottom
+  // Top zone reserved: 70px for BREAKING badge + date
+  var BOTTOM_RESERVE = 85;
+  var TOP_RESERVE = 70;
+  var availH = H - TOP_RESERVE - BOTTOM_RESERVE; // usable height for headline
 
-  // Teaser
-  var teaser=(art.teaser||"").replace(/[^\x00-\x7F]/g,"").trim().substring(0,90);
-  if(teaser){
-    ctx.fillStyle="rgba(255,220,60,1)"; ctx.font="bold 20px 'Arial Black',Arial,sans-serif";
-    ctx.fillText(teaser,32,H-22);
+  // Pick font size that fits within availH with up to 3 lines
+  var title = art.title;
+  ctx.textAlign = "left";
+  ctx.shadowColor = "rgba(0,0,0,0.95)";
+  ctx.shadowBlur = 10;
+  var maxW = W - 64;
+  var fs, lines, lh;
+
+  // Try sizes from large to small until it fits
+  var sizes = [54, 46, 40, 34, 28, 22];
+  for (var si = 0; si < sizes.length; si++) {
+    fs = sizes[si];
+    lh = Math.round(fs * 1.25);
+    ctx.font = "900 " + fs + "px 'Arial Black','Impact',Arial,sans-serif";
+    // word wrap
+    var words = title.split(" ");
+    lines = []; var cur = "";
+    words.forEach(function(w) {
+      var t = cur ? cur + " " + w : w;
+      if (ctx.measureText(t).width > maxW) { lines.push(cur); cur = w; }
+      else cur = t;
+    });
+    if (cur) lines.push(cur);
+    // Check if 3 lines (max) fit in availH
+    var maxLines = Math.min(lines.length, 3);
+    if (maxLines * lh <= availH) { lines = lines.slice(0, maxLines); break; }
+    if (si === sizes.length - 1) { lines = lines.slice(0, 3); }
+  }
+
+  // If still overflow at smallest size, truncate last line with ellipsis
+  ctx.font = "900 " + fs + "px 'Arial Black','Impact',Arial,sans-serif";
+  ctx.fillStyle = "#fff";
+
+  // Start y: center the block in available space, biased toward bottom
+  var blockH = lines.length * lh;
+  var startY = TOP_RESERVE + availH - blockH - 8;
+  if (startY < TOP_RESERVE) startY = TOP_RESERVE;
+
+  lines.forEach(function(l, i) {
+    // truncate line if wider than canvas
+    while (ctx.measureText(l).width > maxW && l.length > 3) {
+      l = l.slice(0, -4) + "...";
+    }
+    ctx.fillText(l, 32, startY + i * lh + fs);
+  });
+  ctx.shadowBlur = 0;
+
+  // Teaser — fixed at bottom, small enough to never overlap
+  var teaser = (art.teaser || "").replace(/[^\x00-\x7F]/g, "").trim().substring(0, 85);
+  if (teaser) {
+    ctx.font = "bold 15px Arial,sans-serif";
+    // truncate teaser to fit
+    while (ctx.measureText(teaser).width > W - 120 && teaser.length > 5) {
+      teaser = teaser.slice(0, -4) + "...";
+    }
+    ctx.fillStyle = "rgba(255,220,60,1)";
+    ctx.fillText(teaser, 32, H - 28);
   }
 
   // Bottom bar
