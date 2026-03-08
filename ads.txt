@@ -1,4 +1,1 @@
-# ads.txt for hustle254.com
-# Replace XXXXXXXXXXXXXXXX with your actual AdSense Publisher ID
-# Get it from adsense.google.com after approval
-google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, pub-4575381845991909, DIRECT, f08c47fec0942fa0
