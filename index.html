@@ -178,6 +178,7 @@ nav a.active{color:var(--accent);}
 .ai-img-text{font-size:11px;color:var(--text3);letter-spacing:1px;}
 .ai-dl-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:8px 16px;border-radius:6px;cursor:pointer;}
 .ai-dl-btn:hover{background:#c0111f;}
+.ai-dl-btn2{background:var(--surface2);border:1px solid var(--border);color:var(--text);}
 
 /* FOOTER */
 footer{background:var(--surface);border-top:1px solid var(--border);}
@@ -196,8 +197,45 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
 .fade-in{opacity:0;transform:translateY(12px);animation:fadeUp 0.4s ease forwards;}
 @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 
-@media(max-width:1024px){.hero-grid{grid-template-columns:1fr;}.hero-main{min-height:320px;}.page-body{grid-template-columns:1fr;}.article-grid{grid-template-columns:1fr 1fr;}.footer-top{grid-template-columns:1fr 1fr;}.share-buttons{grid-template-columns:1fr 1fr;}}
-@media(max-width:680px){.header-inner{padding:0 14px;gap:10px;}nav{display:none;}.hero-section,.page-body{padding-left:14px;padding-right:14px;}.article-grid{grid-template-columns:1fr;}.hero-main-title{font-size:22px;}.footer-top{grid-template-columns:1fr;padding:28px 14px;}.footer-bottom{flex-direction:column;gap:8px;text-align:center;padding:14px;}.share-buttons{grid-template-columns:1fr;}}
+@media(max-width:1024px){
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-main{min-height:320px;}
+  .page-body{grid-template-columns:1fr;}
+  .article-grid{grid-template-columns:1fr 1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .share-buttons{grid-template-columns:1fr 1fr;}
+}
+@media(max-width:680px){
+  html,body{overflow-x:hidden;max-width:100vw;}
+  *{box-sizing:border-box;}
+  .header-inner{padding:0 12px;gap:8px;}
+  nav{display:none;}
+  .logo{font-size:22px;}
+  .search-box{max-width:120px;}
+  .search-box input{font-size:11px;padding:6px 8px;}
+  .hero-section{padding:12px 12px 0;}
+  .hero-main{min-height:220px;}
+  .hero-main-title{font-size:20px;line-height:1.2;}
+  .hero-side{display:none;}
+  .page-body{padding:12px 12px 40px;grid-template-columns:1fr;gap:24px;}
+  .article-grid{grid-template-columns:1fr;}
+  .article-list-item{flex-direction:column;}
+  .article-list-thumb{width:100%;height:160px;}
+  .sidebar{display:none;}
+  .modal-box{margin:8px;border-radius:10px;}
+  .modal-body{padding:16px;}
+  .modal-title{font-size:19px;}
+  .share-buttons{grid-template-columns:1fr 1fr;}
+  .footer-top{grid-template-columns:1fr;padding:24px 12px;}
+  .footer-bottom{flex-direction:column;gap:6px;text-align:center;padding:12px;}
+  .ticker-inner span{font-size:11px;padding:0 20px;}
+  .breaking-ticker{font-size:11px;}
+  .admin-stats-grid{grid-template-columns:1fr 1fr;}
+  .admin-content{padding:12px;}
+  .admin-art-row{flex-wrap:wrap;gap:8px;}
+  .admin-form-grid{grid-template-columns:1fr;}
+  .admin-form-grid .admin-form-group.full{grid-column:1;}
+}
 
 /* ── ADMIN STYLES ── */
 .admin-login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:2000;align-items:center;justify-content:center;}
@@ -460,17 +498,18 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
       <div class="modal-title" id="modalTitle"></div>
       <div class="modal-summary" id="modalSummary"></div>
 
-      <!-- AI Generated Headline Image -->
+      <!-- Poster Generator -->
       <div class="ai-image-section" id="aiImageSection">
-        <div class="ai-image-title">🤖 <span>AI Generated</span> Headline Poster</div>
+        <div class="ai-image-title">🎨 <span>Poster</span> Generator</div>
         <div class="ai-img-loading" id="aiImgLoading">
           <div class="ai-img-spinner"></div>
-          <div class="ai-img-text">Generating image...</div>
+          <div class="ai-img-text">Generating poster...</div>
         </div>
+        <canvas id="posterCanvas" style="display:none;width:100%;border-radius:8px;"></canvas>
         <img id="aiGeneratedImg" class="ai-generated-img" src="" alt="" style="display:none;" onload="aiImgLoaded()" onerror="aiImgError()">
-        <div id="aiDownloadBar" style="display:none;margin-top:10px;display:none;gap:8px;flex-wrap:wrap;">
-          <button class="ai-dl-btn" onclick="downloadAiPoster()">⬇️ Download Poster</button>
-          <button class="ai-dl-btn" onclick="regeneratePoster()">🔄 Regenerate</button>
+        <div id="aiDownloadBar" style="display:none;margin-top:10px;gap:8px;flex-wrap:wrap;">
+          <button class="ai-dl-btn" onclick="downloadPoster()">⬇️ Download Poster</button>
+          <button class="ai-dl-btn ai-dl-btn2" onclick="regeneratePoster()">🔄 New Image</button>
         </div>
       </div>
 
@@ -970,11 +1009,7 @@ function getAiImageUrl(title){
   return `https://image.pollinations.ai/prompt/${prompt}?width=800&height=450&nologo=true&seed=${Math.floor(Math.random()*9999)}`;
 }
 
-function aiImgLoaded(){
-  document.getElementById("aiImgLoading").style.display="none";
-  document.getElementById("aiGeneratedImg").style.display="block";
-  document.getElementById("aiDownloadBar").style.display="flex";
-}
+
 function aiImgError(){
   document.getElementById("aiImageSection").style.display="none";
 }
@@ -993,11 +1028,18 @@ function openArticle(id){
   document.getElementById("modalSummary").textContent = a.summary;
   document.getElementById("modalBody").textContent = a.body;
 
-  // AI generated image
+  // Show poster section — draw text-only poster immediately
   document.getElementById("aiImageSection").style.display="block";
-  document.getElementById("aiImgLoading").style.display="flex";
+  document.getElementById("posterCanvas").style.display="none";
   document.getElementById("aiGeneratedImg").style.display="none";
-  document.getElementById("aiGeneratedImg").src = getAiImageUrl(a.title);
+  document.getElementById("aiDownloadBar").style.display="none";
+  document.getElementById("aiImgLoading").style.display="flex";
+  // Draw text-only poster right away (no wait)
+  setTimeout(()=>{ drawPoster(null); },50);
+  // Also load AI background image — if it loads, redraw with it
+  const aiImg = document.getElementById("aiGeneratedImg");
+  aiImg.src="";
+  setTimeout(()=>{ aiImg.src = getAiImageUrl(a.title); },100);
 
   // Teaser text
   document.getElementById("shareTeaserText").textContent = a.teaser + `\n\n📍 Read the full story: ${SITE_URL}`;
@@ -1196,22 +1238,131 @@ function doSearch(){
 }
 function handleSearch(e){ if(e.key==="Enter") doSearch(); }
 
-function downloadAiPoster(){
-  const img = document.getElementById("aiGeneratedImg");
-  if(!img.src) return;
+function downloadPoster(){
+  const canvas = document.getElementById("posterCanvas");
+  if(canvas.style.display==="none"){
+    // fallback: download AI image
+    const img = document.getElementById("aiGeneratedImg");
+    if(!img.src) return;
+    const a = document.createElement("a");
+    a.href = img.src; a.target="_blank";
+    a.download = (activeArticle?activeArticle.title.replace(/[^a-z0-9]/gi,"_").substring(0,40):"poster")+".jpg";
+    a.click(); return;
+  }
   const a = document.createElement("a");
-  a.href = img.src;
-  a.download = (activeArticle ? activeArticle.title.replace(/[^a-z0-9]/gi,"_").substring(0,40) : "hustle254_poster") + ".jpg";
-  a.target = "_blank";
+  a.download = (activeArticle?activeArticle.title.replace(/[^a-z0-9]/gi,"_").substring(0,40):"hustle254_poster")+".png";
+  a.href = canvas.toDataURL("image/png");
   a.click();
+}
+
+function drawPoster(bgImg){
+  const art = activeArticle;
+  if(!art) return;
+  const canvas = document.getElementById("posterCanvas");
+  const W=800, H=450;
+  canvas.width=W; canvas.height=H;
+  const ctx = canvas.getContext("2d");
+
+  // Background
+  if(bgImg){
+    try{
+      ctx.drawImage(bgImg,0,0,W,H);
+    }catch(e){
+      ctx.fillStyle="#0d0d0f"; ctx.fillRect(0,0,W,H);
+    }
+  } else {
+    ctx.fillStyle="#0d0d0f"; ctx.fillRect(0,0,W,H);
+  }
+
+  // Dark gradient overlay (bottom half)
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,"rgba(0,0,0,0.25)");
+  grad.addColorStop(0.45,"rgba(0,0,0,0.55)");
+  grad.addColorStop(1,"rgba(0,0,0,0.92)");
+  ctx.fillStyle=grad; ctx.fillRect(0,0,W,H);
+
+  // Red top bar
+  ctx.fillStyle="#e8192c"; ctx.fillRect(0,0,W,6);
+
+  // BREAKING NEWS badge
+  ctx.fillStyle="#e8192c";
+  ctx.fillRect(32,22,160,34);
+  ctx.fillStyle="#fff";
+  ctx.font="bold 15px 'Arial Black',Arial,sans-serif";
+  ctx.letterSpacing="3px";
+  ctx.fillText("🔴 BREAKING NEWS",40,44);
+
+  // HUSTLE 254 watermark top right
+  ctx.fillStyle="rgba(255,255,255,0.55)";
+  ctx.font="bold 13px Arial,sans-serif";
+  ctx.textAlign="right";
+  ctx.fillText("HUSTLE254.COM",W-24,44);
+  ctx.textAlign="left";
+
+  // Category badge
+  const cat = (art.category||"NEWS").toUpperCase();
+  ctx.fillStyle="rgba(232,25,44,0.85)";
+  const catW = ctx.measureText(cat).width + 24;
+  ctx.fillRect(32, H-130, catW, 26);
+  ctx.fillStyle="#fff";
+  ctx.font="bold 12px Arial,sans-serif";
+  ctx.fillText(cat, 44, H-112);
+
+  // Title — word wrap
+  const title = art.title.toUpperCase();
+  ctx.fillStyle="#ffffff";
+  ctx.shadowColor="rgba(0,0,0,0.9)";
+  ctx.shadowBlur=8;
+  const fontSize = title.length > 60 ? 22 : title.length > 40 ? 26 : 30;
+  ctx.font = `bold ${fontSize}px 'Arial Black',Arial,sans-serif`;
+  const words = title.split(" ");
+  const maxW = W - 64;
+  let lines=[], line="";
+  words.forEach(w=>{
+    const test = line ? line+" "+w : w;
+    if(ctx.measureText(test).width > maxW){ lines.push(line); line=w; }
+    else line=test;
+  });
+  if(line) lines.push(line);
+  lines = lines.slice(0,3);
+  const lineH = fontSize+8;
+  let y = H - 80 - (lines.length-1)*lineH;
+  lines.forEach(l=>{ ctx.fillText(l,32,y); y+=lineH; });
+  ctx.shadowBlur=0;
+
+  // Teaser/hook line
+  const teaser = art.teaser ? art.teaser.replace(/[🔴🚨💥🌍🏆🔥👇⬇️]/gu,"").trim().substring(0,80) : "";
+  if(teaser){
+    ctx.fillStyle="rgba(255,220,60,0.95)";
+    ctx.font="13px Arial,sans-serif";
+    ctx.fillText(teaser, 32, H-24);
+  }
+
+  // Bottom bar
+  ctx.fillStyle="rgba(232,25,44,0.9)"; ctx.fillRect(0,H-6,W,6);
+
+  // Show canvas, hide spinner
+  canvas.style.display="block";
+  document.getElementById("aiImgLoading").style.display="none";
+  document.getElementById("aiDownloadBar").style.display="flex";
+}
+
+function aiImgLoaded(){
+  // Draw poster with loaded image as background
+  const img = document.getElementById("aiGeneratedImg");
+  drawPoster(img);
 }
 
 function regeneratePoster(){
   if(!activeArticle) return;
-  document.getElementById("aiImgLoading").style.display="flex";
+  document.getElementById("posterCanvas").style.display="none";
   document.getElementById("aiGeneratedImg").style.display="none";
   document.getElementById("aiDownloadBar").style.display="none";
-  document.getElementById("aiGeneratedImg").src = getAiImageUrl(activeArticle.title) + "&t=" + Date.now();
+  document.getElementById("aiImgLoading").style.display="flex";
+  // try AI image first, fall back to text-only poster
+  const img = document.getElementById("aiGeneratedImg");
+  img.src="";
+  setTimeout(()=>{ img.src = getAiImageUrl(activeArticle.title)+"&t="+Date.now(); },100);
 }
 
 // Boot
@@ -1391,6 +1542,12 @@ function adminEditArticle(id){
   document.getElementById("adminEditForm").scrollIntoView({behavior:"smooth"});
 }
 
+function adminSaveSmart(){
+  const id = parseInt(document.getElementById("editId").value);
+  const isNew = ARTICLES.findIndex(x=>x.id===id) === -1;
+  if(isNew){ adminSaveNew(); } else { adminSaveArticle(); }
+}
+
 function adminSaveArticle(){
   const id = parseInt(document.getElementById("editId").value);
   const idx = ARTICLES.findIndex(x=>x.id===id);
@@ -1568,7 +1725,7 @@ window.openArticle = function(id){
           </div>
         </div>
         <div class="admin-form-actions">
-          <button class="admin-save-btn" id="adminSaveBtn" onclick="adminSaveArticle()">💾 Save Changes</button>
+          <button class="admin-save-btn" id="adminSaveBtn" onclick="adminSaveSmart()">💾 Save Article</button>
           <button class="admin-cancel-btn" onclick="cancelEdit()">Cancel</button>
         </div>
       </div>
