@@ -19,7 +19,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .ticker-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:blink 1s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 .ticker-scroll{overflow:hidden;display:flex;align-items:center;flex:1;}
-.ticker-inner{display:flex;white-space:nowrap;animation:scrollLeft 55s linear infinite;}
+.ticker-inner{display:flex;white-space:nowrap;animation:scrollLeft 300s linear infinite;}
 .ticker-inner span{font-size:12.5px;font-weight:500;padding:0 36px;color:#fff;cursor:pointer;}
 .ticker-inner span::after{content:'◆';margin-left:36px;opacity:0.5;}
 @keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
@@ -950,7 +950,12 @@ document.getElementById('dateDisplay').textContent = new Date().toLocaleDateStri
 // Ticker
 function renderTicker(arts){
   const h = arts.map(a=>`<span onclick="openArticle(${a.id})">${a.title}</span>`).join("");
-  document.getElementById("tickerInner").innerHTML = h+h;
+  const el = document.getElementById("tickerInner");
+  el.innerHTML = h+h;
+  requestAnimationFrame(()=>{
+    const duration = Math.max(40, Math.round(el.scrollWidth / 2 / 80));
+    el.style.animationDuration = duration + "s";
+  });
 }
 
 // Placeholder
