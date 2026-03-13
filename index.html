@@ -231,60 +231,111 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
   .footer-bottom{flex-direction:column;gap:6px;text-align:center;padding:12px;}
   .ticker-inner span{font-size:11px;padding:0 20px;}
   .breaking-ticker{font-size:11px;}
-  
-  
-  
-  
+  .admin-stats-grid{grid-template-columns:1fr 1fr;}
+  .admin-content{padding:12px;}
+  .admin-art-row{flex-wrap:wrap;gap:8px;}
+  .admin-form-grid{grid-template-columns:1fr;}
   .admin-form-grid .admin-form-group.full{grid-column:1;}
 }
 
 /* ── ADMIN STYLES ── */
-
+.admin-login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:2000;align-items:center;justify-content:center;}
 .admin-login-overlay.open{display:flex;}
-
-
+.admin-login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:12px;padding:40px;width:360px;max-width:90vw;}
+.admin-login-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--white);margin-bottom:4px;}
 .admin-login-logo em{color:var(--accent);font-style:normal;}
+.admin-login-sub{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:28px;}
+.admin-login-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:6px;display:block;}
+.admin-login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 14px;border-radius:6px;outline:none;margin-bottom:14px;}
+.admin-login-input:focus{border-color:var(--accent);}
+.admin-login-btn{width:100%;background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:12px;border-radius:6px;cursor:pointer;margin-top:4px;}
+.admin-login-btn:hover{background:#c0111f;}
+.admin-login-error{color:#ff6b6b;font-size:12px;margin-top:10px;display:none;}
+.admin-login-cancel{text-align:center;margin-top:14px;font-size:12px;color:var(--text3);cursor:pointer;}
+.admin-login-cancel:hover{color:var(--text);}
 
+.admin-panel{display:none;position:fixed;inset:0;background:var(--bg);z-index:1800;overflow-y:auto;}
 .admin-panel.open{display:block;}
-
-
+.admin-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;height:60px;gap:20px;position:sticky;top:0;z-index:10;}
+.admin-header-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--white);}
 .admin-header-logo em{color:var(--accent);font-style:normal;}
+.admin-header-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
+.admin-header-actions{margin-left:auto;display:flex;gap:10px;}
+.admin-close-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;}
+.admin-close-btn:hover{border-color:var(--accent);color:var(--accent);}
+.admin-logout-btn{background:rgba(232,25,44,0.1);border:1px solid rgba(232,25,44,0.3);color:var(--accent);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;}
 
+.admin-tabs{display:flex;gap:2px;padding:0 32px;background:var(--surface);border-bottom:1px solid var(--border);}
+.admin-tab-btn{background:none;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:14px 20px;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;}
+.admin-tab-btn:hover{color:var(--white);}
 .admin-tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
 
+.admin-content{max-width:1100px;margin:0 auto;padding:32px;}
+.admin-tab-pane{display:none;}
 .admin-tab-pane.active{display:block;}
 
-
+.admin-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
 .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center;}
 .stat-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--accent);line-height:1;}
 .stat-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:6px;}
-
-
+.admin-section-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--white);margin-bottom:16px;}
+.admin-bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px;}
 .bar-row{display:flex;align-items:center;gap:14px;}
 .bar-label{font-size:12px;font-weight:600;color:var(--text2);width:110px;flex-shrink:0;}
 .bar-track{flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;}
 .bar-fill{height:100%;background:var(--accent);border-radius:4px;transition:width 0.6s ease;}
 .bar-count{font-size:12px;font-weight:700;color:var(--text3);width:30px;text-align:right;}
-
-
+.admin-viewed-list{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.admin-viewed-item{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border);}
 .admin-viewed-item:last-child{border-bottom:none;}
+.admin-viewed-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--border);min-width:28px;line-height:1;margin-top:2px;}
+.admin-viewed-title{font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);margin-bottom:4px;}
+.admin-viewed-meta{font-size:11px;color:var(--text3);}
 
+.admin-articles-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.admin-search-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 14px;border-radius:6px;outline:none;}
+.admin-search-input:focus{border-color:var(--accent);}
+.admin-add-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:10px 20px;border-radius:6px;cursor:pointer;white-space:nowrap;}
+.admin-add-btn:hover{background:#c0111f;}
+
+.admin-art-row{display:flex;align-items:center;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;}
+.admin-art-thumb{width:80px;height:54px;object-fit:cover;border-radius:5px;flex-shrink:0;background:var(--surface2);}
+.admin-art-info{flex:1;min-width:0;}
+.admin-art-title{font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;}
+.admin-art-meta{font-size:11px;color:var(--text3);}
+.admin-cat-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-right:6px;}
+.admin-art-actions{display:flex;gap:8px;flex-shrink:0;}
+.admin-btn-edit{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:600;padding:6px 12px;border-radius:5px;cursor:pointer;}
+.admin-btn-edit:hover{border-color:var(--accent);color:var(--accent);}
+.admin-btn-del{background:rgba(232,25,44,0.08);border:1px solid rgba(232,25,44,0.25);color:var(--accent);font-size:11px;font-weight:600;padding:6px 12px;border-radius:5px;cursor:pointer;}
+.admin-btn-del:hover{background:var(--accent);color:#fff;}
+
+.admin-edit-form{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:24px;margin-bottom:24px;display:none;}
+.admin-edit-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--white);margin-bottom:20px;}
+.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.admin-form-group{display:flex;flex-direction:column;gap:5px;}
 .admin-form-group.full{grid-column:1/-1;}
-
-.admin-form-input,.admin-form-select,
-.admin-form-input:focus,.admin-form-select:focus,
-
-
+.admin-form-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
+.admin-form-input,.admin-form-select,.admin-form-textarea{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border-radius:6px;outline:none;width:100%;}
+.admin-form-input:focus,.admin-form-select:focus,.admin-form-textarea:focus{border-color:var(--accent);}
+.admin-form-select{cursor:pointer;}
+.admin-form-textarea{resize:vertical;min-height:90px;}
 .admin-form-textarea.tall{min-height:160px;}
+.admin-form-actions{display:flex;gap:10px;margin-top:6px;}
+.admin-save-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:10px 24px;border-radius:6px;cursor:pointer;}
+.admin-save-btn:hover{background:#c0111f;}
+.admin-cancel-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:10px 18px;border-radius:6px;cursor:pointer;}
+.admin-cancel-btn:hover{border-color:var(--border);color:var(--text);}
 
+.admin-toast{position:fixed;bottom:28px;right:28px;background:var(--surface);border:1px solid var(--accent);color:var(--text);font-size:13px;font-weight:600;padding:12px 22px;border-radius:8px;z-index:3000;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;}
 .admin-toast.show{opacity:1;transform:translateY(0);}
 
 @media(max-width:700px){
-  
-  
-  
-  
-  
+  .admin-stats-grid{grid-template-columns:1fr 1fr;}
+  .admin-form-grid{grid-template-columns:1fr;}
+  .admin-art-row{flex-wrap:wrap;}
+  .admin-content{padding:16px;}
+  .admin-tabs{padding:0 16px;overflow-x:auto;}
 }
 
 
@@ -310,6 +361,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
      crossorigin="anonymous"></script>
 </head>
 <body>
+
 
 <div class="ticker-wrap">
   <div class="ticker-tag"><div class="ticker-dot"></div>BREAKING</div>
@@ -494,7 +546,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. Nairobi, Kenya.</div>
+    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. Nairobi, Kenya. </div>
     <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
   </div>
 </footer>
@@ -560,8 +612,12 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
 const SITE_URL = "https://hustle254.com";
 const SITE_NAME = "Hustle 254";
 
+const ARTICLES = []
+let currentArticles = [...ARTICLES];
+let activeArticle = null;
 
-);
+// Date display
+document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
 // Ticker
 function renderTicker(arts){
@@ -943,12 +999,10 @@ function downloadPoster(){
 renderAll(ARTICLES);
 
 // ============================================================
-)();
 // ============================================================
 
 
-// Keyboard shortcut listener
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
+
 
 // ── ADMIN PANEL ──────────────────────────────────────────────
 function showAdminPanel(){
@@ -963,36 +1017,6 @@ function showAdminPanel(){
 
 // ── ARTICLE MANAGER ──────────────────────────────────────────
 
-// ── Serialize ARTICLES to embeddable JS ──────────────────────────────────────
-{
-  return ARTICLES.map(a => {
-    const esc = s => (s||"").replace(/\\/g,"\\\\").replace(/`/g,"\\`").replace(/\${/g,"\\${");
-    return "  {id:"+a.id+",title:"+JSON.stringify(a.title)+
-      ",category:"+JSON.stringify(a.category)+
-      ",region:"+JSON.stringify(a.region)+
-      ",img:"+JSON.stringify(a.img||"")+
-      ",summary:"+JSON.stringify(a.summary||"")+
-      ",body:`"+esc(a.body||"")+"`"+
-      ",date:"+JSON.stringify(a.date||"")+
-      ",teaser:"+JSON.stringify(a.teaser||"")+"}";
-  }).join(",\n");
-}
-
-// ── Build full updated HTML string ───────────────────────────────────────────
-
-
-// ── PUBLISH DIRECT TO GITHUB ─────────────────────────────────────────────────
-
-
-// ── Backup download (fallback) ────────────────────────────────────────────────
-
-
-// ── Token management ────────────────────────────────────────────────────────
-
-
-window.addEventListener("load", loadToken);
-// ────────────────────────────────────────────────────────────────────────────
-
 // Track article views
 const origOpen = openArticle;
 window.openArticle = function(id){
@@ -1002,5 +1026,6 @@ window.openArticle = function(id){
 
 </script>
 
+<div class="admin-toast" id="adminToast"></div>
 </body>
 </html>
