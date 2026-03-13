@@ -545,7 +545,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. Nairobi, Kenya. <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.12;user-select:none;font-size:16px;padding:8px;display:inline-block;">⚙</span></div>
+    <div class="footer-copy">© <span id="adminTrigger" ondblclick="openAdminLogin()" style="user-select:none;cursor:default;">2026</span> Hustle 254. All rights reserved. Nairobi, Kenya.</div>
     <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
   </div>
 </footer>
@@ -612,7 +612,8 @@ const SITE_URL = "https://hustle254.com";
 const SITE_NAME = "Hustle 254";
 
 // GitHub publishing handled via admin.html (private)
-const GITHUB_TOKEN="",GITHUB_OWNER="hotnewss",GITHUB_REPO="hotnews",GITHUB_FILE="index.html";
+let GITHUB_TOKEN = localStorage.getItem("h254_gh_token") || "";
+const GITHUB_OWNER="hotnewss",GITHUB_REPO="hotnews",GITHUB_FILE="index.html";
 
 
 const ARTICLES = [];
@@ -1005,7 +1006,17 @@ function downloadPoster(){
 renderAll(ARTICLES);
 
 // ============================================================
-// ADMIN PANEL — click ⚙ gear icon in footer
+// ADMIN PANEL — double-click "2026" in footer (desktop) or long-press (mobile)
+(function(){
+  var t;
+  window.addEventListener("DOMContentLoaded", function(){
+    var el = document.getElementById("adminTrigger");
+    if(!el) return;
+    el.addEventListener("touchstart", function(){ t = setTimeout(openAdminLogin, 600); }, {passive:true});
+    el.addEventListener("touchend",   function(){ clearTimeout(t); }, {passive:true});
+    el.addEventListener("touchmove",  function(){ clearTimeout(t); }, {passive:true});
+  });
+})();
 // ============================================================
 const ADMIN_USER = "Benedict";
 const ADMIN_PASS = "Benedict12#";
@@ -1344,6 +1355,29 @@ function exportUpdatedHTML(){
   a.download = "index.html"; a.click();
   showAdminToast("✅ Backup downloaded.");
 }
+
+// ── Token management ────────────────────────────────────────────────────────
+function saveToken(val){
+  GITHUB_TOKEN = val.trim();
+  localStorage.setItem("h254_gh_token", GITHUB_TOKEN);
+  const status = document.getElementById("tokenStatus");
+  if(status){
+    status.textContent = GITHUB_TOKEN ? "✅ token saved" : "not set";
+    status.style.color = GITHUB_TOKEN ? "#3fb950" : "#888";
+  }
+}
+function loadToken(){
+  const t = localStorage.getItem("h254_gh_token") || "";
+  if(t){
+    GITHUB_TOKEN = t;
+    const input = document.getElementById("ghTokenInput");
+    const status = document.getElementById("tokenStatus");
+    if(input) input.value = t;
+    if(status){ status.textContent = "✅ token saved"; status.style.color = "#3fb950"; }
+  }
+}
+window.addEventListener("load", loadToken);
+// ────────────────────────────────────────────────────────────────────────────
 
 // Track article views
 const origOpen = openArticle;
