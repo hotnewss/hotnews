@@ -361,9 +361,6 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
      crossorigin="anonymous"></script>
 </head>
 <body>
-<div style="background:#e8192c;color:#fff;text-align:center;padding:10px;font-size:13px;font-weight:700;letter-spacing:1px;">
-  ⚠️ PRIVATE ADMIN FILE — DO NOT UPLOAD TO GITHUB OR SHARE WITH ANYONE ⚠️
-</div>
 
 
 <div class="ticker-wrap">
@@ -1014,11 +1011,10 @@ function downloadPoster(){
 renderAll(ARTICLES);
 
 // ============================================================
-// ADMIN PANEL — Press Ctrl+Shift+A or type "hustle254admin"
-// Login: admin / hustle254
+// ADMIN PANEL — Press Ctrl+Shift+A
 // ============================================================
-const ADMIN_USER = "admin";
-const ADMIN_PASS = "hustle254";
+const ADMIN_USER = "Benedict";
+const ADMIN_PASS = "Benedict12#";
 let adminLoggedIn = false;
 let adminKeyBuffer = "";
 let editingId = null;
@@ -1038,7 +1034,7 @@ document.addEventListener("keydown", function(e){
   if(e.ctrlKey && e.shiftKey && e.key==="A"){ e.preventDefault(); openAdminLogin(); return; }
   adminKeyBuffer += e.key;
   if(adminKeyBuffer.length > 14) adminKeyBuffer = adminKeyBuffer.slice(-14);
-  if(adminKeyBuffer.includes("hustle254admin")){ adminKeyBuffer=""; openAdminLogin(); }
+  if(adminKeyBuffer.includes("benedict254")){ adminKeyBuffer=""; openAdminLogin(); }
 });
 
 function openAdminLogin(){
