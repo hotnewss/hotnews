@@ -435,12 +435,14 @@ async function publishToGitHub(){
     // 2. Replace ARTICLES array in the live index.html
     const marker = "const ARTICLES = [";
     const s = currentHTML.indexOf(marker);
+    if(s===-1) throw new Error("Could not find ARTICLES in index.html");
+    // Find closing ] accounting for empty [] or full array
     let depth=0, e=-1;
     for(let i=s+marker.length-1;i<currentHTML.length;i++){
       if(currentHTML[i]==="[") depth++;
       else if(currentHTML[i]==="]"){ depth--; if(depth===0){e=i+1;break;} }
     }
-    if(s===-1||e===-1) throw new Error("Could not find ARTICLES in index.html");
+    if(e===-1) throw new Error("Could not find end of ARTICLES array in index.html");
     const newHTML = currentHTML.slice(0,s)+"const ARTICLES = [\n"+serializeArticles()+"\n]"+currentHTML.slice(e);
 
     // 3. Push to GitHub
