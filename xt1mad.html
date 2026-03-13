@@ -1,1234 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-adsense-account" content="ca-pub-4575381845991909">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⚙️ ADMIN — Hustle 254 — Breaking News Worldwide</title>
-<meta name="description" content="Hustle 254 — Kenya's #1 Hustle & News Site. Breaking news from Kenya and around the world.">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<title>H254 Admin</title>
 <style>
-:root{--bg:#0d0d0f;--surface:#141418;--surface2:#1c1c22;--border:#2a2a32;--accent:#e8192c;--text:#f0eff4;--text2:#9896a4;--text3:#5c5a68;--white:#ffffff;}
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden;}
-::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0d0d0f;color:#e0e0e0;font-family:'Segoe UI',sans-serif;min-height:100vh;}
 
-/* TICKER */
-.ticker-wrap{background:var(--accent);overflow:hidden;display:flex;align-items:stretch;height:38px;}
-.ticker-tag{background:var(--white);color:var(--accent);font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;padding:0 20px;display:flex;align-items:center;gap:7px;flex-shrink:0;}
-.ticker-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:blink 1s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.ticker-scroll{overflow:hidden;display:flex;align-items:center;flex:1;}
-.ticker-inner{display:flex;white-space:nowrap;animation:scrollLeft 300s linear infinite;}
-.ticker-inner span{font-size:12.5px;font-weight:500;padding:0 36px;color:#fff;cursor:pointer;}
-.ticker-inner span::after{content:'◆';margin-left:36px;opacity:0.5;}
-@keyframes scrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;}
+.login-box{background:#141418;border:1px solid #2a2a35;border-top:3px solid #e8192c;border-radius:12px;padding:40px;width:360px;max-width:90vw;}
+.login-logo{font-size:26px;font-weight:900;letter-spacing:3px;color:#fff;margin-bottom:4px;}
+.login-logo span{color:#e8192c;}
+.login-sub{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#666;margin-bottom:28px;}
+.login-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;display:block;}
+.login-input{width:100%;background:#1c1c22;border:1px solid #2a2a35;color:#fff;font-size:13px;padding:10px 14px;border-radius:6px;outline:none;margin-bottom:14px;}
+.login-input:focus{border-color:#e8192c;}
+.login-btn{width:100%;background:#e8192c;border:none;color:#fff;font-size:13px;font-weight:700;letter-spacing:1px;padding:12px;border-radius:6px;cursor:pointer;margin-top:4px;}
+.login-btn:hover{background:#c0111f;}
+.login-error{color:#ff6b6b;font-size:12px;margin-top:10px;display:none;text-align:center;}
 
-/* HEADER */
-header{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:200;}
-.header-inner{max-width:1300px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:28px;height:68px;}
-.logo{display:flex;flex-direction:column;line-height:1;text-decoration:none;flex-shrink:0;}
-.logo-main{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:3px;color:var(--white);}
-.logo-main em{color:var(--accent);font-style:normal;}
-.logo-sub{font-size:8px;font-weight:500;letter-spacing:3px;text-transform:uppercase;color:var(--text2);margin-top:1px;}
-.header-divider{width:1px;height:36px;background:var(--border);flex-shrink:0;}
-nav{display:flex;align-items:center;gap:1px;flex:1;overflow-x:auto;}
-nav::-webkit-scrollbar{display:none;}
-nav a{color:var(--text2);text-decoration:none;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:7px 12px;border-radius:4px;transition:all 0.2s;white-space:nowrap;cursor:pointer;}
-nav a:hover{color:var(--white);background:var(--surface2);}
-nav a.active{color:var(--accent);}
-.header-actions{display:flex;align-items:center;margin-left:auto;gap:8px;}
-.search-box{display:flex;align-items:center;background:var(--surface2);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
-.search-box:focus-within{border-color:var(--accent);}
-.search-box input{background:none;border:none;color:var(--text);font-size:12px;padding:8px 12px;outline:none;width:170px;}
-.search-box input::placeholder{color:var(--text3);}
-.search-box button{background:var(--accent);border:none;color:#fff;padding:8px 12px;cursor:pointer;font-size:13px;}
+/* ADMIN PANEL */
+#adminScreen{display:none;}
+.topbar{background:#141418;border-bottom:1px solid #2a2a35;padding:0 24px;display:flex;align-items:center;gap:16px;height:56px;}
+.topbar-logo{font-size:18px;font-weight:900;letter-spacing:2px;color:#fff;flex:1;}
+.topbar-logo span{color:#e8192c;}
+.topbar-btn{background:none;border:1px solid #333;color:#aaa;font-size:12px;padding:6px 14px;border-radius:6px;cursor:pointer;}
+.topbar-btn:hover{background:#1c1c22;color:#fff;}
+.topbar-btn.green{background:#238636;border-color:#238636;color:#fff;}
+.topbar-btn.green:hover{background:#1a6e2a;}
+.topbar-btn.red{background:#e8192c;border-color:#e8192c;color:#fff;}
 
-/* HERO */
-.hero-section{max-width:1300px;margin:0 auto;padding:32px 32px 0;}
-.date-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-.date-text{font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
-.live-badge{display:flex;align-items:center;gap:7px;background:rgba(232,25,44,0.12);border:1px solid rgba(232,25,44,0.3);border-radius:100px;padding:4px 12px;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
-.live-dot{width:6px;height:6px;background:var(--accent);border-radius:50%;animation:blink 1s infinite;}
-.hero-grid{display:grid;grid-template-columns:1fr 380px;grid-template-rows:1fr 1fr;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:36px;min-height:480px;}
-.hero-main{grid-row:1/3;position:relative;overflow:hidden;cursor:pointer;}
-.hero-main img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;}
-.hero-main:hover img{transform:scale(1.03);}
-.hero-main-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.96) 0%,rgba(0,0,0,0.3) 55%,transparent 100%);}
-.hero-main-content{position:absolute;bottom:0;left:0;right:0;padding:28px;}
-.hero-label{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:12px;}
-.hero-main-title{font-family:'DM Serif Display',serif;font-size:28px;line-height:1.2;color:#fff;margin-bottom:10px;}
-.hero-main-summary{font-size:13px;color:rgba(255,255,255,0.72);line-height:1.65;margin-bottom:14px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.hero-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:rgba(255,255,255,0.5);font-weight:500;flex-wrap:wrap;}
-.source-pill{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);border-radius:100px;padding:3px 10px;font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.8);}
-.hero-share-btn{background:var(--accent);border:none;color:#fff;padding:4px 12px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:background 0.2s;}
-.hero-share-btn:hover{background:#c0111f;}
-.hero-side-card{background:var(--surface);padding:18px;display:flex;gap:14px;align-items:flex-start;cursor:pointer;transition:background 0.2s;overflow:hidden;}
-.hero-side-card:hover{background:var(--surface2);}
-.hero-side-img{width:100px;height:72px;object-fit:cover;border-radius:6px;flex-shrink:0;}
-.hero-side-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
-.hero-side-divider{width:24px;height:2px;background:var(--accent);border-radius:1px;margin:4px 0 6px;}
-.hero-side-title{font-family:'DM Serif Display',serif;font-size:14px;line-height:1.3;color:var(--text);}
-.hero-side-meta{font-size:10px;color:var(--text3);font-weight:500;margin-top:5px;}
+/* TOKEN BAR */
+.token-bar{background:#0f1117;border-bottom:1px solid #1e2030;padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.token-bar label{font-size:11px;font-weight:700;color:#e8192c;letter-spacing:1px;white-space:nowrap;}
+.token-input{flex:1;min-width:200px;background:#1c1c22;border:1px solid #333;color:#fff;padding:7px 12px;border-radius:6px;font-size:12px;font-family:monospace;outline:none;}
+.token-input:focus{border-color:#e8192c;}
+.token-status{font-size:11px;color:#666;white-space:nowrap;}
+.token-link{font-size:11px;color:#58a6ff;text-decoration:none;white-space:nowrap;}
 
-/* BODY */
-.page-body{max-width:1300px;margin:0 auto;padding:0 32px 60px;display:grid;grid-template-columns:1fr 310px;gap:44px;}
-.section-header{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
-.section-header-line{flex:1;height:1px;background:var(--border);}
-.section-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--white);white-space:nowrap;}
-.section-accent{width:4px;height:20px;background:var(--accent);border-radius:2px;flex-shrink:0;}
+/* MAIN LAYOUT */
+.main{display:flex;height:calc(100vh - 96px);}
+.sidebar{width:280px;background:#141418;border-right:1px solid #2a2a35;overflow-y:auto;flex-shrink:0;}
+.sidebar-header{padding:16px;border-bottom:1px solid #2a2a35;display:flex;align-items:center;gap:8px;}
+.sidebar-title{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;flex:1;}
+.new-btn{background:#e8192c;border:none;color:#fff;font-size:11px;font-weight:700;padding:6px 12px;border-radius:6px;cursor:pointer;white-space:nowrap;}
+.new-btn:hover{background:#c0111f;}
+.sidebar-search{padding:10px 16px;border-bottom:1px solid #2a2a35;}
+.search-input{width:100%;background:#1c1c22;border:1px solid #2a2a35;color:#fff;font-size:12px;padding:7px 10px;border-radius:6px;outline:none;}
+.search-input:focus{border-color:#e8192c;}
+.article-list{padding:8px;}
+.article-item{padding:10px 12px;border-radius:6px;cursor:pointer;border:1px solid transparent;margin-bottom:4px;}
+.article-item:hover{background:#1c1c22;}
+.article-item.active{background:#1c1c22;border-color:#e8192c;}
+.article-item-title{font-size:12px;font-weight:600;color:#e0e0e0;line-height:1.4;margin-bottom:4px;}
+.article-item-meta{font-size:10px;color:#555;display:flex;gap:8px;}
+.article-item-cat{color:#e8192c;}
+.article-item-del{float:right;background:none;border:none;color:#444;cursor:pointer;font-size:13px;padding:0 2px;}
+.article-item-del:hover{color:#e8192c;}
+.empty-list{padding:32px 16px;text-align:center;color:#444;font-size:13px;}
 
-/* ARTICLE GRID */
-.article-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:36px;}
-.article-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;cursor:pointer;transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;}
-.article-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 36px rgba(0,0,0,0.4);}
-.card-img-wrap{position:relative;overflow:hidden;aspect-ratio:16/9;background:var(--surface2);}
-.card-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
-.article-card:hover .card-img-wrap img{transform:scale(1.06);}
-.card-cat-tag{position:absolute;top:8px;left:8px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
-.card-body{padding:16px;}
-.card-title{font-family:'DM Serif Display',serif;font-size:15px;line-height:1.35;color:var(--text);margin-bottom:8px;}
-.card-summary{font-size:12px;color:var(--text2);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px;}
-.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);}
-.card-time{font-size:10px;color:var(--text3);font-weight:500;}
-.card-actions{display:flex;gap:8px;align-items:center;}
-.card-read{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent);cursor:pointer;}
-.card-share-mini{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:11px;padding:3px 8px;border-radius:4px;cursor:pointer;transition:all 0.2s;}
-.card-share-mini:hover{border-color:var(--accent);color:var(--accent);}
+/* EDITOR */
+.editor{flex:1;overflow-y:auto;padding:24px;}
+.editor-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#333;text-align:center;}
+.editor-empty-icon{font-size:48px;margin-bottom:16px;}
+.editor-empty-text{font-size:14px;}
+.editor-title{font-size:16px;font-weight:700;color:#fff;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #2a2a35;}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.form-group{display:flex;flex-direction:column;gap:6px;}
+.form-group.full{grid-column:1/-1;}
+.form-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#666;}
+.form-input,.form-select,.form-textarea{background:#1c1c22;border:1px solid #2a2a35;color:#fff;font-size:13px;padding:10px 12px;border-radius:6px;outline:none;font-family:'Segoe UI',sans-serif;width:100%;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:#e8192c;}
+.form-select option{background:#1c1c22;}
+.form-textarea{resize:vertical;min-height:90px;}
+.form-textarea.tall{min-height:180px;}
+.form-actions{margin-top:20px;display:flex;gap:10px;}
+.save-btn{background:#e8192c;border:none;color:#fff;font-size:13px;font-weight:700;padding:12px 28px;border-radius:6px;cursor:pointer;}
+.save-btn:hover{background:#c0111f;}
+.cancel-btn{background:none;border:1px solid #333;color:#888;font-size:13px;padding:12px 20px;border-radius:6px;cursor:pointer;}
+.cancel-btn:hover{background:#1c1c22;color:#fff;}
 
-/* LIST */
-.article-list{display:flex;flex-direction:column;}
-.list-item{display:grid;grid-template-columns:100px 1fr;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.2s;}
-.list-item:last-child{border-bottom:none;}
-.list-item:hover{opacity:0.8;}
-.list-thumb{aspect-ratio:4/3;overflow:hidden;border-radius:7px;background:var(--surface2);}
-.list-thumb img{width:100%;height:100%;object-fit:cover;transition:transform 0.3s;}
-.list-item:hover .list-thumb img{transform:scale(1.05);}
-.list-cat{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:4px;}
-.list-title{font-family:'DM Serif Display',serif;font-size:14px;line-height:1.3;color:var(--text);margin-bottom:6px;}
-.list-summary{font-size:11.5px;color:var(--text2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px;}
-.list-foot{display:flex;align-items:center;justify-content:space-between;}
-.list-meta{font-size:10px;color:var(--text3);font-weight:500;}
-.list-share{background:none;border:1px solid var(--border);color:var(--text3);font-size:10px;padding:2px 8px;border-radius:4px;cursor:pointer;transition:all 0.2s;}
-.list-share:hover{border-color:var(--accent);color:var(--accent);}
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;background:#238636;color:#fff;font-size:13px;font-weight:600;padding:12px 20px;border-radius:8px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;}
+.toast.show{opacity:1;}
+.toast.error{background:#e8192c;}
 
-/* SIDEBAR */
-.sidebar-widget{margin-bottom:32px;}
-.trending-item{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity 0.2s;}
-.trending-item:last-child{border-bottom:none;}
-.trending-item:hover{opacity:0.75;}
-.trending-num{font-family:'Bebas Neue',sans-serif;font-size:32px;line-height:1;color:var(--border);min-width:32px;transition:color 0.2s;}
-.trending-item:hover .trending-num{color:var(--accent);}
-.trending-title{font-family:'DM Serif Display',serif;font-size:13px;line-height:1.3;color:var(--text);margin-bottom:4px;}
-.trending-meta{font-size:10px;color:var(--text3);font-weight:500;}
-.cat-list{display:flex;flex-wrap:wrap;gap:6px;}
-.cat-chip{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:5px 11px;border-radius:100px;cursor:pointer;transition:all 0.2s;}
-.cat-chip:hover,.cat-chip.active{border-color:var(--accent);color:var(--accent);background:rgba(232,25,44,0.08);}
-.social-btn{display:flex;align-items:center;gap:10px;padding:11px 16px;border-radius:8px;text-decoration:none;font-size:12px;font-weight:600;margin-bottom:7px;transition:opacity 0.2s,transform 0.2s;cursor:pointer;border:none;}
-.social-btn:hover{opacity:0.85;transform:translateX(3px);}
-.social-btn.facebook{background:#1877f2;color:#fff;}
-.social-btn.twitter{background:#000;color:#fff;border:1px solid #333;}
-.social-btn.whatsapp{background:#25d366;color:#fff;}
-.social-btn.telegram{background:#0088cc;color:#fff;}
-.update-box{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:14px 16px;display:flex;align-items:center;gap:10px;}
-.update-text{font-size:11px;color:var(--text2);line-height:1.5;}
-.update-text strong{color:var(--text);font-weight:600;display:block;}
-
-/* ARTICLE MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:999;overflow-y:auto;padding:20px;}
-.modal-overlay.open{display:block;}
-.modal-box{max-width:820px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;position:relative;}
-.modal-img-wrap{position:relative;}
-.modal-img{width:100%;aspect-ratio:16/7;object-fit:cover;display:block;}
-.modal-img-gen{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.7);border:1px solid var(--border);color:var(--text2);font-size:10px;padding:4px 10px;border-radius:4px;display:flex;align-items:center;gap:5px;}
-.modal-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);border:1px solid rgba(255,255,255,0.2);color:#fff;font-size:18px;cursor:pointer;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:10;}
-.modal-close:hover{background:var(--accent);border-color:var(--accent);}
-.modal-body{padding:32px;}
-.modal-cat{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-.modal-title{font-family:'DM Serif Display',serif;font-size:26px;line-height:1.25;color:var(--text);margin-bottom:14px;}
-.modal-summary{font-size:14px;color:var(--text2);line-height:1.75;border-left:3px solid var(--accent);padding-left:14px;margin-bottom:22px;font-style:italic;}
-.modal-body-text{font-size:14.5px;color:var(--text2);line-height:1.9;white-space:pre-line;margin-bottom:28px;}
-
-/* SHARE PANEL inside modal */
-.share-panel{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px;}
-.share-panel-title{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;color:var(--white);margin-bottom:6px;}
-.share-panel-sub{font-size:12px;color:var(--text2);margin-bottom:16px;}
-.share-teaser{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:14px;font-size:12.5px;color:var(--text2);line-height:1.7;margin-bottom:16px;font-style:italic;}
-.share-buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.share-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:opacity 0.2s,transform 0.2s;text-decoration:none;}
-.share-btn:hover{opacity:0.85;transform:translateY(-1px);}
-.share-btn.fb{background:#1877f2;color:#fff;}
-.share-btn.tw{background:#000;color:#fff;border:1px solid #333;}
-.share-btn.wa{background:#25d366;color:#fff;}
-.share-btn.tg{background:#0088cc;color:#fff;}
-.share-btn.li{background:#0a66c2;color:#fff;}
-.share-btn.tt{background:#010101;color:#fff;border:1px solid #333;}
-.share-btn.em{background:var(--surface);color:var(--text);border:1px solid var(--border);}
-.share-btn.cp{background:var(--surface);color:var(--text);border:1px solid var(--border);}
-.share-btn.cp.copied{background:rgba(25,200,100,0.15);border-color:#19c864;color:#19c864;}
-
-/* AI IMAGE SECTION */
-.ai-image-section{margin-bottom:22px;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;}
-.ai-image-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-.ai-image-title span{color:var(--accent);}
-.ai-generated-img{width:100%;border-radius:6px;border:1px solid var(--border);display:block;}
-.ai-img-loading{width:100%;aspect-ratio:16/7;border-radius:6px;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;border:1px dashed var(--border);}
-.ai-img-spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg)}}
-.ai-img-text{font-size:11px;color:var(--text3);letter-spacing:1px;}
-.ai-dl-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:8px 16px;border-radius:6px;cursor:pointer;}
-.ai-dl-btn:hover{background:#c0111f;}
-.ai-dl-btn2{background:var(--surface2);border:1px solid var(--border);color:var(--text);}
-
-/* FOOTER */
-footer{background:var(--surface);border-top:1px solid var(--border);}
-.footer-top{max-width:1300px;margin:0 auto;padding:44px 32px 28px;display:grid;grid-template-columns:260px 1fr 1fr;gap:44px;}
-.footer-about{font-size:13px;color:var(--text2);line-height:1.7;margin-top:12px;}
-.footer-col-title{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--text3);margin-bottom:14px;}
-.footer-links{list-style:none;display:flex;flex-direction:column;gap:9px;}
-.footer-links a{color:var(--text2);text-decoration:none;font-size:13px;transition:color 0.2s;cursor:pointer;}
-.footer-links a:hover{color:var(--accent);}
-.footer-bottom{border-top:1px solid var(--border);padding:16px 32px;max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
-.footer-copy{font-size:11px;color:var(--text3);font-weight:500;}
-.footer-legal{display:flex;gap:16px;}
-.footer-legal a{font-size:11px;color:var(--text3);text-decoration:none;}
-.footer-legal a:hover{color:var(--accent);}
-
-.fade-in{opacity:0;transform:translateY(12px);animation:fadeUp 0.4s ease forwards;}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-
-@media(max-width:1024px){
-  .hero-grid{grid-template-columns:1fr;}
-  .hero-main{min-height:320px;}
-  .page-body{grid-template-columns:1fr;}
-  .article-grid{grid-template-columns:1fr 1fr;}
-  .footer-top{grid-template-columns:1fr 1fr;}
-  .share-buttons{grid-template-columns:1fr 1fr;}
+@media(max-width:640px){
+  .main{flex-direction:column;height:auto;}
+  .sidebar{width:100%;height:auto;max-height:40vh;}
+  .form-grid{grid-template-columns:1fr;}
+  .form-group.full{grid-column:1;}
 }
-@media(max-width:680px){
-  html,body{overflow-x:hidden;max-width:100vw;}
-  *{box-sizing:border-box;}
-  .header-inner{padding:0 12px;gap:8px;}
-  nav{display:none;}
-  .logo{font-size:22px;}
-  .search-box{max-width:120px;}
-  .search-box input{font-size:11px;padding:6px 8px;}
-  .hero-section{padding:12px 12px 0;}
-  .hero-main{min-height:220px;}
-  .hero-main-title{font-size:20px;line-height:1.2;}
-  .hero-side{display:none;}
-  .page-body{padding:12px 12px 40px;grid-template-columns:1fr;gap:24px;}
-  .article-grid{grid-template-columns:1fr;}
-  .article-list-item{flex-direction:column;}
-  .article-list-thumb{width:100%;height:160px;}
-  .sidebar{display:none;}
-  .modal-box{margin:8px;border-radius:10px;}
-  .modal-body{padding:16px;}
-  .modal-title{font-size:19px;}
-  .share-buttons{grid-template-columns:1fr 1fr;}
-  .footer-top{grid-template-columns:1fr;padding:24px 12px;}
-  .footer-bottom{flex-direction:column;gap:6px;text-align:center;padding:12px;}
-  .ticker-inner span{font-size:11px;padding:0 20px;}
-  .breaking-ticker{font-size:11px;}
-  .admin-stats-grid{grid-template-columns:1fr 1fr;}
-  .admin-content{padding:12px;}
-  .admin-art-row{flex-wrap:wrap;gap:8px;}
-  .admin-form-grid{grid-template-columns:1fr;}
-  .admin-form-grid .admin-form-group.full{grid-column:1;}
-}
-
-/* ── ADMIN STYLES ── */
-.admin-login-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:2000;align-items:center;justify-content:center;}
-.admin-login-overlay.open{display:flex;}
-.admin-login-box{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:12px;padding:40px;width:360px;max-width:90vw;}
-.admin-login-logo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--white);margin-bottom:4px;}
-.admin-login-logo em{color:var(--accent);font-style:normal;}
-.admin-login-sub{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:28px;}
-.admin-login-label{font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text2);margin-bottom:6px;display:block;}
-.admin-login-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 14px;border-radius:6px;outline:none;margin-bottom:14px;}
-.admin-login-input:focus{border-color:var(--accent);}
-.admin-login-btn{width:100%;background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:12px;border-radius:6px;cursor:pointer;margin-top:4px;}
-.admin-login-btn:hover{background:#c0111f;}
-.admin-login-error{color:#ff6b6b;font-size:12px;margin-top:10px;display:none;}
-.admin-login-cancel{text-align:center;margin-top:14px;font-size:12px;color:var(--text3);cursor:pointer;}
-.admin-login-cancel:hover{color:var(--text);}
-
-.admin-panel{display:none;position:fixed;inset:0;background:var(--bg);z-index:1800;overflow-y:auto;}
-.admin-panel.open{display:block;}
-.admin-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;height:60px;gap:20px;position:sticky;top:0;z-index:10;}
-.admin-header-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--white);}
-.admin-header-logo em{color:var(--accent);font-style:normal;}
-.admin-header-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px;}
-.admin-header-actions{margin-left:auto;display:flex;gap:10px;}
-.admin-close-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;}
-.admin-close-btn:hover{border-color:var(--accent);color:var(--accent);}
-.admin-logout-btn{background:rgba(232,25,44,0.1);border:1px solid rgba(232,25,44,0.3);color:var(--accent);padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;}
-
-.admin-tabs{display:flex;gap:2px;padding:0 32px;background:var(--surface);border-bottom:1px solid var(--border);}
-.admin-tab-btn{background:none;border:none;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:14px 20px;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;}
-.admin-tab-btn:hover{color:var(--white);}
-.admin-tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
-
-.admin-content{max-width:1100px;margin:0 auto;padding:32px;}
-.admin-tab-pane{display:none;}
-.admin-tab-pane.active{display:block;}
-
-.admin-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;text-align:center;}
-.stat-num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--accent);line-height:1;}
-.stat-label{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-top:6px;}
-.admin-section-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;color:var(--white);margin-bottom:16px;}
-.admin-bar-chart{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:12px;}
-.bar-row{display:flex;align-items:center;gap:14px;}
-.bar-label{font-size:12px;font-weight:600;color:var(--text2);width:110px;flex-shrink:0;}
-.bar-track{flex:1;height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;}
-.bar-fill{height:100%;background:var(--accent);border-radius:4px;transition:width 0.6s ease;}
-.bar-count{font-size:12px;font-weight:700;color:var(--text3);width:30px;text-align:right;}
-.admin-viewed-list{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
-.admin-viewed-item{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border-bottom:1px solid var(--border);}
-.admin-viewed-item:last-child{border-bottom:none;}
-.admin-viewed-num{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--border);min-width:28px;line-height:1;margin-top:2px;}
-.admin-viewed-title{font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);margin-bottom:4px;}
-.admin-viewed-meta{font-size:11px;color:var(--text3);}
-
-.admin-articles-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
-.admin-search-input{flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 14px;border-radius:6px;outline:none;}
-.admin-search-input:focus{border-color:var(--accent);}
-.admin-add-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:10px 20px;border-radius:6px;cursor:pointer;white-space:nowrap;}
-.admin-add-btn:hover{background:#c0111f;}
-
-.admin-art-row{display:flex;align-items:center;gap:16px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;}
-.admin-art-thumb{width:80px;height:54px;object-fit:cover;border-radius:5px;flex-shrink:0;background:var(--surface2);}
-.admin-art-info{flex:1;min-width:0;}
-.admin-art-title{font-family:'DM Serif Display',serif;font-size:14px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:5px;}
-.admin-art-meta{font-size:11px;color:var(--text3);}
-.admin-cat-badge{background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-right:6px;}
-.admin-art-actions{display:flex;gap:8px;flex-shrink:0;}
-.admin-btn-edit{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:11px;font-weight:600;padding:6px 12px;border-radius:5px;cursor:pointer;}
-.admin-btn-edit:hover{border-color:var(--accent);color:var(--accent);}
-.admin-btn-del{background:rgba(232,25,44,0.08);border:1px solid rgba(232,25,44,0.25);color:var(--accent);font-size:11px;font-weight:600;padding:6px 12px;border-radius:5px;cursor:pointer;}
-.admin-btn-del:hover{background:var(--accent);color:#fff;}
-
-.admin-edit-form{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:24px;margin-bottom:24px;display:none;}
-.admin-edit-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--white);margin-bottom:20px;}
-.admin-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-.admin-form-group{display:flex;flex-direction:column;gap:5px;}
-.admin-form-group.full{grid-column:1/-1;}
-.admin-form-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);}
-.admin-form-input,.admin-form-select,.admin-form-textarea{background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 12px;border-radius:6px;outline:none;width:100%;}
-.admin-form-input:focus,.admin-form-select:focus,.admin-form-textarea:focus{border-color:var(--accent);}
-.admin-form-select{cursor:pointer;}
-.admin-form-textarea{resize:vertical;min-height:90px;}
-.admin-form-textarea.tall{min-height:160px;}
-.admin-form-actions{display:flex;gap:10px;margin-top:6px;}
-.admin-save-btn{background:var(--accent);border:none;color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:10px 24px;border-radius:6px;cursor:pointer;}
-.admin-save-btn:hover{background:#c0111f;}
-.admin-cancel-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;padding:10px 18px;border-radius:6px;cursor:pointer;}
-.admin-cancel-btn:hover{border-color:var(--border);color:var(--text);}
-
-.admin-toast{position:fixed;bottom:28px;right:28px;background:var(--surface);border:1px solid var(--accent);color:var(--text);font-size:13px;font-weight:600;padding:12px 22px;border-radius:8px;z-index:3000;opacity:0;transform:translateY(10px);transition:all 0.3s;pointer-events:none;}
-.admin-toast.show{opacity:1;transform:translateY(0);}
-
-@media(max-width:700px){
-  .admin-stats-grid{grid-template-columns:1fr 1fr;}
-  .admin-form-grid{grid-template-columns:1fr;}
-  .admin-art-row{flex-wrap:wrap;}
-  .admin-content{padding:16px;}
-  .admin-tabs{padding:0 16px;overflow-x:auto;}
-}
-
-
-/* ── AdSense ad unit wrappers ── */
-.ad-unit{background:var(--surface2);border:1px solid var(--border);border-radius:8px;
-  padding:8px;margin:24px 0;text-align:center;overflow:hidden;}
-.ad-unit-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--text3);margin-bottom:4px;}
-.ad-unit ins{display:block;}
-/* Sidebar ad — fixed 300×250 box */
-.ad-sidebar{margin:0 0 28px 0;background:var(--surface2);border:1px solid var(--border);
-  border-radius:8px;padding:8px;text-align:center;}
-.ad-sidebar .ad-unit-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--text3);margin-bottom:4px;}
-
 </style>
-
-  <!-- ═══ GOOGLE ADSENSE ═══════════════════════════════════════════
-       REPLACE ca-pub-4575381845991909 with your actual Publisher ID
-       e.g.  pub-1234567890123456
-  ═══════════════════════════════════════════════════════════════════ -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4575381845991909"
-     crossorigin="anonymous"></script>
 </head>
 <body>
 
-
-<div class="ticker-wrap">
-  <div class="ticker-tag"><div class="ticker-dot"></div>BREAKING</div>
-  <div class="ticker-scroll">
-    <div class="ticker-inner" id="tickerInner">
-      <span>Welcome to Hustle 254 — Breaking News Worldwide</span>
-      <span>Welcome to Hustle 254 — Breaking News Worldwide</span>
-    </div>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo"><span>HUSTLE</span> 254</div>
+    <div class="login-sub">Admin Panel</div>
+    <label class="login-label">Username</label>
+    <input class="login-input" id="loginUser" type="text" placeholder="Username" autocomplete="off" onkeyup="if(event.key==='Enter')doLogin()">
+    <label class="login-label">Password</label>
+    <input class="login-input" id="loginPass" type="password" placeholder="••••••••" onkeyup="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">🔐 Login</button>
+    <div class="login-error" id="loginError">❌ Wrong username or password</div>
   </div>
 </div>
 
-<header>
-  <div class="header-inner">
-    <a href="#" class="logo" onclick="resetFilter(event)">
-      <div class="logo-main"><em>HUSTLE</em>&nbsp;254</div>
-      <div class="logo-sub">Breaking News Worldwide</div>
-    </a>
-    <div class="header-divider"></div>
-    <nav id="mainNav">
-      <a href="#" class="active" onclick="resetFilter(event)">All</a>
-      <a href="#" onclick="filterCat(event,'Kenya')">Kenya</a>
-      <a href="#" onclick="filterCat(event,'World')">World</a>
-      <a href="#" onclick="filterCat(event,'Politics')">Politics</a>
-      <a href="#" onclick="filterCat(event,'Business')">Business</a>
-      <a href="#" onclick="filterCat(event,'Technology')">Tech</a>
-      <a href="#" onclick="filterCat(event,'Sports')">Sports</a>
-      <a href="#" onclick="filterCat(event,'Health')">Health</a>
-      <a href="#" onclick="filterCat(event,'Entertainment')">Entertainment</a>
-    </nav>
-    <div class="header-actions">
-      <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search news..." onkeyup="handleSearch(event)">
-        <button onclick="doSearch()">🔍</button>
-      </div>
-    </div>
-  </div>
-</header>
+<!-- ADMIN -->
+<div id="adminScreen">
 
-<div class="hero-section">
-  <div class="date-bar">
-    <span class="date-text" id="dateDisplay">—</span>
-    <div class="live-badge"><div class="live-dot"></div>Hustle 254 · Worldwide</div>
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-logo"><span>HUSTLE</span> 254 &nbsp;<span style="color:#444;font-size:12px;font-weight:400;">ADMIN</span></div>
+    <button class="topbar-btn green" onclick="publishToGitHub()">🚀 Publish Now</button>
+    <button class="topbar-btn" onclick="doLogout()">Logout</button>
   </div>
-  <div id="heroGrid"></div>
-</div>
 
-<div class="page-body">
-  <main>
-    <div class="section-header">
-      <div class="section-accent"></div>
-      <div class="section-title">Latest News</div>
-      <div class="section-header-line"></div>
-    </div>
-    
-<div class="ad-unit">
-  <div class="ad-unit-label">Advertisement</div>
-  <!-- AD SLOT: Below Hero (responsive banner) — replace slot id below -->
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-4575381845991909"
-       data-ad-slot="6666666666"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-    <div id="articleGrid" class="article-grid"></div>
-    <div class="section-header" style="margin-top:6px;">
-      <div class="section-accent"></div>
-      <div class="section-title">More Stories</div>
-      <div class="section-header-line"></div>
-    </div>
-    <div id="articleList" class="article-list"></div>
-  </main>
-  <aside class="sidebar">
-    
-<div class="ad-sidebar">
-  <div class="ad-unit-label">Advertisement</div>
-  <!-- AD SLOT: Sidebar Top (300×250) — replace slot id below -->
-  <ins class="adsbygoogle"
-       style="display:inline-block;width:300px;height:250px"
-       data-ad-client="ca-pub-4575381845991909"
-       data-ad-slot="3333333333"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-    <div class="sidebar-widget">
-      <div class="section-header">
-        <div class="section-accent"></div>
-        <div class="section-title" style="font-size:16px;">Trending</div>
-        <div class="section-header-line"></div>
+  <!-- TOKEN BAR -->
+  <div class="token-bar">
+    <label>🔑 GITHUB TOKEN</label>
+    <input class="token-input" id="tokenInput" type="password" placeholder="Paste token here (ghp_...) — required to publish">
+    <span class="token-status" id="tokenStatus">not set</span>
+    <a class="token-link" href="https://github.com/settings/tokens/new" target="_blank">Get token →</a>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-title">Articles (<span id="articleCount">0</span>)</span>
+        <button class="new-btn" onclick="newArticle()">＋ New</button>
       </div>
-      <div id="trendingList"></div>
-    </div>
-    <div class="sidebar-widget">
-      <div class="section-header">
-        <div class="section-accent"></div>
-        <div class="section-title" style="font-size:16px;">Categories</div>
-        <div class="section-header-line"></div>
+      <div class="sidebar-search">
+        <input class="search-input" id="searchInput" placeholder="🔍 Search..." oninput="filterList()">
       </div>
-      <div class="cat-list" id="catList">
-        <span class="cat-chip" onclick="filterCat(null,'Kenya')">🇰🇪 Kenya</span>
-        <span class="cat-chip" onclick="filterCat(null,'World')">🌍 World</span>
-        <span class="cat-chip" onclick="filterCat(null,'Politics')">🏛️ Politics</span>
-        <span class="cat-chip" onclick="filterCat(null,'Business')">💼 Business</span>
-        <span class="cat-chip" onclick="filterCat(null,'Technology')">💻 Tech</span>
-        <span class="cat-chip" onclick="filterCat(null,'Sports')">⚽ Sports</span>
-        <span class="cat-chip" onclick="filterCat(null,'Health')">❤️ Health</span>
-        <span class="cat-chip" onclick="filterCat(null,'Entertainment')">🎬 Entertainment</span>
-      </div>
+      <div class="article-list" id="articleList"></div>
     </div>
-    <div class="ad-sidebar">
-  <div class="ad-unit-label">Advertisement</div>
-  <!-- AD SLOT: Sidebar Bottom (300×600) — replace slot id below -->
-  <ins class="adsbygoogle"
-       style="display:inline-block;width:300px;height:600px"
-       data-ad-client="ca-pub-4575381845991909"
-       data-ad-slot="4444444444"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-    <div class="sidebar-widget">
-      <div class="section-header">
-        <div class="section-accent"></div>
-        <div class="section-title" style="font-size:16px;">Share & Follow</div>
-        <div class="section-header-line"></div>
+
+    <!-- EDITOR -->
+    <div class="editor" id="editor">
+      <div class="editor-empty" id="editorEmpty">
+        <div class="editor-empty-icon">✍️</div>
+        <div class="editor-empty-text">Click <strong>＋ New</strong> to write an article<br>or select one from the list to edit</div>
       </div>
-      <button class="social-btn facebook" onclick="shareSite('facebook')">📘 Share on Facebook</button>
-      <button class="social-btn twitter" onclick="shareSite('twitter')">𝕏 Share on X / Twitter</button>
-      <button class="social-btn whatsapp" onclick="shareSite('whatsapp')">💬 Share on WhatsApp</button>
-      <button class="social-btn telegram" onclick="shareSite('telegram')">✈️ Share on Telegram</button>
-    </div>
-    <div class="sidebar-widget">
-      <div class="update-box">
-        <span style="font-size:18px;">🌍</span>
-        <div class="update-text">
-          <strong>Hustle 254</strong>
-          Breaking news from Kenya &amp; worldwide
+      <div id="editorForm" style="display:none;">
+        <div class="editor-title" id="editorTitle">New Article</div>
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Title *</label>
+            <input class="form-input" id="editTitle" placeholder="Article headline...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-select" id="editCategory">
+              <option>Kenya</option><option>World</option><option>Politics</option>
+              <option>Business</option><option>Technology</option><option>Sports</option>
+              <option>Health</option><option>Entertainment</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Region</label>
+            <input class="form-input" id="editRegion" placeholder="e.g. Kenya, USA, Africa...">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date</label>
+            <input class="form-input" id="editDate" type="date">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Image URL</label>
+            <input class="form-input" id="editImg" placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Summary (shown on cards)</label>
+            <textarea class="form-textarea" id="editSummary" placeholder="1-2 sentence summary..."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Full Article Body</label>
+            <textarea class="form-textarea tall" id="editBody" placeholder="Full article... use blank lines between paragraphs."></textarea>
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Social Teaser (for Facebook/WhatsApp)</label>
+            <textarea class="form-textarea" id="editTeaser" placeholder="🔥 Catchy teaser with emojis..."></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="save-btn" onclick="saveArticle()">💾 Save & Publish</button>
+          <button class="cancel-btn" onclick="cancelEdit()">Cancel</button>
         </div>
       </div>
     </div>
-  </aside>
-</div>
 
-
-<div class="ad-unit" style="max-width:970px;margin:0 auto 28px auto;">
-  <div class="ad-unit-label">Advertisement</div>
-  <!-- AD SLOT: Leaderboard / Before Footer (728×90 or responsive) — replace slot id below -->
-  <ins class="adsbygoogle"
-       style="display:block"
-       data-ad-client="ca-pub-4575381845991909"
-       data-ad-slot="5555555555"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-<footer>
-  <div class="footer-top">
-    <div>
-      <div class="logo">
-        <div class="logo-main"><em>HUSTLE</em>&nbsp;254</div>
-        <div class="logo-sub">Breaking News Worldwide</div>
-      </div>
-      <p class="footer-about">Your #1 source for breaking news from Kenya and around the world. Business, politics, sports, tech, health and more — published from Nairobi.</p>
-    </div>
-    <div>
-      <div class="footer-col-title">Navigate</div>
-      <ul class="footer-links">
-        <li><a onclick="resetFilter(event)">All News</a></li>
-        <li><a onclick="filterCat(event,'Kenya')">Kenya</a></li>
-        <li><a onclick="filterCat(event,'World')">World</a></li>
-        <li><a onclick="filterCat(event,'Business')">Business</a></li>
-        <li><a onclick="filterCat(event,'Sports')">Sports</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Company</div>
-      <ul class="footer-links">
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Advertise: <span class="__cf_email__" data-cfemail="55343126153d20262139306760617b363a38">[email&#160;protected]</span></a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms of Use</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. Nairobi, Kenya. <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.15;user-select:none;font-size:10px;">⚙</span></div>
-    <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
-  </div>
-</footer>
-
-<!-- ARTICLE MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-  <div class="modal-box" id="modalBox">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-img-wrap">
-      <img class="modal-img" id="modalImg" src="" alt="">
-    </div>
-    <div class="modal-body">
-      <div class="modal-cat" id="modalCat"></div>
-      <div class="modal-title" id="modalTitle"></div>
-      <div class="modal-summary" id="modalSummary"></div>
-
-      
-<div class="ad-unit">
-  <div class="ad-unit-label">Advertisement</div>
-  <!-- AD SLOT: In-Article — replace slot id below -->
-  <ins class="adsbygoogle"
-       style="display:block; text-align:center;"
-       data-ad-layout="in-article"
-       data-ad-format="fluid"
-       data-ad-client="ca-pub-4575381845991909"
-       data-ad-slot="2222222222"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-</div>
-
-      <!-- Poster Generator -->
-      <div class="ai-image-section" id="aiImageSection">
-        <div class="ai-image-title">&#127912; <span>Article</span> Poster</div>
-        <canvas id="posterCanvas" style="width:100%;border-radius:8px;display:block;"></canvas>
-        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="ai-dl-btn" onclick="downloadPoster()">&#11015;&#65039; Download Poster</button>
-          <button class="ai-dl-btn ai-dl-btn2" onclick="redrawPoster()">&#127912; Redraw</button>
-        </div>
-      </div>
-
-      <div class="modal-body-text" id="modalBody"></div>
-
-      <!-- SHARE PANEL -->
-      <div class="share-panel">
-        <div class="share-panel-title">📢 Share This Story</div>
-        <div class="share-panel-sub">Share with your teaser below — drives traffic back to Hustle 254</div>
-        <div class="share-teaser" id="shareTeaserText"></div>
-        <div class="share-buttons">
-          <button class="share-btn fb" id="shareBtn-facebook">📘 Facebook</button>
-          <button class="share-btn tw" id="shareBtn-twitter">𝕏 Twitter / X</button>
-          <button class="share-btn wa" id="shareBtn-whatsapp">💬 WhatsApp</button>
-          <button class="share-btn tg" id="shareBtn-telegram">✈️ Telegram</button>
-          <button class="share-btn li" id="shareBtn-linkedin">💼 LinkedIn</button>
-          <button class="share-btn tt" id="shareBtn-tiktok">🎵 TikTok Bio</button>
-          <button class="share-btn em" id="shareBtn-email">📧 Email</button>
-          <button class="share-btn cp" id="shareBtn-copy">📋 Copy Link</button>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const SITE_URL = "https://hustle254.com";
-const SITE_NAME = "Hustle 254";
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-
-// ═══ GITHUB TOKEN — loaded from input UI below, never hardcoded ═══════════
-let GITHUB_TOKEN = localStorage.getItem("h254_gh_token") || "";
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const ADMIN_USER   = "Benedict";
+const ADMIN_PASS   = "Benedict12#";
 const GITHUB_OWNER = "hotnewss";
-const GITHUB_REPO  = "hotnews1";
+const GITHUB_REPO  = "hotnews";
 const GITHUB_FILE  = "index.html";
-// ════════════════════════════════════════════════════════════════════════════
 
-
-const ARTICLES = [];
-let currentArticles = [...ARTICLES];
-let activeArticle = null;
-
-// Date display
-document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-KE',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-
-// Ticker
-function renderTicker(arts){
-  const h = arts.map(a=>`<span onclick="openArticle(${a.id})">${a.title}</span>`).join("");
-  const el = document.getElementById("tickerInner");
-  el.innerHTML = h+h;
-  requestAnimationFrame(()=>{
-    const duration = Math.max(40, Math.round(el.scrollWidth / 2 / 80));
-    el.style.animationDuration = duration + "s";
-  });
-}
-
-// Placeholder
-function imgFallback(cat){
-  const map={Kenya:"0d2137",World:"0d1a2e",Politics:"1a0d2e",Business:"0d2e1a",Technology:"1a1a2e",Sports:"2e0d0d",Health:"0d2e0d",Entertainment:"2e1a0d"};
-  return`https://placehold.co/800x450/${map[cat]||"222"}/ffffff?text=${encodeURIComponent(cat)}`;
-}
-
-// AI Image generation using Pollinations (free, no API key needed)
-// poster uses canvas only
-
-
-
-
-// Open article modal
-function openArticle(id){
-  const a = ARTICLES.find(x=>x.id===id);
-  if(!a) return;
-  activeArticle = a;
-
-  // Modal image
-  document.getElementById("modalImg").src = a.img || imgFallback(a.category);
-  document.getElementById("modalImg").onerror = function(){this.src=imgFallback(a.category);};
-  document.getElementById("modalCat").textContent = `${a.category} · ${a.region}`;
-  document.getElementById("modalTitle").textContent = a.title;
-  document.getElementById("modalSummary").textContent = a.summary;
-  document.getElementById("modalBody").textContent = a.body;
-
-  // Draw poster instantly
-  document.getElementById("aiImageSection").style.display="block";
-  drawPoster();
-
-  // Teaser text
-  document.getElementById("shareTeaserText").textContent = a.teaser + `\n\n📍 Read the full story: ${SITE_URL}`;
-
-  // Wire up share buttons
-  wireShareButtons(a);
-
-  document.getElementById("modalOverlay").classList.add("open");
-  document.body.style.overflow="hidden";
-  document.getElementById("modalBox").scrollTop=0;
-}
-
-function closeModal(){
-  document.getElementById("modalOverlay").classList.remove("open");
-  document.body.style.overflow="";
-  activeArticle = null;
-}
-function closeModalOutside(e){
-  if(e.target===document.getElementById("modalOverlay")) closeModal();
-}
-document.addEventListener("keydown",e=>{ if(e.key==="Escape") closeModal(); });
-
-// Share functions
-function buildShareText(a){
-  return a.teaser + `\n\nFull story: ${SITE_URL}`;
-}
-
-function wireShareButtons(a){
-  const text = buildShareText(a);
-  const url = SITE_URL;
-  const encodedText = encodeURIComponent(text);
-  const encodedUrl = encodeURIComponent(url);
-  const encodedTitle = encodeURIComponent(a.title);
-
-  document.getElementById("shareBtn-facebook").onclick = ()=>{ window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,'_blank'); };
-  document.getElementById("shareBtn-twitter").onclick  = ()=>{ window.open(`https://twitter.com/intent/tweet?text=${encodedText}`,'_blank'); };
-  document.getElementById("shareBtn-whatsapp").onclick = ()=>{ window.open(`https://wa.me/?text=${encodedText}`,'_blank'); };
-  document.getElementById("shareBtn-telegram").onclick = ()=>{ window.open(`https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(a.teaser)}`,'_blank'); };
-  document.getElementById("shareBtn-linkedin").onclick = ()=>{ window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&title=${encodedTitle}`,'_blank'); };
-  document.getElementById("shareBtn-tiktok").onclick   = ()=>{ copyToClipboard(text, 'shareBtn-tiktok', 'Copied for TikTok!'); };
-  document.getElementById("shareBtn-email").onclick    = ()=>{ window.location.href=`mailto:?subject=${encodedTitle}&body=${encodedText}`; };
-
-  const copyBtn = document.getElementById("shareBtn-copy");
-  copyBtn.onclick = ()=>{ copyToClipboard(text, 'shareBtn-copy', '✅ Copied!'); };
-}
-
-function copyToClipboard(text, btnId, label){
-  navigator.clipboard.writeText(text).then(()=>{
-    const btn = document.getElementById(btnId);
-    const orig = btn.textContent;
-    btn.textContent = label;
-    btn.classList.add('copied');
-    setTimeout(()=>{ btn.textContent=orig; btn.classList.remove('copied'); }, 2000);
-  }).catch(()=>{
-    const ta = document.createElement('textarea');
-    ta.value = text; document.body.appendChild(ta); ta.select();
-    document.execCommand('copy'); document.body.removeChild(ta);
-  });
-}
-
-// Share the whole site
-function shareSite(platform){
-  const text = encodeURIComponent(`🌍 Breaking news from Kenya & worldwide — Hustle 254 is your #1 source for real news, business, sports and hustle stories!\n\n${SITE_URL}`);
-  const url = encodeURIComponent(SITE_URL);
-  const links = {
-    facebook:`https://www.facebook.com/sharer/sharer.php?u=${url}`,
-    twitter:`https://twitter.com/intent/tweet?text=${text}`,
-    whatsapp:`https://wa.me/?text=${text}`,
-    telegram:`https://t.me/share/url?url=${url}&text=${text}`
-  };
-  if(links[platform]) window.open(links[platform],'_blank');
-}
-
-// Render functions
-function renderHero(arts){
-  if(!arts.length){ document.getElementById("heroGrid").innerHTML=`<div style="text-align:center;padding:60px;color:var(--text3);font-size:13px;letter-spacing:2px;text-transform:uppercase;">No articles found</div>`; return; }
-  const a=arts[0], s1=arts[1]||a, s2=arts[2]||a;
-  document.getElementById("heroGrid").innerHTML=`
-  <div class="hero-grid fade-in">
-    <div class="hero-main" onclick="openArticle(${a.id})">
-      <img src="${a.img}" onerror="this.src='${imgFallback(a.category)}'" alt="">
-      <div class="hero-main-overlay"></div>
-      <div class="hero-main-content">
-        <div class="hero-label">🔴 Top Story · ${a.region}</div>
-        <h1 class="hero-main-title">${a.title}</h1>
-        <p class="hero-main-summary">${a.summary}</p>
-        <div class="hero-meta">
-          <span class="source-pill">${a.category}</span>
-          <span>📅 ${a.date}</span>
-          <button class="hero-share-btn" onclick="event.stopPropagation();openArticle(${a.id});setTimeout(()=>document.querySelector('.share-panel').scrollIntoView({behavior:'smooth'}),400)">📢 Share</button>
-        </div>
-      </div>
-    </div>
-    <div class="hero-side-card" onclick="openArticle(${s1.id})">
-      <img src="${s1.img}" class="hero-side-img" onerror="this.src='${imgFallback(s1.category)}'" alt="">
-      <div><div class="hero-side-label">${s1.category} · ${s1.region}</div><div class="hero-side-divider"></div>
-      <div class="hero-side-title">${s1.title}</div>
-      <div class="hero-side-meta">📅 ${s1.date}</div></div>
-    </div>
-    <div class="hero-side-card" onclick="openArticle(${s2.id})">
-      <img src="${s2.img}" class="hero-side-img" onerror="this.src='${imgFallback(s2.category)}'" alt="">
-      <div><div class="hero-side-label">${s2.category} · ${s2.region}</div><div class="hero-side-divider"></div>
-      <div class="hero-side-title">${s2.title}</div>
-      <div class="hero-side-meta">📅 ${s2.date}</div></div>
-    </div>
-  </div>`;
-}
-
-function renderGrid(arts){
-  document.getElementById("articleGrid").innerHTML=arts.slice(1,7).map((a,i)=>`
-  <div class="article-card fade-in" style="animation-delay:${i*0.07}s">
-    <div class="card-img-wrap" onclick="openArticle(${a.id})">
-      <img src="${a.img}" onerror="this.src='${imgFallback(a.category)}'" alt="">
-      <div class="card-cat-tag">${a.category}</div>
-    </div>
-    <div class="card-body" onclick="openArticle(${a.id})">
-      <div class="card-title">${a.title}</div>
-      <div class="card-summary">${a.summary}</div>
-    </div>
-    <div class="card-footer" style="padding:0 16px 14px;">
-      <span class="card-time">📅 ${a.date} · ${a.region}</span>
-      <div class="card-actions">
-        <span class="card-share-mini" onclick="openArticle(${a.id});setTimeout(()=>document.querySelector('.share-panel').scrollIntoView({behavior:'smooth'}),400)">📢 Share</span>
-        <span class="card-read" onclick="openArticle(${a.id})">Read →</span>
-      </div>
-    </div>
-  </div>`).join("");
-}
-
-function renderList(arts){
-  document.getElementById("articleList").innerHTML=arts.slice(7).map((a,i)=>`
-  <div class="list-item fade-in" style="animation-delay:${i*0.04}s">
-    <div class="list-thumb" onclick="openArticle(${a.id})">
-      <img src="${a.img}" onerror="this.src='${imgFallback(a.category)}'" alt="">
-    </div>
-    <div>
-      <div class="list-cat" onclick="openArticle(${a.id})">${a.category} · ${a.region}</div>
-      <div class="list-title" onclick="openArticle(${a.id})">${a.title}</div>
-      <div class="list-summary" onclick="openArticle(${a.id})">${a.summary}</div>
-      <div class="list-foot">
-        <span class="list-meta">📅 ${a.date}</span>
-        <button class="list-share" onclick="openArticle(${a.id});setTimeout(()=>document.querySelector('.share-panel').scrollIntoView({behavior:'smooth'}),400)">📢 Share</button>
-      </div>
-    </div>
-  </div>`).join("");
-}
-
-function renderTrending(arts){
-  document.getElementById("trendingList").innerHTML=arts.slice(0,5).map((a,i)=>`
-  <div class="trending-item" onclick="openArticle(${a.id})">
-    <div class="trending-num">0${i+1}</div>
-    <div>
-      <div class="trending-title">${a.title}</div>
-      <div class="trending-meta">${a.category} · ${a.region} · ${a.date}</div>
-    </div>
-  </div>`).join("");
-}
-
-function renderAll(arts){
-  if(!arts.length){
-    document.getElementById("heroGrid").innerHTML=`<div style="text-align:center;padding:60px;color:var(--text3);font-size:13px;letter-spacing:2px;text-transform:uppercase;">No articles found</div>`;
-    document.getElementById("articleGrid").innerHTML="";
-    document.getElementById("articleList").innerHTML="";
-    return;
-  }
-  renderHero(arts);
-  renderGrid(arts);
-  renderList(arts);
-  renderTrending(arts);
-  renderTicker(arts);
-}
-
-function filterCat(e, cat){
-  if(e){ e.preventDefault(); document.querySelectorAll("nav a").forEach(a=>a.classList.remove("active")); e.target.classList.add("active"); }
-  document.querySelectorAll(".cat-chip").forEach(c=>{ c.classList.toggle("active", c.textContent.includes(cat)); });
-  currentArticles = ARTICLES.filter(a=>a.category===cat);
-  renderAll(currentArticles);
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function resetFilter(e){
-  if(e){ e.preventDefault(); }
-  document.querySelectorAll("nav a").forEach(a=>a.classList.remove("active"));
-  document.querySelector("nav a").classList.add("active");
-  document.querySelectorAll(".cat-chip").forEach(c=>c.classList.remove("active"));
-  currentArticles = [...ARTICLES];
-  renderAll(currentArticles);
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function doSearch(){
-  const q=document.getElementById("searchInput").value.toLowerCase().trim();
-  if(!q){ currentArticles=[...ARTICLES]; renderAll(currentArticles); return; }
-  currentArticles=ARTICLES.filter(a=>(a.title+" "+a.summary+" "+a.category+" "+a.region).toLowerCase().includes(q));
-  renderAll(currentArticles);
-}
-function handleSearch(e){ if(e.key==="Enter") doSearch(); }
-
-function drawPoster(){
-  var art = activeArticle;
-  if(!art) return;
-  var canvas = document.getElementById("posterCanvas");
-  var W=800, H=450;
-  canvas.width=W; canvas.height=H;
-  var ctx = canvas.getContext("2d");
-
-  var bgColors={
-    Kenya:["#0a1628","#1a0a08"],
-    World:["#0a1220","#0a2010"],
-    Politics:["#150a20","#200a15"],
-    Business:["#0a1a10","#102010"],
-    Technology:["#080a20","#0a1025"],
-    Sports:["#1a0808","#200a0a"],
-    Health:["#081a10","#0a200a"],
-    Entertainment:["#1a100a","#201508"]
-  };
-  var cols = bgColors[art.category]||["#0d0d0f","#1a1a22"];
-  var bg = ctx.createLinearGradient(0,0,W,H);
-  bg.addColorStop(0,cols[0]); bg.addColorStop(1,cols[1]);
-  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
-
-  // Subtle grid texture
-  ctx.strokeStyle="rgba(255,255,255,0.04)"; ctx.lineWidth=1;
-  for(var x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-  for(var y=0;y<H;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-
-  // Big faded category word
-  ctx.save(); ctx.globalAlpha=0.06; ctx.fillStyle="#fff";
-  ctx.font="bold 120px Arial,sans-serif"; ctx.textAlign="center";
-  ctx.fillText((art.category||"NEWS").toUpperCase(),W/2,H/2+40); ctx.restore();
-
-  // Left edge accent
-  ctx.fillStyle="#e8192c"; ctx.fillRect(0,0,6,H);
-  // Top bar
-  ctx.fillStyle="#e8192c"; ctx.fillRect(0,0,W,5);
-
-  // BREAKING NEWS badge
-  ctx.fillStyle="#e8192c"; ctx.fillRect(28,18,220,40);
-  ctx.fillStyle="#fff"; ctx.font="bold 17px Arial,sans-serif"; ctx.textAlign="left";
-  ctx.fillText("● BREAKING NEWS",40,44);
-
-  // Date
-  var d="";
-  try{ d=new Date(art.date).toLocaleDateString("en-KE",{day:"numeric",month:"short",year:"numeric"});}catch(e){}
-  ctx.fillStyle="rgba(255,255,255,0.5)"; ctx.font="12px Arial,sans-serif";
-  ctx.textAlign="right"; ctx.fillText(d,W-24,41);
-
-  // HUSTLE 254 branding
-  ctx.fillStyle="rgba(232,25,44,0.9)"; ctx.font="bold 16px Arial,sans-serif";
-  ctx.textAlign="right"; ctx.fillText("HUSTLE 254",W-24,H-22);
-  ctx.fillStyle="rgba(255,255,255,0.4)"; ctx.font="10px Arial,sans-serif";
-  ctx.fillText("hustle254.com",W-24,H-8);
-
-  // Category pill
-  ctx.textAlign="left"; ctx.font="bold 11px Arial,sans-serif";
-  var cat=(art.category||"NEWS").toUpperCase();
-  var cpw=ctx.measureText(cat).width+20;
-  ctx.fillStyle="rgba(232,25,44,0.85)"; ctx.fillRect(28,H-68,cpw,22);
-  ctx.fillStyle="#fff"; ctx.fillText(cat,38,H-52);
-
-  // ── SMART LAYOUT: calculate zones ──
-  // Bottom zone reserved: 30px teaser + 10px gap + 30px cat pill + 10px gap = 80px from bottom
-  // Top zone reserved: 70px for BREAKING badge + date
-  var BOTTOM_RESERVE = 85;
-  var TOP_RESERVE = 70;
-  var availH = H - TOP_RESERVE - BOTTOM_RESERVE; // usable height for headline
-
-  // Pick font size that fits within availH with up to 3 lines
-  var title = art.title;
-  ctx.textAlign = "left";
-  ctx.shadowColor = "rgba(0,0,0,0.95)";
-  ctx.shadowBlur = 10;
-  var maxW = W - 64;
-  var fs, lines, lh;
-
-  // Try sizes from large to small until it fits
-  var sizes = [54, 46, 40, 34, 28, 22];
-  for (var si = 0; si < sizes.length; si++) {
-    fs = sizes[si];
-    lh = Math.round(fs * 1.25);
-    ctx.font = "900 " + fs + "px 'Arial Black','Impact',Arial,sans-serif";
-    // word wrap
-    var words = title.split(" ");
-    lines = []; var cur = "";
-    words.forEach(function(w) {
-      var t = cur ? cur + " " + w : w;
-      if (ctx.measureText(t).width > maxW) { lines.push(cur); cur = w; }
-      else cur = t;
-    });
-    if (cur) lines.push(cur);
-    // Check if 3 lines (max) fit in availH
-    var maxLines = Math.min(lines.length, 3);
-    if (maxLines * lh <= availH) { lines = lines.slice(0, maxLines); break; }
-    if (si === sizes.length - 1) { lines = lines.slice(0, 3); }
-  }
-
-  // If still overflow at smallest size, truncate last line with ellipsis
-  ctx.font = "900 " + fs + "px 'Arial Black','Impact',Arial,sans-serif";
-  ctx.fillStyle = "#fff";
-
-  // Start y: center the block in available space, biased toward bottom
-  var blockH = lines.length * lh;
-  var startY = TOP_RESERVE + availH - blockH - 8;
-  if (startY < TOP_RESERVE) startY = TOP_RESERVE;
-
-  lines.forEach(function(l, i) {
-    // truncate line if wider than canvas
-    while (ctx.measureText(l).width > maxW && l.length > 3) {
-      l = l.slice(0, -4) + "...";
-    }
-    ctx.fillText(l, 32, startY + i * lh + fs);
-  });
-  ctx.shadowBlur = 0;
-
-  // Teaser — fixed at bottom, small enough to never overlap
-  var teaser = (art.teaser || "").replace(/[^\x00-\x7F]/g, "").trim().substring(0, 85);
-  if (teaser) {
-    ctx.font = "bold 15px Arial,sans-serif";
-    // truncate teaser to fit
-    while (ctx.measureText(teaser).width > W - 120 && teaser.length > 5) {
-      teaser = teaser.slice(0, -4) + "...";
-    }
-    ctx.fillStyle = "rgba(255,220,60,1)";
-    ctx.fillText(teaser, 32, H - 28);
-  }
-
-  // Bottom bar
-  ctx.fillStyle="#e8192c"; ctx.fillRect(0,H-4,W,4);
-}
-
-function redrawPoster(){ if(activeArticle) drawPoster(); }
-
-function downloadPoster(){
-  var canvas=document.getElementById("posterCanvas");
-  var a=document.createElement("a");
-  var name=(activeArticle?activeArticle.title.replace(/[^a-z0-9]/gi,"_").substring(0,50):"hustle254_poster")+".png";
-  a.download=name; a.href=canvas.toDataURL("image/png"); a.click();
-}
-
-// Boot
-renderAll(ARTICLES);
-
-// ============================================================
-// ADMIN PANEL — Press Ctrl+Shift+A
-// ============================================================
-const ADMIN_USER = "Benedict";
-const ADMIN_PASS = "Benedict12#";
-let adminLoggedIn = false;
-let adminKeyBuffer = "";
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let ARTICLES = [];
 let editingId = null;
-let pageViews = parseInt(localStorage.getItem("h254_pv")||"0") + 1;
-let sessionStart = Date.now();
-localStorage.setItem("h254_pv", pageViews);
+let githubToken = "";
 
-// Track visits per article
-function trackArticleView(id){
-  const key = "h254_av_"+id;
-  const v = parseInt(localStorage.getItem(key)||"0")+1;
-  localStorage.setItem(key, v);
+// ── LOGIN ─────────────────────────────────────────────────────────────────────
+function doLogin(){
+  const u = document.getElementById("loginUser").value.trim();
+  const p = document.getElementById("loginPass").value;
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminScreen").style.display = "block";
+    loadFromGitHub();
+  } else {
+    const err = document.getElementById("loginError");
+    err.style.display = "block";
+    setTimeout(()=> err.style.display="none", 2500);
+  }
 }
 
-// Keyboard shortcut listener
-document.addEventListener("keydown", function(e){
-  if(e.ctrlKey && e.shiftKey && e.key==="A"){ e.preventDefault(); openAdminLogin(); return; }
-  adminKeyBuffer += e.key;
-  if(adminKeyBuffer.length > 14) adminKeyBuffer = adminKeyBuffer.slice(-14);
-  if(adminKeyBuffer.includes("benedict254")){ adminKeyBuffer=""; openAdminLogin(); }
+function doLogout(){
+  document.getElementById("adminScreen").style.display = "none";
+  document.getElementById("loginScreen").style.display = "flex";
+  document.getElementById("loginUser").value = "";
+  document.getElementById("loginPass").value = "";
+  document.getElementById("tokenInput").value = "";
+  githubToken = "";
+  ARTICLES = [];
+}
+
+// ── TOKEN ─────────────────────────────────────────────────────────────────────
+document.getElementById("tokenInput").addEventListener("input", function(){
+  githubToken = this.value.trim();
+  const status = document.getElementById("tokenStatus");
+  if(githubToken){
+    status.textContent = "✅ token set";
+    status.style.color = "#3fb950";
+  } else {
+    status.textContent = "not set";
+    status.style.color = "#666";
+  }
 });
 
-function openAdminLogin(){
-  if(adminLoggedIn){ showAdminPanel(); return; }
-  document.getElementById("adminLoginOverlay").classList.add("open");
-  document.getElementById("adminLoginUser").focus();
-}
-
-function adminLogin(){
-  const u = document.getElementById("adminLoginUser").value;
-  const p = document.getElementById("adminLoginPass").value;
-  if(u===ADMIN_USER && p===ADMIN_PASS){
-    adminLoggedIn = true;
-    document.getElementById("adminLoginOverlay").classList.remove("open");
-    document.getElementById("adminLoginUser").value="";
-    document.getElementById("adminLoginPass").value="";
-    showAdminPanel();
-  } else {
-    document.getElementById("adminLoginError").style.display="block";
-    setTimeout(()=>document.getElementById("adminLoginError").style.display="none",2500);
+// ── LOAD ARTICLES FROM GITHUB ─────────────────────────────────────────────────
+async function loadFromGitHub(){
+  showToast("⏳ Loading articles from GitHub...");
+  try {
+    const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+    const headers = {"Accept":"application/vnd.github.v3+json"};
+    if(githubToken) headers["Authorization"] = "token "+githubToken;
+    const res = await fetch(url, {headers});
+    if(!res.ok) throw new Error("Cannot load from GitHub: "+res.status);
+    const data = await res.json();
+    const html = decodeURIComponent(escape(atob(data.content.replace(/\n/g,""))));
+    // Extract ARTICLES array
+    const marker = "const ARTICLES = [";
+    const s = html.indexOf(marker);
+    let depth=0, e=-1;
+    for(let i=s+marker.length-1;i<html.length;i++){
+      if(html[i]==="[") depth++;
+      else if(html[i]==="]"){ depth--; if(depth===0){e=i+1;break;} }
+    }
+    if(s===-1||e===-1){ ARTICLES=[]; }
+    else {
+      try { ARTICLES = eval(html.slice(s+marker.length-1, e)); }
+      catch(err){ ARTICLES=[]; }
+    }
+    renderList();
+    showToast("✅ Loaded "+ARTICLES.length+" articles");
+  } catch(err){
+    showToast("⚠️ Could not load articles: "+err.message, true);
+    ARTICLES = [];
+    renderList();
   }
 }
 
-function adminLoginKey(e){ if(e.key==="Enter") adminLogin(); }
-
-function closeAdminLogin(){
-  document.getElementById("adminLoginOverlay").classList.remove("open");
-}
-
-// ── ADMIN PANEL ──────────────────────────────────────────────
-function showAdminPanel(){
-  renderAdminStats();
-  renderAdminArticleList();
-  document.getElementById("adminPanel").classList.add("open");
-  showAdminTab("stats");
-}
-
-function closeAdminPanel(){
-  document.getElementById("adminPanel").classList.remove("open");
-  editingId = null;
-}
-
-function adminLogout(){
-  adminLoggedIn = false;
-  closeAdminPanel();
-}
-
-function showAdminTab(tab){
-  document.querySelectorAll(".admin-tab-btn").forEach(b=>b.classList.remove("active"));
-  document.querySelectorAll(".admin-tab-pane").forEach(p=>p.classList.remove("active"));
-  document.getElementById("adminPane-"+tab).classList.add("active");
-  document.querySelector(`[onclick="showAdminTab('${tab}')"]`).classList.add("active");
-}
-
-// ── STATS ────────────────────────────────────────────────────
-function renderAdminStats(){
-  const cats = {};
-  ARTICLES.forEach(a=>{ cats[a.category]=(cats[a.category]||0)+1; });
-  const topCats = Object.entries(cats).sort((a,b)=>b[1]-a[1]);
-
-  // Top viewed articles
-  const viewed = ARTICLES.map(a=>({
-    ...a, views: parseInt(localStorage.getItem("h254_av_"+a.id)||"0")
-  })).sort((a,b)=>b.views-a.views).slice(0,10);
-
-  document.getElementById("adminPane-stats").innerHTML = `
-  <div class="admin-stats-grid">
-    <div class="stat-card">
-      <div class="stat-num">${pageViews.toLocaleString()}</div>
-      <div class="stat-label">Total Page Views</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">${ARTICLES.length}</div>
-      <div class="stat-label">Total Articles</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">${[...new Set(ARTICLES.map(a=>a.category))].length}</div>
-      <div class="stat-label">Categories</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num">${Math.round((Date.now()-sessionStart)/1000)}s</div>
-      <div class="stat-label">Session Duration</div>
-    </div>
-  </div>
-
-  <div class="admin-section-title">📊 Articles by Category</div>
-  <div class="admin-bar-chart">
-    ${topCats.map(([cat,count])=>`
-    <div class="bar-row">
-      <div class="bar-label">${cat}</div>
-      <div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/ARTICLES.length*100)}%"></div></div>
-      <div class="bar-count">${count}</div>
-    </div>`).join("")}
-  </div>
-
-  <div class="admin-section-title" style="margin-top:28px;">🔥 Most Viewed Articles</div>
-  <div class="admin-viewed-list">
-    ${viewed.map((a,i)=>`
-    <div class="admin-viewed-item">
-      <span class="admin-viewed-num">${i+1}</span>
-      <div>
-        <div class="admin-viewed-title">${a.title}</div>
-        <div class="admin-viewed-meta">${a.category} · ${a.views} views</div>
+// ── ARTICLE LIST ──────────────────────────────────────────────────────────────
+function renderList(){
+  const q = document.getElementById("searchInput").value.toLowerCase();
+  const filtered = ARTICLES.filter(a =>
+    a.title.toLowerCase().includes(q) || (a.category||"").toLowerCase().includes(q)
+  );
+  document.getElementById("articleCount").textContent = ARTICLES.length;
+  const list = document.getElementById("articleList");
+  if(filtered.length === 0){
+    list.innerHTML = '<div class="empty-list">No articles yet.<br>Click ＋ New to add one.</div>';
+    return;
+  }
+  list.innerHTML = filtered.map(a => `
+    <div class="article-item ${editingId===a.id?'active':''}" onclick="editArticle(${a.id})">
+      <button class="article-item-del" onclick="event.stopPropagation();deleteArticle(${a.id})">🗑</button>
+      <div class="article-item-title">${a.title}</div>
+      <div class="article-item-meta">
+        <span class="article-item-cat">${a.category||""}</span>
+        <span>${a.date||""}</span>
       </div>
-    </div>`).join("")}
-  </div>`;
-}
-
-// ── ARTICLE MANAGER ──────────────────────────────────────────
-function renderAdminArticleList(filter=""){
-  const list = filter
-    ? ARTICLES.filter(a=>(a.title+" "+a.category).toLowerCase().includes(filter.toLowerCase()))
-    : ARTICLES;
-
-  document.getElementById("adminArticleList").innerHTML = list.map(a=>`
-  <div class="admin-art-row" id="arow-${a.id}">
-    <img src="${a.img}" onerror="this.src='${imgFallback(a.category)}'" class="admin-art-thumb">
-    <div class="admin-art-info">
-      <div class="admin-art-title">${a.title}</div>
-      <div class="admin-art-meta"><span class="admin-cat-badge">${a.category}</span> ${a.region} · ${a.date}</div>
     </div>
-    <div class="admin-art-actions">
-      <button class="admin-btn-edit" onclick="adminEditArticle(${a.id})">✏️ Edit</button>
-      <button class="admin-btn-del" onclick="adminDeleteArticle(${a.id})">🗑️ Delete</button>
-    </div>
-  </div>`).join("");
+  `).join("");
 }
 
-function adminSearchArticles(e){
-  renderAdminArticleList(e.target.value);
-}
+function filterList(){ renderList(); }
 
-function adminEditArticle(id){
-  editingId = id;
-  const a = ARTICLES.find(x=>x.id===id);
-  document.getElementById("editId").value = a.id;
-  document.getElementById("editTitle").value = a.title;
-  document.getElementById("editCategory").value = a.category;
-  document.getElementById("editRegion").value = a.region;
-  document.getElementById("editDate").value = a.date;
-  document.getElementById("editImg").value = a.img;
-  document.getElementById("editSummary").value = a.summary;
-  document.getElementById("editBody").value = a.body;
-  document.getElementById("editTeaser").value = a.teaser;
-  document.getElementById("adminEditForm").style.display="block";
-  document.getElementById("adminEditForm").scrollIntoView({behavior:"smooth"});
-}
-
-function adminSaveSmart(){
-  const id = parseInt(document.getElementById("editId").value);
-  const isNew = ARTICLES.findIndex(x=>x.id===id) === -1;
-  if(isNew){ adminSaveNew(); } else { adminSaveArticle(); }
-}
-
-function adminSaveArticle(){
-  const id = parseInt(document.getElementById("editId").value);
-  const idx = ARTICLES.findIndex(x=>x.id===id);
-  if(idx===-1) return;
-  ARTICLES[idx] = {
-    id,
-    title:    document.getElementById("editTitle").value.trim(),
-    category: document.getElementById("editCategory").value,
-    region:   document.getElementById("editRegion").value.trim(),
-    date:     document.getElementById("editDate").value.trim(),
-    img:      document.getElementById("editImg").value.trim(),
-    summary:  document.getElementById("editSummary").value.trim(),
-    body:     document.getElementById("editBody").value.trim(),
-    teaser:   document.getElementById("editTeaser").value.trim()
-  };
-  currentArticles = [...ARTICLES];
-  renderAll(currentArticles);
-  renderAdminArticleList();
-  cancelEdit();
-  publishToGitHub();
-}
-
-function cancelEdit(){
-  document.getElementById("adminEditForm").style.display="none";
+// ── NEW ARTICLE ───────────────────────────────────────────────────────────────
+function newArticle(){
   editingId = null;
-}
-
-function adminDeleteArticle(id){
-  if(!confirm("Delete this article? This cannot be undone.")) return;
-  const idx = ARTICLES.findIndex(x=>x.id===id);
-  if(idx!==-1){ ARTICLES.splice(idx,1); }
-  currentArticles = currentArticles.filter(a=>a.id!==id);
-  renderAll(currentArticles);
-  renderAdminArticleList();
-  publishToGitHub();
-}
-
-function adminAddNew(){
-  editingId = null;
-  const newId = Math.max(...ARTICLES.map(a=>a.id))+1;
+  const newId = ARTICLES.length > 0 ? Math.max(...ARTICLES.map(a=>a.id))+1 : 1;
   document.getElementById("editId").value = newId;
   document.getElementById("editTitle").value = "";
   document.getElementById("editCategory").value = "Kenya";
@@ -1238,15 +327,38 @@ function adminAddNew(){
   document.getElementById("editSummary").value = "";
   document.getElementById("editBody").value = "";
   document.getElementById("editTeaser").value = "";
-  document.getElementById("adminEditForm").style.display="block";
-  document.getElementById("adminEditForm").scrollIntoView({behavior:"smooth"});
+  document.getElementById("editorTitle").textContent = "✍️ New Article";
+  document.getElementById("editorEmpty").style.display = "none";
+  document.getElementById("editorForm").style.display = "block";
 }
 
-function adminSaveNew(){
-  const newId = parseInt(document.getElementById("editId").value);
-  const newArt = {
-    id: newId,
-    title:    document.getElementById("editTitle").value.trim(),
+// ── EDIT ARTICLE ──────────────────────────────────────────────────────────────
+function editArticle(id){
+  const a = ARTICLES.find(x=>x.id===id);
+  if(!a) return;
+  editingId = id;
+  document.getElementById("editId").value = a.id;
+  document.getElementById("editTitle").value = a.title||"";
+  document.getElementById("editCategory").value = a.category||"Kenya";
+  document.getElementById("editRegion").value = a.region||"";
+  document.getElementById("editDate").value = a.date||"";
+  document.getElementById("editImg").value = a.img||"";
+  document.getElementById("editSummary").value = a.summary||"";
+  document.getElementById("editBody").value = a.body||"";
+  document.getElementById("editTeaser").value = a.teaser||"";
+  document.getElementById("editorTitle").textContent = "✏️ Edit Article";
+  document.getElementById("editorEmpty").style.display = "none";
+  document.getElementById("editorForm").style.display = "block";
+  renderList();
+}
+
+// ── SAVE ARTICLE ──────────────────────────────────────────────────────────────
+function saveArticle(){
+  const title = document.getElementById("editTitle").value.trim();
+  if(!title){ alert("Title is required."); return; }
+  const article = {
+    id:       editingId || parseInt(document.getElementById("editId").value),
+    title,
     category: document.getElementById("editCategory").value,
     region:   document.getElementById("editRegion").value.trim(),
     date:     document.getElementById("editDate").value.trim(),
@@ -1255,26 +367,34 @@ function adminSaveNew(){
     body:     document.getElementById("editBody").value.trim(),
     teaser:   document.getElementById("editTeaser").value.trim()
   };
-  if(!newArt.title){ alert("Title is required."); return; }
-  ARTICLES.unshift(newArt);  // ← new articles always go to top
-  currentArticles = [...ARTICLES];
-  renderAll(currentArticles);
-  renderAdminArticleList();
+  if(editingId){
+    const idx = ARTICLES.findIndex(x=>x.id===editingId);
+    if(idx!==-1) ARTICLES[idx] = article;
+  } else {
+    ARTICLES.unshift(article); // new articles always on top
+  }
   cancelEdit();
+  renderList();
   publishToGitHub();
 }
 
-function showAdminToast(msg){
-  const t = document.getElementById("adminToast");
-  t.textContent = msg;
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),3000);
+// ── DELETE ARTICLE ────────────────────────────────────────────────────────────
+function deleteArticle(id){
+  if(!confirm("Delete this article? Cannot be undone.")) return;
+  ARTICLES = ARTICLES.filter(a=>a.id!==id);
+  if(editingId===id) cancelEdit();
+  renderList();
+  publishToGitHub();
 }
 
+function cancelEdit(){
+  editingId = null;
+  document.getElementById("editorForm").style.display = "none";
+  document.getElementById("editorEmpty").style.display = "flex";
+  renderList();
+}
 
-
-
-// ── Serialize ARTICLES to embeddable JS ──────────────────────────────────────
+// ── SERIALIZE & BUILD HTML ────────────────────────────────────────────────────
 function serializeArticles(){
   return ARTICLES.map(a => {
     const esc = s => (s||"").replace(/\\/g,"\\\\").replace(/`/g,"\\`").replace(/\${/g,"\\${");
@@ -1289,213 +409,66 @@ function serializeArticles(){
   }).join(",\n");
 }
 
-// ── Build full updated HTML string ───────────────────────────────────────────
-function buildUpdatedHTML(){
-  const cur = document.documentElement.outerHTML;
-  const marker = "const ARTICLES = [";
-  const s = cur.indexOf(marker);
-  let depth=0, e=-1;
-  for(let i=s+marker.length-1;i<cur.length;i++){
-    if(cur[i]==="[") depth++;
-    else if(cur[i]==="]"){ depth--; if(depth===0){e=i+1;break;} }
+// ── PUBLISH TO GITHUB ─────────────────────────────────────────────────────────
+async function publishToGitHub(){
+  const token = document.getElementById("tokenInput").value.trim();
+  if(!token){
+    showToast("⚠️ Paste your GitHub token first!", true);
+    document.getElementById("tokenInput").focus();
+    return;
   }
-  if(s===-1||e===-1) return null;
-  return "<!DOCTYPE html>\n"+cur.slice(0,s)+"const ARTICLES = [\n"+serializeArticles()+"\n]"+cur.slice(e);
-}
-
-// ── PUBLISH DIRECT TO GITHUB ─────────────────────────────────────────────────
-async function publishToGitHub(silent=false){
-  if(!GITHUB_TOKEN){
-    alert("⚠️ GitHub Token missing!\n\nIn the HTML file find GITHUB_TOKEN and paste your token.\nGet one at: github.com/settings/tokens\n(needs: repo → contents read+write)");
-    return false;
-  }
-  const html = buildUpdatedHTML();
-  if(!html){ showAdminToast("❌ Build error"); return false; }
-  if(!silent) showAdminToast("⏳ Publishing to GitHub...");
-  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
+  showToast("⏳ Publishing to GitHub...");
+  const apiUrl = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_FILE}`;
   const headers = {
-    "Authorization": "token "+GITHUB_TOKEN,
+    "Authorization": "token "+token,
     "Accept": "application/vnd.github.v3+json",
     "Content-Type": "application/json"
   };
   try {
-    // Get current SHA
-    const r1 = await fetch(url, {headers});
-    if(!r1.ok) throw new Error("Cannot read file from GitHub ("+r1.status+"). Check token & repo name.");
-    const {sha} = await r1.json();
-    // Encode content
-    const encoded = btoa(unescape(encodeURIComponent(html)));
-    // Push commit
-    const r2 = await fetch(url, {
+    // 1. Get current file + SHA
+    const r1 = await fetch(apiUrl, {headers});
+    if(!r1.ok) throw new Error("Cannot read index.html from GitHub ("+r1.status+")");
+    const fileData = await r1.json();
+    const sha = fileData.sha;
+    const currentHTML = decodeURIComponent(escape(atob(fileData.content.replace(/\n/g,""))));
+
+    // 2. Replace ARTICLES array in the live index.html
+    const marker = "const ARTICLES = [";
+    const s = currentHTML.indexOf(marker);
+    let depth=0, e=-1;
+    for(let i=s+marker.length-1;i<currentHTML.length;i++){
+      if(currentHTML[i]==="[") depth++;
+      else if(currentHTML[i]==="]"){ depth--; if(depth===0){e=i+1;break;} }
+    }
+    if(s===-1||e===-1) throw new Error("Could not find ARTICLES in index.html");
+    const newHTML = currentHTML.slice(0,s)+"const ARTICLES = [\n"+serializeArticles()+"\n]"+currentHTML.slice(e);
+
+    // 3. Push to GitHub
+    const encoded = btoa(unescape(encodeURIComponent(newHTML)));
+    const r2 = await fetch(apiUrl, {
       method:"PUT", headers,
       body: JSON.stringify({
-        message: "Admin publish " + new Date().toISOString().slice(0,16).replace("T"," "),
+        message: "Publish "+new Date().toISOString().slice(0,16).replace("T"," "),
         content: encoded,
         sha
       })
     });
-    if(!r2.ok){ const e=await r2.json(); throw new Error(e.message||r2.status); }
-    showAdminToast("🚀 Published! Live in ~30 seconds.");
-    return true;
+    if(!r2.ok){ const err=await r2.json(); throw new Error(err.message||r2.status); }
+    showToast("🚀 Published! Live on hustle254.com in ~30 seconds.");
   } catch(err){
-    showAdminToast("❌ "+err.message);
+    showToast("❌ "+err.message, true);
     console.error(err);
-    return false;
   }
 }
 
-// ── Backup download (fallback) ────────────────────────────────────────────────
-function exportUpdatedHTML(){
-  const html = buildUpdatedHTML();
-  if(!html){ alert("Export error."); return; }
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([html],{type:"text/html"}));
-  a.download = "index.html"; a.click();
-  showAdminToast("✅ Backup downloaded.");
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+function showToast(msg, isError=false){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show" + (isError?" error":"");
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=> t.className="toast", 4000);
 }
-
-
-// ── Token management ─────────────────────────────────────────────────────────
-function saveToken(val){
-  GITHUB_TOKEN = val.trim();
-  localStorage.setItem("h254_gh_token", GITHUB_TOKEN);
-  document.getElementById("tokenStatus").textContent = GITHUB_TOKEN ? "✅ token saved" : "not set";
-  document.getElementById("tokenStatus").style.color = GITHUB_TOKEN ? "#3fb950" : "#888";
-}
-function loadToken(){
-  const t = localStorage.getItem("h254_gh_token") || "";
-  if(t){
-    GITHUB_TOKEN = t;
-    document.getElementById("ghTokenInput").value = t;
-    document.getElementById("tokenStatus").textContent = "✅ token saved";
-    document.getElementById("tokenStatus").style.color = "#3fb950";
-  }
-}
-window.addEventListener("load", loadToken);
-// ─────────────────────────────────────────────────────────────────────────────
-
-// Track article views
-const origOpen = openArticle;
-window.openArticle = function(id){
-  trackArticleView(id);
-  origOpen(id);
-};
-
 </script>
-
-<!-- ADMIN LOGIN OVERLAY -->
-<div class="admin-login-overlay" id="adminLoginOverlay" onclick="if(event.target===this)closeAdminLogin()">
-  <div class="admin-login-box">
-    <div class="admin-login-logo"><em>HUSTLE</em> 254</div>
-    <div class="admin-login-sub">Admin Access</div>
-    <label class="admin-login-label">Username</label>
-    <input class="admin-login-input" id="adminLoginUser" type="text" placeholder="admin" onkeyup="adminLoginKey(event)" autocomplete="off">
-    <label class="admin-login-label">Password</label>
-    <input class="admin-login-input" id="adminLoginPass" type="password" placeholder="••••••••" onkeyup="adminLoginKey(event)">
-    <button class="admin-login-btn" onclick="adminLogin()">🔐 Login to Admin</button>
-    <div class="admin-login-error" id="adminLoginError">❌ Wrong username or password</div>
-    <div class="admin-login-cancel" onclick="closeAdminLogin()">Cancel</div>
-  </div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="adminPanel">
-  
-  <!-- Token Setup Bar -->
-  <div id="tokenBar" style="background:#1a1a2e;border-bottom:1px solid #333;padding:12px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-    <span style="color:#e8192c;font-weight:700;font-size:12px;letter-spacing:1px;">🔑 GITHUB TOKEN</span>
-    <input id="ghTokenInput" type="password" placeholder="Paste your GitHub token here (ghp_...)"
-      style="flex:1;min-width:200px;background:#0d0d0f;border:1px solid #444;color:#fff;padding:8px 12px;border-radius:6px;font-size:12px;font-family:monospace;"
-      value="" oninput="saveToken(this.value)">
-    <span id="tokenStatus" style="font-size:11px;color:#888;">not set</span>
-    <a href="https://github.com/settings/tokens/new" target="_blank"
-      style="font-size:11px;color:#58a6ff;text-decoration:none;">Get token →</a>
-  </div>
-
-  <div class="admin-header">
-    <div class="admin-header-logo"><em>HUSTLE</em> 254</div>
-    <div class="admin-header-badge">ADMIN</div>
-    <div class="admin-header-actions">
-      <button class="admin-close-btn" onclick="closeAdminPanel()">← Back to Site</button>
-      <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
-    </div>
-  </div>
-  <div class="admin-tabs">
-    <button class="admin-tab-btn active" onclick="showAdminTab('stats')">📊 Analytics</button>
-    <button class="admin-tab-btn" onclick="showAdminTab('articles')">📝 Articles</button>
-  </div>
-  <div class="admin-content">
-
-    <!-- STATS TAB -->
-    <div class="admin-tab-pane active" id="adminPane-stats" data-tab="stats">
-      <!-- Rendered by JS -->
-    </div>
-
-    <!-- ARTICLES TAB -->
-    <div class="admin-tab-pane" id="adminPane-articles" data-tab="articles">
-      <div class="admin-articles-toolbar">
-        <input class="admin-search-input" placeholder="🔍 Search articles by title or category..." oninput="adminSearchArticles(event)">
-        <button class="admin-add-btn" onclick="adminAddNew()">＋ New Article</button>
-        <button class="admin-add-btn" style="background:#238636;margin-left:auto;" onclick="publishToGitHub()">🚀 Publish Now</button>
-        <button class="admin-add-btn" style="background:#555;font-size:10px;" onclick="exportUpdatedHTML()" title="Download as backup">⬇ Backup</button>
-      </div>
-
-      <!-- EDIT / ADD FORM -->
-      <div class="admin-edit-form" id="adminEditForm">
-        <div class="admin-edit-title" id="editFormTitle">✏️ Edit Article</div>
-        <input type="hidden" id="editId">
-        <div class="admin-form-grid">
-          <div class="admin-form-group full">
-            <label class="admin-form-label">Title *</label>
-            <input class="admin-form-input" id="editTitle" placeholder="Article headline...">
-          </div>
-          <div class="admin-form-group">
-            <label class="admin-form-label">Category</label>
-            <select class="admin-form-select" id="editCategory">
-              <option>Kenya</option><option>World</option><option>Politics</option>
-              <option>Business</option><option>Technology</option><option>Sports</option>
-              <option>Health</option><option>Entertainment</option>
-            </select>
-          </div>
-          <div class="admin-form-group">
-            <label class="admin-form-label">Region</label>
-            <input class="admin-form-input" id="editRegion" placeholder="e.g. Kenya, USA, Africa...">
-          </div>
-          <div class="admin-form-group">
-            <label class="admin-form-label">Date</label>
-            <input class="admin-form-input" id="editDate" type="date">
-          </div>
-          <div class="admin-form-group">
-            <label class="admin-form-label">Image URL</label>
-            <input class="admin-form-input" id="editImg" placeholder="https://images.unsplash.com/...">
-          </div>
-          <div class="admin-form-group full">
-            <label class="admin-form-label">Summary (1-2 sentences)</label>
-            <textarea class="admin-form-textarea" id="editSummary" placeholder="Short summary shown on cards..."></textarea>
-          </div>
-          <div class="admin-form-group full">
-            <label class="admin-form-label">Full Article Body</label>
-            <textarea class="admin-form-textarea tall" id="editBody" placeholder="Full article text... Use blank lines to separate paragraphs."></textarea>
-          </div>
-          <div class="admin-form-group full">
-            <label class="admin-form-label">Social Share Teaser (with emoji for engagement)</label>
-            <textarea class="admin-form-textarea" id="editTeaser" placeholder="🔥 Attention-grabbing teaser for Facebook/WhatsApp/Twitter..."></textarea>
-          </div>
-        </div>
-        <div class="admin-form-actions">
-          <button class="admin-save-btn" id="adminSaveBtn" onclick="adminSaveSmart()">💾 Save Article</button>
-          <button class="admin-cancel-btn" onclick="cancelEdit()">Cancel</button>
-        </div>
-      </div>
-
-      <div id="adminArticleList"></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- TOAST -->
-<div class="admin-toast" id="adminToast"></div>
-
 </body>
 </html>
