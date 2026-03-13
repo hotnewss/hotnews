@@ -545,7 +545,7 @@ footer{background:var(--surface);border-top:1px solid var(--border);}
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. Nairobi, Kenya. <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.15;user-select:none;font-size:10px;">⚙</span></div>
+    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. Nairobi, Kenya. <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.12;user-select:none;font-size:16px;padding:8px;display:inline-block;">⚙</span></div>
     <div class="footer-legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
   </div>
 </footer>
@@ -1005,12 +1005,12 @@ function downloadPoster(){
 renderAll(ARTICLES);
 
 // ============================================================
-// ADMIN PANEL — Press Ctrl+Shift+A
+// ADMIN PANEL — click ⚙ gear icon in footer
 // ============================================================
 const ADMIN_USER = "Benedict";
 const ADMIN_PASS = "Benedict12#";
 let adminLoggedIn = false;
-let adminKeyBuffer = "";
+
 let editingId = null;
 let pageViews = parseInt(localStorage.getItem("h254_pv")||"0") + 1;
 let sessionStart = Date.now();
@@ -1025,10 +1025,7 @@ function trackArticleView(id){
 
 // Keyboard shortcut listener
 document.addEventListener("keydown", function(e){
-  if(e.ctrlKey && e.shiftKey && e.key==="A"){ e.preventDefault(); openAdminLogin(); return; }
-  adminKeyBuffer += e.key;
-  if(adminKeyBuffer.length > 14) adminKeyBuffer = adminKeyBuffer.slice(-14);
-  if(adminKeyBuffer.includes("benedict254")){ adminKeyBuffer=""; openAdminLogin(); }
+  if(e.key==="Escape") return;
 });
 
 function openAdminLogin(){
@@ -1357,7 +1354,117 @@ window.openArticle = function(id){
 
 </script>
 
-<!-- admin via admin.html -->
+<!-- ADMIN LOGIN OVERLAY -->
+<div class="admin-login-overlay" id="adminLoginOverlay" onclick="if(event.target===this)closeAdminLogin()">
+  <div class="admin-login-box">
+    <div class="admin-login-logo"><em>HUSTLE</em> 254</div>
+    <div class="admin-login-sub">Admin Access</div>
+    <label class="admin-login-label">Username</label>
+    <input class="admin-login-input" id="adminLoginUser" type="text" placeholder="admin" onkeyup="adminLoginKey(event)" autocomplete="off">
+    <label class="admin-login-label">Password</label>
+    <input class="admin-login-input" id="adminLoginPass" type="password" placeholder="••••••••" onkeyup="adminLoginKey(event)">
+    <button class="admin-login-btn" onclick="adminLogin()">🔐 Login to Admin</button>
+    <div class="admin-login-error" id="adminLoginError">❌ Wrong username or password</div>
+    <div class="admin-login-cancel" onclick="closeAdminLogin()">Cancel</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+
+  <!-- Token Setup Bar -->
+  <div id="tokenBar" style="background:#1a1a2e;border-bottom:1px solid #333;padding:12px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+    <span style="color:#e8192c;font-weight:700;font-size:12px;letter-spacing:1px;">🔑 GITHUB TOKEN</span>
+    <input id="ghTokenInput" type="password" placeholder="Paste your GitHub token here (ghp_...)"
+      style="flex:1;min-width:200px;background:#0d0d0f;border:1px solid #444;color:#fff;padding:8px 12px;border-radius:6px;font-size:12px;font-family:monospace;"
+      value="" oninput="saveToken(this.value)">
+    <span id="tokenStatus" style="font-size:11px;color:#888;">not set</span>
+    <a href="https://github.com/settings/tokens/new" target="_blank"
+      style="font-size:11px;color:#58a6ff;text-decoration:none;">Get token →</a>
+  </div>
+
+  <div class="admin-header">
+    <div class="admin-header-logo"><em>HUSTLE</em> 254</div>
+    <div class="admin-header-badge">ADMIN</div>
+    <div class="admin-header-actions">
+      <button class="admin-close-btn" onclick="closeAdminPanel()">← Back to Site</button>
+      <button class="admin-logout-btn" onclick="adminLogout()">Logout</button>
+    </div>
+  </div>
+  <div class="admin-tabs">
+    <button class="admin-tab-btn active" onclick="showAdminTab('stats')">📊 Analytics</button>
+    <button class="admin-tab-btn" onclick="showAdminTab('articles')">📝 Articles</button>
+  </div>
+  <div class="admin-content">
+
+    <!-- STATS TAB -->
+    <div class="admin-tab-pane active" id="adminPane-stats" data-tab="stats"></div>
+
+    <!-- ARTICLES TAB -->
+    <div class="admin-tab-pane" id="adminPane-articles" data-tab="articles">
+      <div class="admin-articles-toolbar">
+        <input class="admin-search-input" placeholder="🔍 Search articles by title or category..." oninput="adminSearchArticles(event)">
+        <button class="admin-add-btn" onclick="adminAddNew()">＋ New Article</button>
+        <button class="admin-add-btn" style="background:#238636;margin-left:auto;" onclick="publishToGitHub()">🚀 Publish Now</button>
+        <button class="admin-add-btn" style="background:#555;font-size:10px;" onclick="exportUpdatedHTML()" title="Download as backup">⬇ Backup</button>
+      </div>
+
+      <!-- EDIT / ADD FORM -->
+      <div class="admin-edit-form" id="adminEditForm">
+        <div class="admin-edit-title" id="editFormTitle">✏️ Edit Article</div>
+        <input type="hidden" id="editId">
+        <div class="admin-form-grid">
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Title *</label>
+            <input class="admin-form-input" id="editTitle" placeholder="Article headline...">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Category</label>
+            <select class="admin-form-select" id="editCategory">
+              <option>Kenya</option><option>World</option><option>Politics</option>
+              <option>Business</option><option>Technology</option><option>Sports</option>
+              <option>Health</option><option>Entertainment</option>
+            </select>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Region</label>
+            <input class="admin-form-input" id="editRegion" placeholder="e.g. Kenya, USA, Africa...">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Date</label>
+            <input class="admin-form-input" id="editDate" type="date">
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label">Image URL</label>
+            <input class="admin-form-input" id="editImg" placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Summary (1-2 sentences)</label>
+            <textarea class="admin-form-textarea" id="editSummary" placeholder="Short summary shown on cards..."></textarea>
+          </div>
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Full Article Body</label>
+            <textarea class="admin-form-textarea tall" id="editBody" placeholder="Full article text... Use blank lines to separate paragraphs."></textarea>
+          </div>
+          <div class="admin-form-group full">
+            <label class="admin-form-label">Social Share Teaser (with emoji for engagement)</label>
+            <textarea class="admin-form-textarea" id="editTeaser" placeholder="🔥 Attention-grabbing teaser for Facebook/WhatsApp/Twitter..."></textarea>
+          </div>
+        </div>
+        <div class="admin-form-actions">
+          <button class="admin-save-btn" id="adminSaveBtn" onclick="adminSaveSmart()">💾 Save Article</button>
+          <button class="admin-cancel-btn" onclick="cancelEdit()">Cancel</button>
+        </div>
+      </div>
+
+      <div id="adminArticleList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
 <div class="admin-toast" id="adminToast"></div>
+
 </body>
 </html>
