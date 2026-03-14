@@ -97,6 +97,7 @@ body{background:#0d0d0f;color:#e0e0e0;font-family:'Segoe UI',sans-serif;min-heig
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 // ── IMPORT SYSTEM ─────────────────────────────────────────────────────────────
+if(typeof ARTICLES === 'undefined') var ARTICLES = [];
 let importedArticles = [];
 
 function openImport(){
@@ -145,9 +146,7 @@ function processFile(file){
 }
 
 function parseCSV(text){
-  const lines = text.trim().split(/
-?
-/);
+  const lines = text.trim().split(/\r?\n/);
   if(lines.length < 2){ showImportError('CSV is empty or has no data rows.'); return; }
   const headers = lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,'').toLowerCase());
   const rows = [];
@@ -218,8 +217,7 @@ function showImportError(msg){
 }
 
 function downloadTemplate(){
-  const csv = 'title,category,region,date,img,summary,body,teaser
-'+
+  const csv = 'title,category,region,date,img,summary,body,teaser\n' +
     '"Sample Article Title",Kenya,Nairobi,2026-03-14,"https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800","Short summary here.","Full article body text here.","🔥 Teaser for social media!"';
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
