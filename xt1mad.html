@@ -94,6 +94,139 @@ body{background:#0d0d0f;color:#e0e0e0;font-family:'Segoe UI',sans-serif;min-heig
   .form-group.full{grid-column:1;}
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
+// ── IMPORT SYSTEM ─────────────────────────────────────────────────────────────
+let importedArticles = [];
+
+function openImport(){
+  document.getElementById('importModal').style.display='flex';
+  importedArticles=[];
+  document.getElementById('importPreview').style.display='none';
+  document.getElementById('importError').style.display='none';
+  document.getElementById('importBtn').style.display='none';
+  document.getElementById('fileInput').value='';
+}
+
+function closeImport(){
+  document.getElementById('importModal').style.display='none';
+}
+
+function handleDrop(e){
+  e.preventDefault();
+  document.getElementById('dropZone').style.borderColor='#2a2a35';
+  const file = e.dataTransfer.files[0];
+  if(file) processFile(file);
+}
+
+function handleFileSelect(e){
+  const file = e.target.files[0];
+  if(file) processFile(file);
+}
+
+function processFile(file){
+  document.getElementById('importError').style.display='none';
+  document.getElementById('importPreview').style.display='none';
+  document.getElementById('importBtn').style.display='none';
+  const name = file.name.toLowerCase();
+  if(name.endsWith('.csv')){
+    const reader = new FileReader();
+    reader.onload = e => parseCSV(e.target.result);
+    reader.readAsText(file);
+  } else if(name.endsWith('.xlsx')||name.endsWith('.xls')){
+    const reader = new FileReader();
+    reader.onload = e => parseExcel(e.target.result);
+    reader.readAsArrayBuffer(file);
+  } else if(name.endsWith('.docx')){
+    showImportError('Word (.docx) support: please save as CSV or Excel first. Use File → Save As → CSV in Word/Excel.');
+  } else {
+    showImportError('Unsupported file type. Please use .csv or .xlsx');
+  }
+}
+
+function parseCSV(text){
+  const lines = text.trim().split(/
+?
+/);
+  if(lines.length < 2){ showImportError('CSV is empty or has no data rows.'); return; }
+  const headers = lines[0].split(',').map(h=>h.trim().replace(/^"|"$/g,'').toLowerCase());
+  const rows = [];
+  for(let i=1;i<lines.length;i++){
+    // Handle quoted commas
+    const cols = lines[i].match(/('[^']*'|"[^"]*"|[^,]+|(?<=,)(?=,)|^(?=,)|(?<=,)$)/g) || lines[i].split(',');
+    const obj = {};
+    headers.forEach((h,idx)=>{ obj[h] = (cols[idx]||'').trim().replace(/^"|"$/g,''); });
+    if(obj.title) rows.push(obj);
+  }
+  buildImportPreview(rows);
+}
+
+function parseExcel(buffer){
+  try {
+    const wb = XLSX.read(buffer, {type:'arraybuffer'});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(ws, {defval:''});
+    // Normalize keys to lowercase
+    const normalized = rows.map(r=>{
+      const obj={};
+      Object.keys(r).forEach(k=>{ obj[k.toLowerCase().trim()]=String(r[k]||'').trim(); });
+      return obj;
+    }).filter(r=>r.title);
+    buildImportPreview(normalized);
+  } catch(e){
+    showImportError('Could not read Excel file: '+e.message);
+  }
+}
+
+function buildImportPreview(rows){
+  if(rows.length===0){ showImportError('No valid articles found. Make sure your file has a "title" column.'); return; }
+  const maxId = ARTICLES.length>0 ? Math.max(...ARTICLES.map(a=>a.id)) : 0;
+  importedArticles = rows.map((r,i)=>({
+    id: maxId + i + 1,
+    title:    r.title||'',
+    category: r.category||'Kenya',
+    region:   r.region||'Kenya',
+    date:     r.date||new Date().toISOString().split('T')[0],
+    img:      r.img||r.image||r.imageurl||'',
+    summary:  r.summary||'',
+    body:     r.body||r.content||r.article||'',
+    teaser:   r.teaser||''
+  }));
+  // Show preview
+  document.getElementById('importPreviewCount').textContent = '✅ '+importedArticles.length+' articles ready to import';
+  document.getElementById('importPreviewList').innerHTML = importedArticles.slice(0,10).map((a,i)=>
+    '<div style="padding:3px 0;border-bottom:1px solid #1a1a1a;">'+( i+1)+'. '+a.title+'</div>'
+  ).join('') + (importedArticles.length>10 ? '<div style="color:#555;padding:4px 0;">...and '+(importedArticles.length-10)+' more</div>' : '');
+  document.getElementById('importPreview').style.display='block';
+  document.getElementById('importBtn').style.display='block';
+}
+
+function doImport(){
+  if(importedArticles.length===0) return;
+  // Add new articles to front, keeping existing
+  ARTICLES = [...importedArticles, ...ARTICLES];
+  renderList();
+  closeImport();
+  showToast('⏳ Imported '+importedArticles.length+' articles — publishing...');
+  publishToGitHub();
+}
+
+function showImportError(msg){
+  const el = document.getElementById('importError');
+  el.textContent = '❌ '+msg;
+  el.style.display='block';
+}
+
+function downloadTemplate(){
+  const csv = 'title,category,region,date,img,summary,body,teaser
+'+
+    '"Sample Article Title",Kenya,Nairobi,2026-03-14,"https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800","Short summary here.","Full article body text here.","🔥 Teaser for social media!"';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = 'hustle254_template.csv';
+  a.click();
+}
+
+</script>
 </head>
 <body>
 
@@ -117,7 +250,7 @@ body{background:#0d0d0f;color:#e0e0e0;font-family:'Segoe UI',sans-serif;min-heig
   <!-- TOP BAR -->
   <div class="topbar">
     <div class="topbar-logo"><span>HUSTLE</span> 254 &nbsp;<span style="color:#444;font-size:12px;font-weight:400;">ADMIN</span></div>
-    <button class="topbar-btn green" onclick="publishToGitHub()">🚀 Publish Now</button>
+    <button class="topbar-btn" onclick="openImport()" style="background:#0d419d;border-color:#0d419d;color:#fff;">📂 Import File</button><button class="topbar-btn green" onclick="publishToGitHub()">🚀 Publish Now</button>
     <button class="topbar-btn" onclick="doLogout()">Logout</button>
   </div>
 
@@ -136,7 +269,7 @@ body{background:#0d0d0f;color:#e0e0e0;font-family:'Segoe UI',sans-serif;min-heig
     <div class="sidebar">
       <div class="sidebar-header">
         <span class="sidebar-title">Articles (<span id="articleCount">0</span>)</span>
-        <button class="new-btn" onclick="newArticle()">＋ New</button>
+        <button class="new-btn" onclick="newArticle()">＋ New</button><button class="new-btn" onclick="openImport()" style="background:#0d419d;margin-left:4px;">📂 Import</button>
       </div>
       <div class="sidebar-search">
         <input class="search-input" id="searchInput" placeholder="🔍 Search..." oninput="filterList()">
@@ -472,5 +605,57 @@ function showToast(msg, isError=false){
   t._timer = setTimeout(()=> t.className="toast", 4000);
 }
 </script>
+
+<!-- IMPORT MODAL -->
+<div id="importModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:#141418;border:1px solid #2a2a35;border-top:3px solid #0d419d;border-radius:12px;padding:32px;width:560px;max-width:95vw;max-height:90vh;overflow-y:auto;">
+    <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;">📂 Import Articles</div>
+    <div style="font-size:12px;color:#666;margin-bottom:24px;">Upload CSV, Excel (.xlsx) or Word (.docx) — up to 300+ articles at once</div>
+
+    <!-- Format guide -->
+    <div style="background:#0d0d0f;border:1px solid #2a2a35;border-radius:8px;padding:16px;margin-bottom:20px;">
+      <div style="font-size:11px;font-weight:700;color:#0d419d;letter-spacing:1px;margin-bottom:8px;">REQUIRED COLUMNS (CSV/Excel)</div>
+      <div style="font-size:11px;color:#888;line-height:2;">
+        <span style="color:#fff;font-family:monospace;">title</span> — Article headline (required)<br>
+        <span style="color:#fff;font-family:monospace;">category</span> — Kenya / World / Politics / Business / Technology / Sports / Health / Entertainment<br>
+        <span style="color:#fff;font-family:monospace;">region</span> — e.g. Kenya, USA, Africa<br>
+        <span style="color:#fff;font-family:monospace;">date</span> — YYYY-MM-DD format<br>
+        <span style="color:#fff;font-family:monospace;">img</span> — Image URL<br>
+        <span style="color:#fff;font-family:monospace;">summary</span> — Short 1-2 sentence summary<br>
+        <span style="color:#fff;font-family:monospace;">body</span> — Full article text<br>
+        <span style="color:#fff;font-family:monospace;">teaser</span> — Social media teaser with emojis
+      </div>
+      <button onclick="downloadTemplate()" style="margin-top:12px;background:none;border:1px solid #333;color:#58a6ff;font-size:11px;padding:6px 12px;border-radius:6px;cursor:pointer;">⬇ Download CSV Template</button>
+    </div>
+
+    <!-- File drop zone -->
+    <div id="dropZone" style="border:2px dashed #2a2a35;border-radius:8px;padding:32px;text-align:center;cursor:pointer;transition:border-color 0.2s;margin-bottom:16px;"
+      onclick="document.getElementById('fileInput').click()"
+      ondragover="event.preventDefault();this.style.borderColor='#0d419d'"
+      ondragleave="this.style.borderColor='#2a2a35'"
+      ondrop="handleDrop(event)">
+      <div style="font-size:32px;margin-bottom:8px;">📁</div>
+      <div style="font-size:13px;color:#888;">Click to browse or drag & drop your file here</div>
+      <div style="font-size:11px;color:#555;margin-top:4px;">Supports: .csv, .xlsx, .xls, .docx</div>
+      <input type="file" id="fileInput" accept=".csv,.xlsx,.xls,.docx" style="display:none;" onchange="handleFileSelect(event)">
+    </div>
+
+    <!-- Preview -->
+    <div id="importPreview" style="display:none;">
+      <div style="font-size:12px;font-weight:700;color:#3fb950;margin-bottom:8px;" id="importPreviewCount"></div>
+      <div style="background:#0d0d0f;border:1px solid #2a2a35;border-radius:6px;max-height:180px;overflow-y:auto;padding:10px;font-size:11px;color:#888;" id="importPreviewList"></div>
+    </div>
+
+    <!-- Error -->
+    <div id="importError" style="display:none;color:#ff6b6b;font-size:12px;margin-top:8px;"></div>
+
+    <!-- Actions -->
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button id="importBtn" onclick="doImport()" style="display:none;background:#238636;border:none;color:#fff;font-size:13px;font-weight:700;padding:10px 24px;border-radius:6px;cursor:pointer;">✅ Import & Publish</button>
+      <button onclick="closeImport()" style="background:none;border:1px solid #333;color:#888;font-size:13px;padding:10px 20px;border-radius:6px;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
