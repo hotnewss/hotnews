@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hustle 254 — Breaking News Worldwide</title>
-<meta name="description" content="Hustle 254 — Kenya's #1 Hustle & News Site. Breaking news from Kenya and around the world.">
+<meta name="description" content="Hustle 254 — Breaking News Worldwide. Your #1 source for global news, business, sports, tech and more.">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Libre+Franklin:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -405,7 +405,7 @@ footer .logo-sub{color:rgba(255,255,255,0.3);}
     <div class="header-divider"></div>
     <nav id="mainNav">
       <a href="#" class="active" onclick="resetFilter(event)">All</a>
-      <a href="#" onclick="filterCat(event,'Kenya')">Kenya</a>
+      <a href="#" onclick="filterCat(event,'Africa')">Africa</a>
       <a href="#" onclick="filterCat(event,'World')">World</a>
       <a href="#" onclick="filterCat(event,'Politics')">Politics</a>
       <a href="#" onclick="filterCat(event,'Business')">Business</a>
@@ -484,7 +484,7 @@ footer .logo-sub{color:rgba(255,255,255,0.3);}
         <div class="section-header-line"></div>
       </div>
       <div class="cat-list" id="catList">
-        <span class="cat-chip" onclick="filterCat(null,'Kenya')">🇰🇪 Kenya</span>
+        <span class="cat-chip" onclick="filterCat(null,'Africa')">🌍 Africa</span>
         <span class="cat-chip" onclick="filterCat(null,'World')">🌍 World</span>
         <span class="cat-chip" onclick="filterCat(null,'Politics')">🏛️ Politics</span>
         <span class="cat-chip" onclick="filterCat(null,'Business')">💼 Business</span>
@@ -519,7 +519,7 @@ footer .logo-sub{color:rgba(255,255,255,0.3);}
         <span style="font-size:18px;">🌍</span>
         <div class="update-text">
           <strong>Hustle 254</strong>
-          Breaking news from Kenya &amp; worldwide
+          Breaking news from around the world
         </div>
       </div>
     </div>
@@ -545,13 +545,13 @@ footer .logo-sub{color:rgba(255,255,255,0.3);}
         <div class="logo-main"><em>HUSTLE</em>&nbsp;254</div>
         <div class="logo-sub">Breaking News Worldwide</div>
       </div>
-      <p class="footer-about">Your #1 source for breaking news from Kenya and around the world. Business, politics, sports, tech, health and more — published from Nairobi.</p>
+      <p class="footer-about">Your #1 source for breaking news from around the world. Business, politics, sports, tech, health and entertainment — delivered by a small team of independent journalists.</p>
     </div>
     <div>
       <div class="footer-col-title">Navigate</div>
       <ul class="footer-links">
         <li><a onclick="resetFilter(event)">All News</a></li>
-        <li><a onclick="filterCat(event,'Kenya')">Kenya</a></li>
+        <li><a onclick="filterCat(event,'Africa')">Africa</a></li>
         <li><a onclick="filterCat(event,'World')">World</a></li>
         <li><a onclick="filterCat(event,'Business')">Business</a></li>
         <li><a onclick="filterCat(event,'Sports')">Sports</a></li>
@@ -569,7 +569,7 @@ footer .logo-sub{color:rgba(255,255,255,0.3);}
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. Nairobi, Kenya. <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.15;user-select:none;font-size:10px;">⚙</span></div>
+    <div class="footer-copy">© 2026 Hustle 254. All rights reserved. <span onclick="openAdminLogin()" style="cursor:pointer;opacity:0.15;user-select:none;font-size:10px;">⚙</span></div>
     <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div>
   </div>
 </footer>
@@ -666,7 +666,7 @@ function renderTicker(arts){
 
 // Placeholder
 function imgFallback(cat){
-  const map={Kenya:"0d2137",World:"0d1a2e",Politics:"1a0d2e",Business:"0d2e1a",Technology:"1a1a2e",Sports:"2e0d0d",Health:"0d2e0d",Entertainment:"2e1a0d"};
+  const map={Africa:"0d2137",World:"0d1a2e",Politics:"1a0d2e",Business:"0d2e1a",Technology:"1a1a2e",Sports:"2e0d0d",Health:"0d2e0d",Entertainment:"2e1a0d"};
   return`https://placehold.co/800x450/${map[cat]||"222"}/ffffff?text=${encodeURIComponent(cat)}`;
 }
 
@@ -755,7 +755,7 @@ function copyToClipboard(text, btnId, label){
 
 // Share the whole site
 function shareSite(platform){
-  const text = encodeURIComponent(`🌍 Breaking news from Kenya & worldwide — Hustle 254 is your #1 source for real news, business, sports and hustle stories!\n\n${SITE_URL}`);
+  const text = encodeURIComponent(`🌍 Breaking news from around the world — Hustle 254 is your #1 source for real news, business, sports and hustle stories!\n\n${SITE_URL}`);
   const url = encodeURIComponent(SITE_URL);
   const links = {
     facebook:`https://www.facebook.com/sharer/sharer.php?u=${url}`,
@@ -900,7 +900,7 @@ function drawPoster(){
   var ctx = canvas.getContext("2d");
 
   var bgColors={
-    Kenya:["#0a1628","#1a0a08"],
+    Africa:["#0a1628","#1a0a08"],
     World:["#0a1220","#0a2010"],
     Politics:["#150a20","#200a15"],
     Business:["#0a1a10","#102010"],
@@ -1257,8 +1257,8 @@ function adminAddNew(){
   const newId = Math.max(...ARTICLES.map(a=>a.id))+1;
   document.getElementById("editId").value = newId;
   document.getElementById("editTitle").value = "";
-  document.getElementById("editCategory").value = "Kenya";
-  document.getElementById("editRegion").value = "Kenya";
+  document.getElementById("editCategory").value = "World";
+  document.getElementById("editRegion").value = "World";
   document.getElementById("editDate").value = new Date().toISOString().split("T")[0];
   document.getElementById("editImg").value = "";
   document.getElementById("editSummary").value = "";
@@ -1446,14 +1446,14 @@ window.openArticle = function(id){
           <div class="admin-form-group">
             <label class="admin-form-label">Category</label>
             <select class="admin-form-select" id="editCategory">
-              <option>Kenya</option><option>World</option><option>Politics</option>
+              <option>World</option><option>Africa</option><option>Politics</option>
               <option>Business</option><option>Technology</option><option>Sports</option>
               <option>Health</option><option>Entertainment</option>
             </select>
           </div>
           <div class="admin-form-group">
             <label class="admin-form-label">Region</label>
-            <input class="admin-form-input" id="editRegion" placeholder="e.g. Kenya, USA, Africa...">
+            <input class="admin-form-input" id="editRegion" placeholder="e.g. USA, Africa, Europe, Asia...">
           </div>
           <div class="admin-form-group">
             <label class="admin-form-label">Date</label>
